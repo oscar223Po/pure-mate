@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>iconfont</title>
+	<style>
+		html,body{
+			height: 100%;
+		}
+		body{
+			padding: 1.875rem;
+			font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+			font-size: 1em;
+			background-color:#333;
+			color:#fff;
+		}
+		.iconfont-page h1{
+			font-size: 1.875rem;
+			margin-bottom: 2rem;
+		}
+		.iconfont-page ul{
+			display: flex;
+			flex-wrap: wrap;
+			gap: 2.5rem;
+			margin: 0;
+			padding: 0;
+		}
+		.iconfont-page ul li{
+			margin-bottom: 0.625rem;
+			display: inline-flex;
+			gap: 0.625rem;
+			list-style: none;
+			align-items: center;
+		}
+		.iconfont-page ul li::before{
+			font-size: 2rem;
+		}
+		@font-face { 
+	font-family: "iconfont"; 
+	font-display: swap;
+	src: url("/Users/sell/Main/pure-mate/src/assets/svgicons/preview/iconfont.woff2?f4b50928441606da9b1f682a53a95478") format("woff2"); 
+} 
+[class*="--icon-"]::before{
+	font-family: iconfont; 
+}
+	[class*="--icon-s-ln"]::before { 
+		content: "\f101"; 
+	} 
+	[class*="--icon-s-in"]::before { 
+		content: "\f102"; 
+	} 
+	[class*="--icon-s-fb"]::before { 
+		content: "\f103"; 
+	} 
+	[class*="--icon-s-db"]::before { 
+		content: "\f104"; 
+	} 
+	[class*="--icon-s-bn"]::before { 
+		content: "\f105"; 
+	} 
+	[class*="--icon-play"]::before { 
+		content: "\f106"; 
+	} 
+
+	</style>
+</head>
+<body>
+	<div class="iconfont-page">
+		<h1>Перелік іконок та їх класів:</h1>
+		<ul>
+				<li class="--icon-s-ln">--icon-s-ln</li>
+				<li class="--icon-s-in">--icon-s-in</li>
+				<li class="--icon-s-fb">--icon-s-fb</li>
+				<li class="--icon-s-db">--icon-s-db</li>
+				<li class="--icon-s-bn">--icon-s-bn</li>
+				<li class="--icon-play">--icon-play</li>
+		</ul>
+	</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<style data-fls-preloader>
+	body > *:not(.fls-preloader) {
+		opacity: 0;
+		visibility: hidden;
+	}
+
+	[data-fls-preloader-loaded] body > *:not(.fls-preloader) {
+		opacity: 1;
+		visibility: visible;
+		transition: opacity 0.5s ease;
+	}
+</style>

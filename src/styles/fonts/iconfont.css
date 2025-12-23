@@ -1,0 +1,26 @@
+@font-face { 
+	font-family: "iconfont"; 
+	font-display: swap;
+	src: url("/Users/sell/Main/pure-mate/src/assets/svgicons/preview/iconfont.woff2?67d18140cf3f975ba68ba382a35791cf") format("woff2"); 
+} 
+[class*="--icon-"]::before{
+	font-family: iconfont; 
+}
+	[class*="--icon-s-ln"]::before { 
+		content: "\f101"; 
+	} 
+	[class*="--icon-s-in"]::before { 
+		content: "\f102"; 
+	} 
+	[class*="--icon-s-fb"]::before { 
+		content: "\f103"; 
+	} 
+	[class*="--icon-s-db"]::before { 
+		content: "\f104"; 
+	} 
+	[class*="--icon-s-bn"]::before { 
+		content: "\f105"; 
+	} 
+	[class*="--icon-play"]::before { 
+		content: "\f106"; 
+	} 

@@ -1,0 +1,976 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<style data-fls-preloader="">
+			body > *:not(.fls-preloader) {
+		opacity: 0;
+		visibility: hidden;
+	}
+
+	[data-fls-preloader-loaded] body > *:not(.fls-preloader) {
+		opacity: 1;
+		visibility: visible;
+		transition: opacity 0.5s ease;
+	}
+		</style>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="preload" href="./assets/fonts/FKTGnarly_SBd.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+		<link rel="preload" href="./assets/fonts/FKTGnarly_Rg.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+		<link rel="preload" href="./assets/fonts/FKTGnarly_Lt.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+		<link rel="preload" href="./assets/fonts/FKTGnarly_It.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+		<link rel="preload" href="./assets/fonts/FKTGnarly_Bd.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+		<link rel="shortcut icon" href="./assets/img/shortcut.svg">
+		<title>Pure Mate</title>
+		<script type="module" crossorigin="" src="./js/index.min.js?v=1766419922435"></script>
+		<link rel="stylesheet" crossorigin="" href="./css/index.min.css?v=1766419922435">
+	</head>
+	<body>
+		<div class="wrapper">
+			<header data-fls-header="" data-fls-header-scroll="" class="header">
+				<div class="header__container">
+					<a href="#" data-fls-scrollto=".hero" class="header__logo">
+						<img src="./assets/img/logo.svg" alt="Image">
+					</a>
+					<div class="header__menu menu">
+						<nav class="menu__body">
+							<ul class="menu__list">
+								<li class="menu__item">
+									<a href="#" data-fls-scrollto=".works" class="menu__link">Work</a>
+								</li>
+								<li class="menu__item">
+									<a href="#" data-fls-scrollto=".our" class="menu__link">Expertise</a>
+								</li>
+								<li class="menu__item">
+									<a href="#" data-fls-scrollto=".cause" class="menu__link">Approach</a>
+								</li>
+								<li class="menu__item">
+									<a href="#" data-fls-scrollto=".why" class="menu__link">About</a>
+								</li>
+								<li class="menu__item">
+									<a href="#" data-fls-scrollto=".lets-make" class="menu__link">Contact</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+					<!--
+<fetch url="@components/layout/menu/menu.json">
+<each loop='item in response'>
+</each>
+</fetch>
+-->
+					<a href="#" data-fls-dynamic=".hero__button, 767.98" class="header__button">Discuss Your Project</a>
+					<button type="button" data-fls-menu="" class="header__icon">
+						<div class="icon-menu">
+							<span></span>
+						</div>
+					</button>
+				</div>
+			</header>
+			<main class="page page--home">
+				<section class="page__hero hero">
+					<div class="hero__gif">
+						<img data-fls-watcher="" class="lazyload" src="./assets/img/home.gif" alt="Gif">
+					</div>
+					<div class="hero__container">
+						<div class="hero__body">
+							<div class="hero__head">
+								<img data-fls-watcher="" class="hero__logo lazyload" src="./assets/img/logo.svg" alt="Logo">
+								<img data-fls-watcher="" class="hero__by lazyload" src="./assets/img/by-orange.svg" alt="Decore">
+							</div>
+							<div data-fls-watcher="" class="hero__sub-title lazyload">We Design and Build Digital Products</div>
+							<div class="hero__button"></div>
+						</div>
+					</div>
+				</section>
+				<section class="page__complex complex">
+					<div class="complex__board complex__board--pc">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span>
+							<img class="fm-horse disable" src="./assets/img/shapes/horse.svg" alt="Shape">
+						</span>
+						<span>
+							<img class="fm-queen-02 disable" src="./assets/img/shapes/queen.svg" alt="Shape">
+						</span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span>
+							<img class="fm-queen" src="./assets/img/shapes/queen.svg" alt="Shape">
+							<img class="fm-elephant disable" src="./assets/img/shapes/elephant.svg" alt="Shape">
+						</span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span>
+							<img class="fm-pawn" src="./assets/img/shapes/pawn.svg" alt="Shape">
+							<img class="fm-horse-01 disable" src="./assets/img/shapes/horse.svg" alt="Shape">
+							<img class="fm-queen-01 disable" src="./assets/img/shapes/queen.svg" alt="Shape">
+						</span>
+					</div>
+					<div class="complex__board complex__board--mb">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span>
+							<img class="sm-horse disable" src="./assets/img/shapes/horse.svg" alt="Shape">
+						</span>
+						<span>
+							<img class="sm-queen-02 disable" src="./assets/img/shapes/queen.svg" alt="Shape">
+						</span>
+						<span></span>
+						<span></span>
+						<span>
+							<img class="sm-queen" src="./assets/img/shapes/queen.svg" alt="Shape">
+							<img class="sm-elephant disable" src="./assets/img/shapes/elephant.svg" alt="Shape">
+						</span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span>
+							<img class="sm-pawn" src="./assets/img/shapes/pawn.svg" alt="Shape">
+							<img class="sm-horse-01 disable" src="./assets/img/shapes/horse.svg" alt="Shape">
+							<img class="sm-queen-01 disable" src="./assets/img/shapes/queen.svg" alt="Shape">
+						</span>
+					</div>
+					<div class="complex__body">
+						<div class="complex__container-min">
+							<h2 class="complex__title">Is Your Business a Complex Game?</h2>
+							<div class="complex__text">
+								<p>
+									We are a digital agency that sees complex business challenges as elegant puzzles. Our craft is finding
+						not just solutions, but perfect moves where impeccable logic meets undeniable beauty.
+								</p>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="page__showreel showreel">
+					<video data-fls-watcher="" class="showreel__video lazyload" src="./assets/img/video/macbook-subtle-turn.mp4" preload="metadata" playsinline=""></video>
+					<button type="button" class="showreel__button showreel__button--icon-play">Showreel</button>
+				</section>
+				<section class="page__craft craft">
+					<div class="craft__container-min">
+						<h3 class="craft__title craft__title--title">We Craft the Winning Strategy</h3>
+					</div>
+				</section>
+				<section class="page__strategy strategy">
+					<article class="strategy__item strategy__item--strategy">
+						<span class="strategy__tag">#Strategy</span>
+						<div class="strategy__content">
+							<h2>Your Winning Move</h2>
+							<p>
+								We analyze the market's playing field, forecast competitors' moves, and develop a digital strategy
+					that
+					leads to victory. It's not just a plan—
+								<span>it's a gambit.</span>
+							</p>
+						</div>
+						<div class="strategy__gif">
+							<img data-fls-watcher="" class="lazyload" src="./assets/img/strategy/ches.gif" alt="Gif">
+						</div>
+					</article>
+					<article class="strategy__item strategy__item--design">
+						<span class="strategy__tag">#Design</span>
+						<div class="strategy__content">
+							<h2>Logic Made Visible</h2>
+							<p>
+								Every pixel, every interval follows a rigorous system. We transform complex data and user journeys
+					into
+					intuitive and visually flawless interfaces.
+							</p>
+						</div>
+						<div class="strategy__gif">
+							<img data-fls-watcher="" class="lazyload" src="./assets/img/strategy/balls.gif" alt="Gif">
+						</div>
+					</article>
+					<article class="strategy__item strategy__item--engineering">
+						<span class="strategy__tag">#Engineering</span>
+						<div class="strategy__content">
+							<h2>Flawless Execution</h2>
+							<p>
+								Clean code, refined processes, and precise timelines. We engineer every idea to perfection, like a
+					master-crafted mechanism.
+							</p>
+						</div>
+						<div class="strategy__gif">
+							<img data-fls-watcher="" class="lazyload" src="./assets/img/strategy/hand.gif" alt="Gif">
+						</div>
+					</article>
+				</section>
+				<section class="page__works works">
+					<div class="works__container-min">
+						<h2 class="works__title works__title--title">Our Works</h2>
+					</div>
+					<div class="works__container">
+						<article class="works__followrx followrx-works">
+							<div class="followrx-works__body">
+								<div class="followrx-works__content">
+									<img src="./assets/img/works/followrx/logo.svg" alt="Logo-Followrx">
+									<div data-fls-dynamic=".followrx-works__note-mb, 767.98" class="followrx-works__note">
+										<h3>End-to-End Brand Identity & App Design for FollowRx</h3>
+										<p>
+											This project encompassed the complete creation of the FollowRx brand universe. We developed a
+								cohesive visual identity from the ground up, culminating in a custom 3D robot owl mascot and a
+								user-friendly mobile application, establishing a distinctive and trustworthy presence in the
+								pharmaceutical tech space.
+										</p>
+									</div>
+								</div>
+								<picture data-fls-watcher="" class="followrx-works__picture lazyload">
+									<source srcset="./assets/img/works/followrx/mb.png" media="(max-width: 767.98px)">
+									<img src="./assets/img/works/followrx/pc.png" alt="Image">
+								</picture>
+							</div>
+							<div class="followrx-works__note-mb"></div>
+						</article>
+						<div class="works__pare">
+							<article class="works__sample sample-works">
+								<video data-fls-watcher="" class="sample-works__video lazyload" src="./assets/img/video/editor-export.mp4" preload="metadata" playsinline="" autoplay muted loop></video>
+								<div class="sample-works__note sample-works__note--note">
+									<h3>Rx2Go: Order Tracking Redesign</h3>
+									<p>
+										We transformed a basic utility into a transparent journey of trust. The redesigned tracking
+							experience boosts user confidence with clear status updates, signature capture, and real-time ETA.
+									</p>
+								</div>
+							</article>
+							<article class="works__sample sample-works">
+								<video data-fls-watcher="" class="sample-works__video lazyload" src="./assets/img/video/editor-export.mp4" preload="metadata" playsinline="" autoplay muted loop></video>
+								<div class="sample-works__note sample-works__note--note">
+									<h3>Comprehensive Brand Identity & Website for Dispatcher Academy</h3>
+									<p>
+										This project involved the creation of a complete brand ecosystem — from strategic visual identity
+							to a functional website — for a pioneering educational institution. The goal was to establish a
+							brand that embodies authority, modernity, and trust in the specialized field of dispatcher
+							training.
+									</p>
+								</div>
+							</article>
+						</div>
+						<article class="works__board board-works">
+							<div class="board-works__body">
+								<img data-fls-watcher="" class="board-works__mockup lazyload" src="./assets/img/works/board/mockup.png" alt="Image">
+								<div class="board-works__hero hero-board-works">
+									<img data-fls-watcher="" class="hero-board-works__header lazyload" src="./assets/img/works/board/header.png" alt="Image">
+									<div class="hero-board-works__tare">
+										<div class="hero-board-works__head">
+											<h4>
+												THE LEADING PRESCRIPTION DELIVERY SERVICE IN
+												<span>NEW YORK</span>
+											</h4>
+											<p>
+												Save money, simplify deliveries, and keep everyone happy with cutting-edge solutions that
+									integrate effortlessly with your current software.
+											</p>
+											<div class="hero-board-works__actions">
+												<a href="#" class="hero-board-works__blue">
+													Schedule a Call
+													<svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<rect width="23.4566" height="23.4566" rx="11.7283" fill="white"></rect>
+														<path d="M7.46289 15.9935L15.9926 7.46387M15.9926 7.46387V15.9935M15.9926 7.46387H7.46289" stroke="#2C7EF8" stroke-width="1.59931" stroke-linecap="round" stroke-linejoin="round"></path>
+													</svg>
+												</a>
+												<a href="#" class="hero-board-works__green">Get a Quote</a>
+											</div>
+										</div>
+										<div data-fls-slider="" class="hero-board-works__slider swiper">
+											<div class="hero-board-works__wrapper swiper-wrapper">
+												<div class="hero-board-works__slide swiper-slide">
+													<h5>Monitor all communications</h5>
+													<img data-fls-watcher="" class="lazyload" src="./assets/img/works/board/slides/01.jpg" alt="Image">
+												</div>
+												<div class="hero-board-works__slide swiper-slide">
+													<video data-fls-watcher="" class="lazyload" src="./assets/img/video/editor-export.mp4" preload="metadata" playsinline="" autoplay muted loop></video>
+												</div>
+												<div class="hero-board-works__slide swiper-slide">
+													<h5>Get proof of every delivery</h5>
+													<img data-fls-watcher="" class="lazyload" src="./assets/img/works/board/slides/02.jpg" alt="Image">
+												</div>
+											</div>
+										</div>
+										<img data-fls-watcher="" class="hero-board-works__media lazyload" src="./assets/img/works/board/media.png" alt="Image">
+									</div>
+								</div>
+							</div>
+							<div class="board-works__note board-works__note--note">
+								<h3>Website and dashboard Rx2Go</h3>
+								<p>
+									We designed a clean, intuitive, and empathetic digital experience. The new Rx2Go website prioritizes
+						clarity and trust above all else. A calming color palette and thoughtful iconography reinforce a sense
+						of safety and well-being, positioning Rx2Go not just as a service, but as a dependable partner in
+						health.
+								</p>
+							</div>
+						</article>
+						<div class="works__pare">
+							<article class="works__sample sample-works">
+								<img data-fls-watcher="" class="sample-works__image lazyload" src="./assets/img/works/sample/image.jpg" alt="Image">
+								<div class="sample-works__note sample-works__note--note">
+									<h3>Marketing Materials for Conference</h3>
+									<p>
+										Crafting a cohesive design suite for a trio of companies — from booth and merch to booklets —
+							ensuring a powerful and singular presence at a major US pharma convention.
+									</p>
+								</div>
+							</article>
+							<article class="works__sample sample-works">
+								<video data-fls-watcher="" class="sample-works__video lazyload" src="./assets/img/video/editor-export.mp4" preload="metadata" playsinline="" autoplay muted loop></video>
+								<div class="sample-works__note sample-works__note--note">
+									<h3>Driver App for Flawless Logistics</h3>
+									<p>
+										We engineered an intuitive app for perfect deliveries. Built for iOS & Android, it equips drivers
+							with offline maps, real-time error alerts, and a QA dashboard to maintain the highest service
+							standards on every route.
+									</p>
+								</div>
+							</article>
+						</div>
+						<article class="works__below below-works">
+							<div class="below-works__wrapper">
+								<video data-fls-watcher="" class="below-works__video lazyload" src="./assets/img/video/macbook-subtle-turn.mp4" preload="metadata" playsinline="" autoplay muted loop></video>
+								<img data-fls-watcher="" class="below-works__logo lazyload" src="./assets/img/works/below/logo.svg" alt="Logo-Route">
+							</div>
+							<div class="below-works__note below-works__note--note">
+								<h3>UX/UI Design for a Multi-Page Pharmaceutical Software Platform</h3>
+								<p>
+									This project involved the comprehensive design of rx4route's digital presence—a leading provider of
+						sophisticated software solutions for pharmacies. The challenge was to create a complex, multi-page
+						website that reflects the company's expertise while ensuring intuitive navigation and clear
+						information architecture for a B2B audience.
+								</p>
+							</div>
+						</article>
+						<div class="works__pare">
+							<article class="works__sample sample-works">
+								<video data-fls-watcher="" class="sample-works__video lazyload" src="./assets/img/video/editor-export.mp4" preload="metadata" playsinline="" autoplay muted loop></video>
+								<div class="sample-works__note sample-works__note--note">
+									<h3>Dynamic Web Design with Bold Animation</h3>
+									<p>
+										This project focuses on creating a powerful and unforgettable first impression through the
+							strategic use of vibrant color schemes and immersive animations. The design challenges the status
+							quo, transforming a standard website into an interactive canvas.
+									</p>
+								</div>
+							</article>
+							<article class="works__sample sample-works">
+								<video data-fls-watcher="" class="sample-works__video lazyload" src="./assets/img/video/editor-export.mp4" preload="metadata" playsinline="" autoplay muted loop></video>
+								<div class="sample-works__note sample-works__note--note">
+									<h3>Brand & Digital Foundation for a Healthcare Leader</h3>
+									<p>
+										We developed a full brand system and an expert-level website for PharmaStaff, translating their
+							specialized healthcare outsourcing services into a compelling digital presence that attracts top
+							talent and clients.
+									</p>
+								</div>
+							</article>
+						</div>
+					</div>
+				</section>
+				<section class="page__circle circle">
+					<div class="circle__container">
+						<div class="circle__body">
+							<video data-fls-watcher="" class="circle__video" src="./assets/img/video/editor-export.mp4" preload="metadata" playsinline="" autoplay muted loop></video>
+						</div>
+					</div>
+				</section>
+				<section class="page__our our">
+					<div class="our__container-min">
+						<div class="our__body">
+							<div class="our__section our__section--01 is-active">
+								<div class="our__head">
+									<div class="our__label">Our Expertise</div>
+									<h3 class="our__title">Checkmate, by Design</h3>
+								</div>
+								<div class="our__inner">
+									<div class="our__name name-our">
+										<h4 class="name-our__title">Web Design</h4>
+										<div class="name-our__label">Graphic design & Branding</div>
+									</div>
+									<div class="our__inner-spollers inner-spollers">
+										<details class="inner-spollers__item add-open" open>
+											<summary class="inner-spollers__title">Web Design</summary>
+											<div class="inner-spollers__body">
+												<div class="our__side side-our">
+													<div class="side-our__heading">
+														<h5 class="side-our__title side-our__title--01">Logic Made Visible</h5>
+														<div class="side-our__text">
+															<p>
+																We craft digital experiences where clarity, elegance and strategy work together.
+													Every
+													interaction is designed to move users toward a winning outcome.
+															</p>
+														</div>
+													</div>
+													<div data-fls-spollers="" data-fls-spollers-one="" class="side-our__spollers spollers">
+														<details class="spollers__item">
+															<summary class="spollers__title">Landing Pages</summary>
+															<div class="spollers__body">
+																<p>
+																	<span>What it is:</span>
+																	a focused one-page website built for a selling,
+														presenting a
+														product,
+														capturing leads, or promoting an offer.
+																</p>
+																<p>
+																	<span>What you get:</span>
+																	a decisive, conversion-driven experience that
+														removes
+														distractions and
+														directs users to take the action you need. A single, powerful move designed to
+														turn
+														interest into results.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">Corporate Websites</summary>
+															<div class="spollers__body">
+																<p>
+																	<span>What it is:</span>
+																	a multi-page website that represents your company,
+														your
+														digital
+														headquarters.
+																</p>
+																<p>
+																	<span>What you get:</span>
+																	a clear, trustworthy, and structured online
+														presence that
+														explains who
+														you are, what you do, and why you matter. We build authoritative platforms
+														that
+														strengthen your reputation and guide visitors through your business with ease.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">E-commerce Platforms</summary>
+															<div class="spollers__body">
+																<p>
+																	<span>What it is:</span>
+																	a complete online store where customers can browse,
+														choose,
+														and purchase
+														your products.
+																</p>
+																<p>
+																	<span>What you get:</span>
+																	a seamless, intuitive shopping journey that
+														increases sales,
+														simplifies
+														decisions, and supports growth at any scale. More than a store, your strategic
+														sales
+														engine.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">CRM Systems</summary>
+															<div class="spollers__body">
+																<p>
+																	<span>What it is:</span>
+																	a tool that stores, organizes, and manages all your
+														customer
+														information in
+														one place.
+																</p>
+																<p>
+																	<span>What you get:</span>
+																	a clean, powerful command center that helps your
+														team
+														understand clients,
+														track interactions, and make smarter decisions. We turn complex data into
+														clear,
+														actionable insight.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">Mobile Applications</summary>
+															<div class="spollers__body">
+																<p>
+																	What it is: a custom mobile app tailored to your business and your users’
+														daily needs.
+																</p>
+																<p>
+																	What you get: A simple, intuitive product your customers can use anytime,
+														anywhere. A
+														strategic move that meets users exactly where they are.
+																</p>
+															</div>
+														</details>
+													</div>
+												</div>
+											</div>
+										</details>
+									</div>
+								</div>
+							</div>
+							<div class="our__section our__section--02">
+								<div class="our__head our__head--mb-none">
+									<div class="our__label">Our Expertise</div>
+									<h3 class="our__title">Checkmate, by Design</h3>
+								</div>
+								<div class="our__inner">
+									<div class="our__name name-our">
+										<h4 class="name-our__title">Graphic design & Branding</h4>
+										<div class="name-our__label">Development</div>
+									</div>
+									<div class="our__inner-spollers inner-spollers">
+										<details class="inner-spollers__item remove-open" open>
+											<summary class="inner-spollers__title">Graphic design & Branding</summary>
+											<div class="inner-spollers__body">
+												<div class="our__side side-our">
+													<div class="side-our__heading">
+														<h5 class="side-our__title side-our__title--02">Your Identity, Defined</h5>
+														<div class="side-our__text">
+															<p>
+																In a crowded market, your brand is your flag. We build core identities that make
+													you
+													instantly recognizable and impossible to forget.
+															</p>
+														</div>
+													</div>
+													<div data-fls-spollers="" data-fls-spollers-one="" class="side-our__spollers spollers">
+														<details class="spollers__item">
+															<summary class="spollers__title">Logo Design</summary>
+															<div class="spollers__body">
+																<p>
+																	<span>What it is:</span>
+																	a custom symbol that represents your company, your
+														visual
+														signature.
+																</p>
+																<p>
+																	<span>What you get:</span>
+																	a strong, memorable mark that reflects your essence
+														and
+														sets
+														you apart
+														from competitors. The king on your chessboard: a clear, confident emblem of
+														your
+														strategic vision.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">Corporate Identity</summary>
+															<div class="spollers__body">
+																<p>
+																	<span>What it is:</span>
+																	a complete visual system: colors, typography, styles,
+														rules,
+														and brand
+														elements that form your brand’s look and feel.
+																</p>
+																<p>
+																	<span>What you get:</span>
+																	a consistent, recognizable identity that ensures
+														every
+														touchpoint: your
+														website, presentations, ads, and materials. A cohesive system for visual
+														dominance,
+														giving every move clarity and power.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">Conference Stands</summary>
+															<div class="spollers__body">
+																<p>
+																	Command the room. We design immersive and impactful stands that draw attendees
+														in
+														and
+														make your presence undeniable.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">Business Cards</summary>
+															<div class="spollers__body">
+																<p>
+																	A classic move, perfected. We design elegant and memorable cards that
+														facilitate
+														powerful first connections.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">Brochures & Booklets</summary>
+															<div class="spollers__body">
+																<p>
+																	We transform complex information into structured, easy-to-navigate print
+														materials.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">Social Media Design</summary>
+															<div class="spollers__body">
+																<p>
+																	Maintain a consistent, strategic presence across every platform. We create
+														scroll-stopping visuals that deepen your community, sharpen your voice, and
+														carry
+														your
+														message further with each move.
+																</p>
+															</div>
+														</details>
+													</div>
+												</div>
+											</div>
+										</details>
+									</div>
+								</div>
+							</div>
+							<div class="our__section our__section--03">
+								<div class="our__head our__head--mb-none">
+									<div class="our__label">Our Expertise</div>
+									<h3 class="our__title">Checkmate, by Design</h3>
+								</div>
+								<div class="our__inner">
+									<div class="our__name name-our name-our--final">
+										<h4 class="name-our__title">Development</h4>
+									</div>
+									<div class="our__inner-spollers inner-spollers">
+										<details class="inner-spollers__item remove-open" open>
+											<summary class="inner-spollers__title">Development</summary>
+											<div class="inner-spollers__body">
+												<div class="our__side side-our">
+													<div class="side-our__heading">
+														<h5 class="side-our__title side-our__title--03">Flawless Execution</h5>
+														<div class="side-our__text">
+															<p>
+																Strategy and design mean nothing without precision engineering. We write the
+													clean,
+													robust
+													code that brings your vision to life, building digital solutions that are both
+													powerful
+													and perfect. Every build — a perfectly executed strategy.
+															</p>
+														</div>
+													</div>
+													<div data-fls-spollers="" data-fls-spollers-one="" class="side-our__spollers spollers">
+														<details class="spollers__item">
+															<summary class="spollers__title">Frontend Development</summary>
+															<div class="spollers__body">
+																<p>
+																	<span>What it is:</span>
+																	everything users see and interact with on your
+														website
+														or
+														app.
+																</p>
+																<p>
+																	<span>What you get</span>
+																	: fast, responsive, visually flawless interfaces that
+														feel
+														natural and
+														effortless to use. We turn design into a smooth and intuitive user experience
+														that
+														strengthens your first impression.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">Backend Development</summary>
+															<div class="spollers__body">
+																<p>
+																	<span>What it is:</span>
+																	the hidden engine that powers your product, including
+														system
+														logic, databases, and server operations.
+																</p>
+																<p>
+																	<span>What you get:</span>
+																	A strong, secure, and scalable foundation that
+														keeps
+														your
+														platform running smoothly regardless of complexity. This is the core
+														architecture
+														that
+														supports every move you make.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">iOS & Android App Development</summary>
+															<div class="spollers__body">
+																<p>
+																	<span>What it is:</span>
+																	native mobile applications built specifically for
+														each
+														platform.
+																</p>
+																<p>
+																	<span>What you get:</span>
+																	high-performance apps that feel seamless,
+														intuitive,
+														and
+														perfectly
+														aligned with each device. Your audience receives an experience that feels
+														completely
+														natural.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">Quality Assurance & Project Management</summary>
+															<div class="spollers__body">
+																<p>
+																	<span>What it is:</span>
+																	a full process of testing, reviewing, and
+														coordinating
+														the
+														development
+														cycle.
+																</p>
+																<p>
+																	<span>What you get:</span>
+																	a stable and refined product where every feature is
+														carefully checked
+														before launch. We anticipate issues before they appear and ensure the final
+														result
+														plays flawlessly.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">Technical Support</summary>
+															<div class="spollers__body">
+																<p>
+																	<span>What it is:</span>
+																	continuous monitoring, updates, and maintenance of
+														your
+														digital systems.
+																</p>
+																<p>
+																	<span>What you get:</span>
+																	long-term reliability, security, and confidence as
+														your
+														platform evolves.
+														This is consistent, strategic support that protects every step of your digital
+														journey.
+																</p>
+															</div>
+														</details>
+														<details class="spollers__item">
+															<summary class="spollers__title">DevOps</summary>
+															<div class="spollers__body">
+																<p>
+																	<span>What it is:</span>
+																	a practice that improves how your product is built,
+														deployed,
+														and scaled in production.
+																</p>
+																<p>
+																	<span>What you get:</span>
+																	faster releases, smoother processes, and
+														infrastructure
+														that
+														adapts easily as you grow. This is complete optimization of your digital
+														ecosystem.
+																</p>
+															</div>
+														</details>
+													</div>
+												</div>
+											</div>
+										</details>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="page__cause cause">
+					<div class="cause__container-min">
+						<div class="cause__body">
+							<div class="cause__section">
+								<h2 class="cause__title cause__title--title">A Strategy, Not Just a Sprint</h2>
+								<div class="cause__article article-cause">
+									<div class="article-cause__body">
+										<h3 class="article-cause__title">Your Dedicated Team</h3>
+										<div class="article-cause__label">No More Random Gambits</div>
+										<div class="article-cause__text">
+											<p>
+												From day one, you are assigned a core team of strategists, designers, and engineers. This is
+									your unit, deeply familiar with your project's every nuance. They are your knights and
+									bishops,
+									moving in concert towards your goal.
+											</p>
+										</div>
+									</div>
+									<img data-fls-watcher="" class="article-cause__gif lazyload" src="./assets/img/cause.jpg" alt="Gif">
+								</div>
+							</div>
+							<div class="cause__section">
+								<h2 class="cause__title cause__title--title">A Strategy, Not Just a Sprint</h2>
+								<div class="cause__article article-cause">
+									<div class="article-cause__body">
+										<h3 class="article-cause__title">Transparency in Every Move</h3>
+										<div class="article-cause__label">The Board is Always Open</div>
+										<div class="article-cause__text">
+											<p>
+												We believe you should never have to guess the state of your project. Through our open Kanban
+									board and shared dashboards, you can see the live status of every task, track progress
+									against milestones, and access meeting notes and reports. No hidden moves, no surprises.
+											</p>
+										</div>
+									</div>
+									<img data-fls-watcher="" class="article-cause__gif lazyload" src="./assets/img/cause.jpg" alt="Gif">
+								</div>
+							</div>
+							<div class="cause__section">
+								<h2 class="cause__title cause__title--title">A Strategy, Not Just a Sprint</h2>
+								<div class="cause__article article-cause">
+									<div class="article-cause__body">
+										<h3 class="article-cause__title">The Logic of Sprints</h3>
+										<div class="article-cause__label">Momentum Through Measured Wins</div>
+										<div class="article-cause__text">
+											<p>
+												We work in weekly sprints. Together, we plan the sequence of moves, breaking down the grand
+									strategy into manageable tasks. Every week ends with a clear deliverable and a progress
+									report. This ensures constant momentum and gives you a regular cadence of victories.
+											</p>
+										</div>
+									</div>
+									<img data-fls-watcher="" class="article-cause__gif lazyload" src="./assets/img/cause.jpg" alt="Gif">
+								</div>
+							</div>
+							<div class="cause__section">
+								<h2 class="cause__title cause__title--title">A Strategy, Not Just a Sprint</h2>
+								<div class="cause__article article-cause">
+									<div class="article-cause__body">
+										<h3 class="article-cause__title">Always in Communication</h3>
+										<div class="article-cause__label">Your Queen's Direct Line</div>
+										<div class="article-cause__text">
+											<p>
+												Questions? Insights? Your dedicated project lead is your direct line. We respond with speed
+									and clarity in your preferred channel—be it Slack, email, or a quick call. If you're pressed
+									for time, we'll send a concise video update. We are an extension of your team, always within
+									reach.
+											</p>
+										</div>
+									</div>
+									<img data-fls-watcher="" class="article-cause__gif lazyload" src="./assets/img/cause.jpg" alt="Gif">
+								</div>
+							</div>
+							<div class="cause__section">
+								<h2 class="cause__title cause__title--title">A Strategy, Not Just a Sprint</h2>
+								<div class="cause__article article-cause">
+									<div class="article-cause__body">
+										<h3 class="article-cause__title">Focused on the Launch</h3>
+										<div class="article-cause__label">Checkmate, Not Perpetual Check</div>
+										<div class="article-cause__text">
+											<p>
+												Our process is engineered to get a quality, functional product to market as fast as possible.
+									We parallel-track design and development to launch a robust MVP (Minimum Viable Product)
+									early, avoiding the endless cycle of pre-launch iterations. We believe a live product is the
+									first true win.
+											</p>
+										</div>
+									</div>
+									<img data-fls-watcher="" class="article-cause__gif lazyload" src="./assets/img/cause.jpg" alt="Gif">
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="page__poster poster">
+					<video data-fls-watcher="" class="poster__video lazyload" src="./assets/img/video/macbook-subtle-turn.mp4" preload="metadata" playsinline="" autoplay muted loop></video>
+					<img data-fls-watcher="" class="poster__image lazyload" src="./assets/img/poster.svg" alt="Image">
+				</section>
+				<section class="page__why why">
+					<div class="why__gif">
+						<img data-fls-watcher="" class="lazyload" src="./assets/img/king-blue.gif" alt="Gif">
+					</div>
+					<div class="why__body">
+						<div class="why__container-min">
+							<h2 class="why__title why__title--title">Why Choose Pure Mate</h2>
+							<div class="why__text">
+								<p>
+									We are a team of strategists, designers, and developers united by a passion for creating digital
+						products that make an impact. We become your trusted partner, taking ownership of your project's
+						success from concept to launch and beyond.
+								</p>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="page__lets-make lets-make">
+					<div class="lets-make__container">
+						<div class="lets-make__body">
+							<h4 class="lets-make__title">Let's Make Your Winning Move</h4>
+							<div class="lets-make__text">
+								<p>
+									The board is set. You have the vision, we have the strategy. Share your challenge with us, and we will
+						outline the decisive moves to secure your digital dominance. No random plays — just a calculated path
+						to victory.
+								</p>
+							</div>
+							<div class="lets-make__actions">
+								<a data-fls-button="" href="#" class="button button--orange">
+									<span>Book a Strategy Call</span>
+								</a>
+								<a data-fls-button="" href="#" class="button button--blue">
+									<span>Submit Your Task</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</section>
+			</main>
+			<footer data-fls-footer="" class="footer">
+				<img data-fls-watcher="" class="footer__image lazyload" src="./assets/img/footer/image.png" alt="Image">
+				<div class="footer__tail">
+					<img data-fls-watcher="" class="footer__logo lazyload" src="./assets/img/footer/logo.svg" alt="Logo">
+					<img data-fls-watcher="" class="footer__by lazyload" src="./assets/img/by-dark.svg" alt="Decore">
+				</div>
+				<div class="footer__basement basement-footer">
+					<div class="basement-footer__container">
+						<ul class="basement-footer__socals">
+							<li>
+								<a href="" class="basement-footer__socal basement-footer__socal--icon-s-in"></a>
+							</li>
+							<li>
+								<a href="" class="basement-footer__socal basement-footer__socal--icon-s-fb"></a>
+							</li>
+							<li>
+								<a href="" class="basement-footer__socal basement-footer__socal--icon-s-ln"></a>
+							</li>
+							<li>
+								<a href="" class="basement-footer__socal basement-footer__socal--icon-s-bn"></a>
+							</li>
+							<li>
+								<a href="" class="basement-footer__socal basement-footer__socal--icon-s-db"></a>
+							</li>
+						</ul>
+						<div class="basement-footer__below">
+							<a href="#" class="basement-footer__link">Terms of Service</a>
+							<a href="#" class="basement-footer__link">Privacy Policy</a>
+							<div class="basement-footer__right">© 2025 Pure Mate. All Rights Reserved.</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

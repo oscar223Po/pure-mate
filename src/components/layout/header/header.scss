@@ -1,0 +1,70 @@
+.header {
+	-webkit-backdrop-filter: blur(15px);
+	backdrop-filter: blur(15px);
+	width: 100%;
+	z-index: 10;
+	position: fixed;
+	padding-block: 25px;
+	transition: padding-block 0.3s, background-color 0.3s;
+	@media (max-width: toEm($mobile)) {
+		padding-block: 16px;
+	}
+	// .header__container
+	&__container {
+		gap: 24px;
+		align-items: center;
+		@media (min-width: toEm($tablet)) {
+			display: grid;
+			grid-template-columns: 200px 1fr 200px;
+		}
+		@media (max-width: toEm($tablet)) {
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+	// .header__logo
+	&__logo {
+		z-index: 1;
+		max-width: 162px;
+		position: relative;
+		transition: opacity 0.3s;
+		img {
+			width: 100%;
+		}
+		@media (any-hover: hover) {
+			&:hover {
+				opacity: 0.75;
+			}
+		}
+	}
+	// .header__button
+	&__button {
+		color: #fff;
+		flex-shrink: 0;
+		line-height: 1.1;
+		padding: 10px 20px;
+		border-radius: 8px;
+		display: inline-flex;
+		justify-content: center;
+		font-family: $fontSemiBold;
+		background-color: #212225;
+		transition: color 0.3s, background-color 0.3s;
+		@media (any-hover: hover) {
+			&:hover {
+				color: $mainColor;
+				background-color: #ffb700;
+			}
+		}
+	}
+	// .header__icon
+	&__icon {
+		width: 50px;
+		display: flex;
+		aspect-ratio: 1;
+		align-items: center;
+		justify-content: center;
+		@media (min-width: toEm($mobile)) {
+			display: none;
+		}
+	}
+}

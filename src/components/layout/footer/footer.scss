@@ -1,0 +1,109 @@
+.footer {
+	overflow: hidden;
+	text-align: center;
+	background-color: $mainColor;
+	// .footer__image
+	&__image {
+		object-fit: cover;
+		object-position: center;
+		@media (max-width: toEm($mobile)) {
+			height: 417px;
+		}
+	}
+	// .footer__tail
+	&__tail {
+		position: relative;
+		padding-inline: 20px;
+		@media (max-width: toEm($tablet)) {
+			@include adaptiveValue("padding-top", 0, 30, 0, 991.98, 320);
+			&:not(:last-child) {
+				@include adaptiveValue("margin-bottom", 60, 40, 0, 991.98, 320);
+			}
+		}
+	}
+	// .footer__logo
+	&__logo {
+		width: 100%;
+		@include adaptiveValue("max-width", 1360, 340);
+	}
+	// .footer__by
+	&__by {
+		left: 0;
+		right: 0;
+		width: 100%;
+		bottom: -7px;
+		margin: 0 auto;
+		position: absolute;
+		@include adaptiveValue("max-width", 350, 140);
+	}
+	// .footer__title
+	&__title {
+		font-weight: 500;
+		white-space: nowrap;
+		font-family: $fontPoppins;
+		background: linear-gradient(180deg, #222228 0%, #080707 100%);
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		@include adaptiveValue("letter-spacing", -25, -5);
+		@include adaptiveValue("font-size", 310, 65, 0, 1440, 320);
+	}
+}
+.basement-footer {
+	text-align: left;
+	padding-top: 60px;
+	padding-bottom: 80px;
+	@media (max-width: toEm($tablet)) {
+		border-top: 1px solid rgba(255, 255, 255, 0.2);
+		@include adaptiveValue("padding-block", 50, 30, 0, 991.98, 320);
+	}
+	// .basement-footer__container
+	&__container {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		@include adaptiveValue("gap", 40, 20);
+		@media (max-width: toEm($tablet)) {
+			align-items: start;
+			flex-direction: column;
+		}
+	}
+	// .basement-footer__socals
+	&__socals {
+		gap: 16px;
+		display: flex;
+	}
+	// .basement-footer__socal
+	&__socal {
+		display: flex;
+		font-size: 26px;
+		color: #cdcccc;
+		transition: color 0.3s;
+		@media (any-hover: hover) {
+			&:hover {
+				color: #2c7ef8;
+			}
+		}
+	}
+	// .basement-footer__below
+	&__below {
+		display: flex;
+		font-size: 16px;
+		flex-wrap: wrap;
+		color: #818080;
+		@include adaptiveValue("gap", 32, 14);
+		@media (max-width: toEm($mobile)) {
+			flex-direction: column;
+		}
+	}
+	// .basement-footer__link
+	&__link {
+		transition: color 0.3s;
+		@media (any-hover: hover) {
+			&:hover {
+				color: #fff;
+			}
+		}
+	}
+}

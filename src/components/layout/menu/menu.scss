@@ -1,0 +1,115 @@
+.menu {
+	// .menu__body
+	&__body {
+		@media (max-width: toEm($mobile)) {
+			position: fixed;
+			width: 100%;
+			height: 100svh;
+			left: -100%;
+			top: 0;
+			overflow: auto;
+			padding: 102px 15px 30px 15px;
+			transition: left 0.3s;
+			background-color: $mainColor;
+			&::before {
+				content: "";
+				position: fixed;
+				width: 100%;
+				height: 82px;
+				left: -100%;
+				top: 0;
+				transition: left 0.3s;
+				z-index: 2;
+				background-color: #161616;
+			}
+			[data-fls-menu-open] & {
+				left: 0;
+				&::before {
+					left: 0;
+				}
+			}
+			.--header-scroll & {
+				padding: 92px 15px 30px 15px;
+				&::before {
+					height: 70px;
+				}
+			}
+		}
+	}
+	// .menu__list
+	&__list {
+		display: flex;
+		row-gap: 10px;
+		flex-wrap: wrap;
+		column-gap: 24px;
+		justify-self: center;
+		@media (max-width: toEm($mobile)) {
+			row-gap: 24px;
+			flex-direction: column;
+		}
+	}
+	// .menu__item
+	&__item {
+	}
+	// .menu__link
+	&__link {
+		color: #fff;
+		transition: color 0.3s;
+		@media (any-hover: hover) {
+			&:hover {
+				color: #cacaca;
+			}
+		}
+		@media (max-width: toEm($mobile)) {
+			font-size: 20px;
+		}
+	}
+}
+
+// Burger Icon
+.icon-menu {
+	display: block;
+	position: relative;
+	width: toRem(24);
+	height: toRem(16);
+	z-index: 5;
+	@media (any-hover: none) {
+		cursor: default;
+	}
+	span,
+	&::before,
+	&::after {
+		content: "";
+		transition: all 0.3s ease 0s;
+		right: 0;
+		position: absolute;
+		width: 100%;
+		height: 2px;
+		background-color: #fff;
+	}
+	&::before {
+		top: 0;
+	}
+	&::after {
+		bottom: 0;
+	}
+	span {
+		top: calc(50% - 1px);
+	}
+	[data-fls-menu-open] & {
+		span {
+			width: 0;
+		}
+		&::before,
+		&::after {
+		}
+		&::before {
+			top: calc(50% - 1px);
+			transform: rotate(-45deg);
+		}
+		&::after {
+			bottom: calc(50% - 1px);
+			transform: rotate(45deg);
+		}
+	}
+}
