@@ -1,3 +1,79 @@
+// Hero Gif Last Frame
+/*
+setTimeout(() => {
+	document.getElementById('hero-gif').style.display = 'none'
+	document.getElementById('hero-last-frame').hidden = false
+}, 4100) // длительность гифки
+
+setTimeout(() => {
+	document.getElementById('why-gif').style.display = 'none'
+	document.getElementById('why-last-frame').hidden = false
+}, 3400) // длительность гифки
+*/
+
+const poster = document.querySelector('.poster')
+const wrapper = document.querySelector('.page')
+
+let isPlayed = false
+let lockedScrollY = 0
+
+const lockScrollAtPoster = () => {
+	const posterTop = poster.offsetTop
+
+	// 🔒 ЖЕСТКО ставим скролл ровно на начало секции
+	window.scrollTo(0, posterTop)
+
+	lockedScrollY = posterTop
+
+	wrapper.style.position = 'fixed'
+	wrapper.style.top = `-${lockedScrollY}px`
+	wrapper.style.left = '0'
+	wrapper.style.width = '100%'
+	wrapper.style.zIndex = '1'
+}
+
+const unlockScroll = () => {
+	wrapper.style.position = ''
+	wrapper.style.top = ''
+	wrapper.style.left = ''
+	wrapper.style.width = ''
+
+	window.scrollTo(0, lockedScrollY)
+}
+
+const goToNextSection = () => {
+	const next = poster.nextElementSibling
+	if (!next) return
+
+	next.scrollIntoView({
+		behavior: 'smooth',
+		block: 'start'
+	})
+}
+
+window.addEventListener('scroll', () => {
+	if (isPlayed) return
+
+	const rect = poster.getBoundingClientRect()
+
+	// 🔑 ВАЖНО: срабатываем ДО того, как секция ушла вверх
+	if (rect.top <= 0 && rect.bottom > window.innerHeight * 0.3) {
+		isPlayed = true
+		lockScrollAtPoster()
+
+		const ANIMATION_TIME = 2800
+
+		setTimeout(() => {
+			unlockScroll()
+			goToNextSection()
+
+			// 🧼 корректно выводим poster из игры
+			poster.removeAttribute('data-fls-watcher')
+			poster.classList.add('poster-post')
+		}, ANIMATION_TIME)
+	}
+})
+
 // Animation For Pc Complex Section
 const q = (root, sel) => root.querySelector(sel)
 const SHOW = el => el && el.classList.remove('disable')
@@ -68,14 +144,8 @@ function playAnimation(root, prefix) {
 
 	loop()
 }
-playAnimation(
-	document.querySelector('.complex__board--pc'),
-	'fm'
-)
-playAnimation(
-	document.querySelector('.complex__board--mb'),
-	'sm'
-)
+playAnimation(document.querySelector('.complex__board--pc'), 'fm')
+playAnimation(document.querySelector('.complex__board--mb'), 'sm')
 
 // Our Step Section
 const ourSection = document.querySelector('.our')

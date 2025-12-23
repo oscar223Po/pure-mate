@@ -1212,27 +1212,46 @@
 }
 // Poster
 .poster {
-	text-align: center;
+	height: 100vh;
+	overflow: hidden;
 	position: relative;
-	margin-bottom: -3px;
 	background-color: #fff;
+	transition: background-color 0.5s ease-in-out 2.5s;
+	&.--watcher-view {
+		background-color: #0b26c5;
+		.poster__image {
+			scale: 10;
+			bottom: 50%;
+			translate: 0 50%;
+		}
+	}
+	&.poster-post {
+		background-color: #fff;
+		transition: background-color 0.3s ease-in-out 0s;
+		.poster__image {
+			scale: 1;
+			bottom: 50%;
+			translate: 0 50%;
+			transition: bottom 0.3s ease-in-out 0s, translate 0.3s ease-in-out 0s,
+				scale 0.3s ease-in-out 0s;
+		}
+	}
 	@media (max-width: toEm($mobile)) {
 		display: none;
 	}
-	// .poster__video
-	&__video {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
 	// .poster__image
 	&__image {
-		inset: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
 		margin: auto;
 		display: flex;
+		translate: 0 100%;
 		position: absolute;
 		align-items: center;
 		justify-content: center;
+		transition: bottom 1.5s ease-in-out 1s, translate 1.5s ease-in-out 1s,
+			scale 1.5s ease-in-out 2s;
 		@include adaptiveValue('width', 995, 595, 2, $containerWidth, 767.98);
 	}
 }

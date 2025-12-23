@@ -147,7 +147,7 @@ body {
 	visibility: hidden;
 	transition: opacity 0.3s ease 0.5s, visibility 0.3s ease 0.5s;
 	&.--watcher-view {
-		// opacity: 1;
-		// visibility: visible;
+		opacity: 1;
+		visibility: visible;
 	}
 }

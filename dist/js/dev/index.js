@@ -4986,44 +4986,50 @@ function pageNavigation() {
   }
 }
 document.querySelector("[data-fls-scrollto]") ? window.addEventListener("load", pageNavigation) : null;
-(function preloader() {
-  const html = document.documentElement;
-  html.setAttribute("data-fls-preloader-loading", "");
-  html.setAttribute("data-fls-scrolllock", "");
-  const template = `
-		<div class="fls-preloader">
-			<div class="fls-preloader__body">
-				<div class="fls-preloader__counter">0%</div>
-				<div class="fls-preloader__line"><span></span></div>
-			</div>
-		</div>
-	`;
-  document.body.insertAdjacentHTML("beforeend", template);
-  const counterEl = document.querySelector(".fls-preloader__counter");
-  const lineEl = document.querySelector(".fls-preloader__line span");
-  let progress = 0;
-  let fakeTimer = null;
-  function setProgress(value) {
-    counterEl.textContent = `${value}%`;
-    lineEl.style.width = `${value}%`;
-  }
-  fakeTimer = setInterval(() => {
-    if (progress < 90) {
-      progress++;
-      setProgress(progress);
-    }
-  }, 20);
-  window.addEventListener("load", () => {
-    clearInterval(fakeTimer);
-    progress = 100;
-    setProgress(progress);
-    setTimeout(() => {
-      html.setAttribute("data-fls-preloader-loaded", "");
-      html.removeAttribute("data-fls-preloader-loading");
-      html.removeAttribute("data-fls-scrolllock");
-    }, 300);
+const poster = document.querySelector(".poster");
+const wrapper = document.querySelector(".page");
+let isPlayed = false;
+let lockedScrollY = 0;
+const lockScrollAtPoster = () => {
+  const posterTop = poster.offsetTop;
+  window.scrollTo(0, posterTop);
+  lockedScrollY = posterTop;
+  wrapper.style.position = "fixed";
+  wrapper.style.top = `-${lockedScrollY}px`;
+  wrapper.style.left = "0";
+  wrapper.style.width = "100%";
+  wrapper.style.zIndex = "1";
+};
+const unlockScroll = () => {
+  wrapper.style.position = "";
+  wrapper.style.top = "";
+  wrapper.style.left = "";
+  wrapper.style.width = "";
+  window.scrollTo(0, lockedScrollY);
+};
+const goToNextSection = () => {
+  const next = poster.nextElementSibling;
+  if (!next) return;
+  next.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
   });
-})();
+};
+window.addEventListener("scroll", () => {
+  if (isPlayed) return;
+  const rect = poster.getBoundingClientRect();
+  if (rect.top <= 0 && rect.bottom > window.innerHeight * 0.3) {
+    isPlayed = true;
+    lockScrollAtPoster();
+    const ANIMATION_TIME = 2800;
+    setTimeout(() => {
+      unlockScroll();
+      goToNextSection();
+      poster.removeAttribute("data-fls-watcher");
+      poster.classList.add("poster-post");
+    }, ANIMATION_TIME);
+  }
+});
 const q = (root, sel) => root.querySelector(sel);
 const SHOW = (el) => el && el.classList.remove("disable");
 const HIDE = (el) => el && el.classList.add("disable");
@@ -5082,14 +5088,8 @@ function playAnimation(root, prefix) {
   }
   loop2();
 }
-playAnimation(
-  document.querySelector(".complex__board--pc"),
-  "fm"
-);
-playAnimation(
-  document.querySelector(".complex__board--mb"),
-  "sm"
-);
+playAnimation(document.querySelector(".complex__board--pc"), "fm");
+playAnimation(document.querySelector(".complex__board--mb"), "sm");
 const ourSection = document.querySelector(".our");
 const ourItems = document.querySelectorAll(".our__section");
 const ourSteps = ourItems.length;
