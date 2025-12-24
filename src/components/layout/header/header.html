@@ -1,11 +1,36 @@
-<header data-fls-header data-fls-header-scroll class="header">
+<header
+	data-fls-header
+	data-fls-header-scroll
+	class="header"
+>
 	<div class="header__container">
-		<a href="#" data-fls-scrollto=".hero" class="header__logo">
-			<img src="@img/logo.svg" alt="Image">
+		<a
+			href="#"
+			data-fls-scrollto=".hero"
+			class="header__logo"
+		>
+			<img
+				loading="lazy"
+				src="@img/logo.svg"
+				alt="Image"
+			/>
 		</a>
-		<include src="@components/layout/menu/menu.html" locals='{"active":"[[active]]"}'></include>
-		<a href="#" data-fls-dynamic=".hero__button, 767.98" class="header__button">Discuss Your Project</a>
-		<button type="button" data-fls-menu class="header__icon">
+		<include
+			src="@components/layout/menu/menu.html"
+			locals='{"active":"[[active]]"}'
+		></include>
+		<a
+			href="#"
+			data-fls-dynamic=".hero__button, 767.98"
+			class="header__button"
+		>
+			Discuss Your Project
+		</a>
+		<button
+			type="button"
+			data-fls-menu
+			class="header__icon"
+		>
 			<div class="icon-menu"><span></span></div>
 		</button>
 	</div>
