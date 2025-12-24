@@ -825,19 +825,6 @@
 			rgba(0, 0, 0, 0.03) 0px 2px 4px -1px;
 		@include adaptiveValue('min-width', 1910, 436);
 	}
-	// .circle__video
-	&__video {
-		scale: 0;
-		opacity: 0;
-		border-radius: 50%;
-		transition: scale 2s ease 0.5s, opacity 2s ease 0.5s,
-			visibility 2s ease 0.5s;
-		&.--watcher-view {
-			opacity: 1;
-			scale: 1.03;
-			visibility: visible;
-		}
-	}
 }
 // Our
 .our {
@@ -969,8 +956,11 @@
 	// .our__head
 	&__head {
 		opacity: 0;
+		display: flex;
 		line-height: 1;
 		text-align: center;
+		align-items: center;
+		flex-direction: column;
 		font-family: $fontSemiBold;
 		&:not(:last-child) {
 			@include adaptiveValue('margin-bottom', 90, 30, 2, 1440, 767.98);
@@ -992,8 +982,6 @@
 		display: flex;
 		padding: 10px 14px;
 		border-radius: 33px;
-		justify-self: center;
-		justify-content: center;
 		background-color: #e6ebf4;
 		@include adaptiveValue('font-size', 22, 16);
 		&:not(:last-child) {
@@ -1149,7 +1137,7 @@
 			grid-template-rows: 0fr;
 		}
 		@media (max-width: toEm($mobileSmall)) {
-			gap: 20px;
+			gap: 30px;
 		}
 	}
 	// .cause__title
@@ -1258,9 +1246,7 @@
 // Why
 .why {
 	position: relative;
-	@media (max-width: toEm($tablet)) {
-		height: 580px;
-	}
+	margin-bottom: -1px;
 	&::before {
 		left: 0;
 		bottom: 0;
@@ -1270,6 +1256,12 @@
 		height: 90px;
 		position: absolute;
 		background: linear-gradient(180deg, rgba(16, 52, 196, 0) 0%, #1034c4 100%);
+	}
+	@media (max-width: toEm($tablet)) {
+		height: 580px;
+		&::before {
+			height: 35px;
+		}
 	}
 	// .why__gif
 	&__gif {
@@ -1323,11 +1315,6 @@
 	background: url('@img/bg-lets-make.png') 0 0 / cover no-repeat;
 	@include adaptiveValue('padding-top', 185, 130);
 	@include adaptiveValue('margin-bottom', -1, -130);
-	/*
-	background:
-		radial-gradient(120% 60% at 50% 0%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%),
-		linear-gradient(to bottom, #1e43d3 0%, #0f1f66 45%, #040000 100%);
-	*/
 	// .lets-make__body
 	&__body {
 		color: #fff;
@@ -1357,7 +1344,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		@media (max-width: toEm($mobileSmall)) {
+		@media (max-width: toEm($mobile)) {
 			flex-direction: column;
 			.button {
 				width: 100%;

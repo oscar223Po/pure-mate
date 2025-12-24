@@ -5109,23 +5109,43 @@ window.addEventListener("scroll", () => {
   });
 });
 const BREAKPOINT = 767.98;
+let isMobile = null;
 function handleSpollers() {
-  if (window.innerWidth < BREAKPOINT) {
-    document.querySelectorAll(".inner-spollers").forEach((el) => {
+  const nowMobile = window.innerWidth <= BREAKPOINT;
+  if (nowMobile === isMobile) return;
+  isMobile = nowMobile;
+  const innerSpollers = document.querySelectorAll(".inner-spollers");
+  const removeOpen = document.querySelectorAll(".remove-open");
+  const addOpen = document.querySelector(".add-open");
+  if (nowMobile) {
+    innerSpollers.forEach((el) => {
       el.setAttribute("data-fls-spollers", "");
     });
-    document.querySelectorAll(".remove-open").forEach((el) => {
+    removeOpen.forEach((el) => {
       el.removeAttribute("open");
     });
-    const addOpenEl = document.querySelector(".add-open");
-    if (addOpenEl) {
-      addOpenEl.removeAttribute("open");
-      addOpenEl.setAttribute("data-fls-spollers-open", "");
+    if (addOpen) {
+      addOpen.removeAttribute("open");
+      addOpen.setAttribute("data-fls-spollers-open", "");
     }
+  } else {
+    innerSpollers.forEach((el) => {
+      el.removeAttribute("data-fls-spollers");
+    });
+    document.querySelectorAll(".inner-spollers__item").forEach((el) => {
+      el.setAttribute("open", "");
+      el.removeAttribute("data-fls-spollers-open");
+    });
   }
 }
 handleSpollers();
-window.addEventListener("resize", handleSpollers);
+window.addEventListener(
+  "resize",
+  () => {
+    window.requestAnimationFrame(handleSpollers);
+  },
+  { passive: true }
+);
 const causeSection = document.querySelector(".cause");
 const causeItems = document.querySelectorAll(".cause__section");
 const causeSteps = causeItems.length;

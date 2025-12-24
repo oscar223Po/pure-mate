@@ -57,6 +57,10 @@
 				background-color: #ffb700;
 			}
 		}
+		@media (max-width: toEm($mobile)) {
+			padding: 15px 25px;
+			font-family: $fontFamily;
+		}
 	}
 	// .header__icon
 	&__icon {

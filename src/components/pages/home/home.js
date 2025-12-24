@@ -1,16 +1,4 @@
-// Hero Gif Last Frame
-/*
-setTimeout(() => {
-	document.getElementById('hero-gif').style.display = 'none'
-	document.getElementById('hero-last-frame').hidden = false
-}, 4100) // длительность гифки
-
-setTimeout(() => {
-	document.getElementById('why-gif').style.display = 'none'
-	document.getElementById('why-last-frame').hidden = false
-}, 3400) // длительность гифки
-*/
-
+// Animation and scroll for poster section
 const poster = document.querySelector('.poster')
 const wrapper = document.querySelector('.page')
 
@@ -20,7 +8,7 @@ let lockedScrollY = 0
 const lockScrollAtPoster = () => {
 	const posterTop = poster.offsetTop
 
-	// 🔒 ЖЕСТКО ставим скролл ровно на начало секции
+	// We put the scroll exactly at the beginning of the section
 	window.scrollTo(0, posterTop)
 
 	lockedScrollY = posterTop
@@ -31,7 +19,6 @@ const lockScrollAtPoster = () => {
 	wrapper.style.width = '100%'
 	wrapper.style.zIndex = '1'
 }
-
 const unlockScroll = () => {
 	wrapper.style.position = ''
 	wrapper.style.top = ''
@@ -40,7 +27,6 @@ const unlockScroll = () => {
 
 	window.scrollTo(0, lockedScrollY)
 }
-
 const goToNextSection = () => {
 	const next = poster.nextElementSibling
 	if (!next) return
@@ -50,13 +36,12 @@ const goToNextSection = () => {
 		block: 'start'
 	})
 }
-
 window.addEventListener('scroll', () => {
 	if (isPlayed) return
 
 	const rect = poster.getBoundingClientRect()
 
-	// 🔑 ВАЖНО: срабатываем ДО того, как секция ушла вверх
+	// IMPORTANT: we fire before the section goes up.
 	if (rect.top <= 0 && rect.bottom > window.innerHeight * 0.3) {
 		isPlayed = true
 		lockScrollAtPoster()
@@ -67,7 +52,7 @@ window.addEventListener('scroll', () => {
 			unlockScroll()
 			goToNextSection()
 
-			// 🧼 корректно выводим poster из игры
+			// Taking the poster out of the game
 			poster.removeAttribute('data-fls-watcher')
 			poster.classList.add('poster-post')
 		}, ANIMATION_TIME)
@@ -78,6 +63,7 @@ window.addEventListener('scroll', () => {
 const q = (root, sel) => root.querySelector(sel)
 const SHOW = el => el && el.classList.remove('disable')
 const HIDE = el => el && el.classList.add('disable')
+
 function getPieces(root, prefix) {
 	return {
 		queen: q(root, `.${prefix}-queen`),
@@ -144,6 +130,7 @@ function playAnimation(root, prefix) {
 
 	loop()
 }
+
 playAnimation(document.querySelector('.complex__board--pc'), 'fm')
 playAnimation(document.querySelector('.complex__board--mb'), 'sm')
 
@@ -151,6 +138,7 @@ playAnimation(document.querySelector('.complex__board--mb'), 'sm')
 const ourSection = document.querySelector('.our')
 const ourItems = document.querySelectorAll('.our__section')
 const ourSteps = ourItems.length
+
 window.addEventListener('scroll', () => {
 	const rect = ourSection.getBoundingClientRect()
 	const viewport = window.innerHeight
@@ -162,7 +150,7 @@ window.addEventListener('scroll', () => {
 
 	let index = Math.floor(progress * ourSteps)
 
-	// 🔒 фикс последнего элемента
+	// Fixing the last element
 	if (index >= ourSteps) {
 		index = ourSteps - 1
 	}
@@ -174,33 +162,59 @@ window.addEventListener('scroll', () => {
 
 // Add Atribut Spoller
 const BREAKPOINT = 767.98
+let isMobile = null
+
 function handleSpollers() {
-	if (window.innerWidth < BREAKPOINT) {
-		// inner-spollers
-		document.querySelectorAll('.inner-spollers').forEach(el => {
+	const nowMobile = window.innerWidth <= BREAKPOINT
+	if (nowMobile === isMobile) return // doing nothing
+
+	isMobile = nowMobile
+
+	const innerSpollers = document.querySelectorAll('.inner-spollers')
+	const removeOpen = document.querySelectorAll('.remove-open')
+	const addOpen = document.querySelector('.add-open')
+
+	if (nowMobile) {
+		// === MOBILE ===
+		innerSpollers.forEach(el => {
 			el.setAttribute('data-fls-spollers', '')
 		})
 
-		// remove-open
-		document.querySelectorAll('.remove-open').forEach(el => {
+		removeOpen.forEach(el => {
 			el.removeAttribute('open')
 		})
 
-		// add-open (он один)
-		const addOpenEl = document.querySelector('.add-open')
-		if (addOpenEl) {
-			addOpenEl.removeAttribute('open')
-			addOpenEl.setAttribute('data-fls-spollers-open', '')
+		if (addOpen) {
+			addOpen.removeAttribute('open')
+			addOpen.setAttribute('data-fls-spollers-open', '')
 		}
+	} else {
+		// === DESKTOP ===
+		innerSpollers.forEach(el => {
+			el.removeAttribute('data-fls-spollers')
+		})
+
+		document.querySelectorAll('.inner-spollers__item').forEach(el => {
+			el.setAttribute('open', '')
+			el.removeAttribute('data-fls-spollers-open')
+		})
 	}
 }
+
 handleSpollers()
-window.addEventListener('resize', handleSpollers)
+window.addEventListener(
+	'resize',
+	() => {
+		window.requestAnimationFrame(handleSpollers)
+	},
+	{ passive: true }
+)
 
 // Cause Step Section
 const causeSection = document.querySelector('.cause')
 const causeItems = document.querySelectorAll('.cause__section')
 const causeSteps = causeItems.length
+
 window.addEventListener('scroll', () => {
 	const rect = causeSection.getBoundingClientRect()
 	const viewport = window.innerHeight
@@ -212,7 +226,7 @@ window.addEventListener('scroll', () => {
 
 	let index = Math.floor(progress * causeSteps)
 
-	// 🔒 фикс последнего элемента
+	// Fixing the last element
 	if (index >= causeSteps) {
 		index = causeSteps - 1
 	}
@@ -240,14 +254,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		button.classList.add('is-hidden')
 	}
 
-	// Старт видео по кнопке
+	// Start the video by clicking
 	button.addEventListener('click', () => {
 		hideButton()
 		video.currentTime = 0
 		video.play()
 	})
 
-	// Пауза по клику на видео
+	// Pause when a video is clicked on
 	video.addEventListener('click', () => {
 		if (!video.paused) {
 			video.pause()
@@ -255,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	})
 
-	// Когда видео закончилось
+	// When the video ended
 	video.addEventListener('ended', () => {
 		showButton()
 	})

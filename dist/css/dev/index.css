@@ -452,6 +452,7 @@ body {
 .button {
   color: #fff;
   line-height: 1.1;
+  font-size: 1.125rem;
   overflow: hidden;
   padding: 1rem 2rem;
   position: relative;
@@ -459,19 +460,11 @@ body {
   align-items: center;
   display: inline-flex;
   justify-content: center;
+  transition: background-color 0.3s;
 }
 .button span {
   position: relative;
   transition: color 0.5s;
-}
-.button::before {
-  width: 0;
-  bottom: 0;
-  height: 0;
-  content: "";
-  position: absolute;
-  background-color: rgb(237, 237, 237);
-  transition: width 0.5s, height 0.5s;
 }
 .button--orange {
   background-color: #d77200;
@@ -918,32 +911,22 @@ body {
   background-color: #040000;
   box-shadow: rgba(0, 0, 0, 0.05) 0rem 0.25rem 0.375rem -0.0625rem, rgba(0, 0, 0, 0.03) 0rem 0.125rem 0.25rem -0.0625rem;
 }
-.circle__video {
-  scale: 0;
-  opacity: 0;
-  border-radius: 50%;
-  transition: scale 2s ease 0.5s, opacity 2s ease 0.5s, visibility 2s ease 0.5s;
-}
-.circle__video.--watcher-view {
-  opacity: 1;
-  scale: 1.03;
-  visibility: visible;
-}
 .our ::-webkit-scrollbar {
   display: none;
 }
 .our__head {
   opacity: 0;
+  display: flex;
   line-height: 1;
   text-align: center;
+  align-items: center;
+  flex-direction: column;
   font-family: "FKTGnarly_SBd";
 }
 .our__label {
   display: flex;
   padding: 0.625rem 0.875rem;
   border-radius: 2.0625rem;
-  justify-self: center;
-  justify-content: center;
   background-color: #e6ebf4;
 }
 .our__inner {
@@ -1115,6 +1098,7 @@ body {
 }
 .why {
   position: relative;
+  margin-bottom: -0.0625rem;
 }
 .why::before {
   left: 0;
@@ -1157,13 +1141,6 @@ body {
   position: relative;
   margin-bottom: -0.0625rem;
   background: url("../assets/img/bg-lets-make.png") 0 0/cover no-repeat;
-}
-.lets-make {
-  /*
-  background:
-  	radial-gradient(120% 60% at 50% 0%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%),
-  	linear-gradient(to bottom, #1e43d3 0%, #0f1f66 45%, #040000 100%);
-  */
 }
 .lets-make__body {
   color: #fff;
@@ -1225,6 +1202,9 @@ body {
   }
   .why {
     height: 36.25rem;
+  }
+  .why::before {
+    height: 2.1875rem;
   }
 }
 @media (max-width: 47.99875em) and (min-width: 47.99875em){
@@ -1335,6 +1315,10 @@ body {
   .header {
     padding-block: 1rem;
   }
+  .header__button {
+    padding: 0.9375rem 1.5625rem;
+    font-family: "FKTGnarly_Rg";
+  }
   [data-fls-header-scroll].--header-scroll {
     padding-block: 0.625rem;
   }
@@ -1343,9 +1327,6 @@ body {
   }
   .basement-footer__below {
     flex-direction: column;
-  }
-  .button {
-    padding: 0.75rem 1.375rem;
   }
   .hero__sub-title {
     padding-top: 0.9375rem;
@@ -1485,6 +1466,12 @@ body {
   .why__container-min {
     gap: 1.25rem;
   }
+  .lets-make__actions {
+    flex-direction: column;
+  }
+  .lets-make__actions .button {
+    width: 100%;
+  }
 }
 @media (max-width: 29.99875em){
   .board-works__body::before {
@@ -1497,13 +1484,7 @@ body {
     padding: 0.1875rem;
   }
   .cause__section {
-    gap: 1.25rem;
-  }
-  .lets-make__actions {
-    flex-direction: column;
-  }
-  .lets-make__actions .button {
-    width: 100%;
+    gap: 1.875rem;
   }
 }
 @media (max-width: 20em){
@@ -1542,9 +1523,6 @@ body {
   }
   .basement-footer__below {
     gap: 0.875rem;
-  }
-  .button {
-    font-size: 0.875rem;
   }
   .hero__body {
     gap: 2.5rem;
@@ -1811,9 +1789,6 @@ body {
   }
   .basement-footer__below {
     gap: clamp( 0.875rem , 0.550675675675rem  +  1.6216216216vw , 2rem );
-  }
-  .button {
-    font-size: clamp( 0.875rem , 0.802927927925rem  +  0.3603603604vw , 1.125rem );
   }
   .hero__body {
     gap: clamp( 2.5rem , 1.2387387387375rem  +  6.3063063063vw , 6.875rem );
@@ -2254,9 +2229,6 @@ body {
   .basement-footer__below {
     gap: 2rem;
   }
-  .button {
-    font-size: 1.125rem;
-  }
   .hero__body {
     gap: 6.875rem;
   }
@@ -2529,9 +2501,8 @@ body {
   .basement-footer__link:hover {
     color: #fff;
   }
-  .button:hover::before {
-    width: 100%;
-    height: 100%;
+  .button:hover {
+    background-color: #fff;
   }
   .button--orange:hover {
     color: #d77200;
