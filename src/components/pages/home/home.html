@@ -55,7 +55,7 @@
 			<span>
 				<img
 					loading="lazy"
-					class="fm-horse disable"
+					class="fm-horse disable no-tuch"
 					src="@img/shapes/horse.svg"
 					alt="Shape"
 				/>
@@ -81,7 +81,7 @@
 				/>
 				<img
 					loading="lazy"
-					class="fm-elephant disable"
+					class="fm-elephant disable no-tuch"
 					src="@img/shapes/elephant.svg"
 					alt="Shape"
 				/>
@@ -95,13 +95,13 @@
 			<span>
 				<img
 					loading="lazy"
-					class="fm-pawn"
+					class="fm-pawn no-tuch"
 					src="@img/shapes/pawn.svg"
 					alt="Shape"
 				/>
 				<img
 					loading="lazy"
-					class="fm-horse-01 disable"
+					class="fm-horse-01 disable no-tuch"
 					src="@img/shapes/horse.svg"
 					alt="Shape"
 				/>
@@ -1184,7 +1184,7 @@
 		</div>
 	</section>
 	<section
-		data-fls-watcher
+		data-fls-gsap
 		class="page__poster poster"
 	>
 		<img
@@ -1206,8 +1206,18 @@
 		</div>
 		<div class="why__body">
 			<div class="why__container-min">
-				<h2 class="why__title why__title--title">Why Choose Pure Mate</h2>
-				<div class="why__text">
+				<h2
+					data-fls-watcher
+					data-fls-watcher-once
+					class="why__title why__title--title animate-area"
+				>
+					Why Choose Pure Mate
+				</h2>
+				<div
+					data-fls-watcher
+					data-fls-watcher-once
+					class="why__text animate-area"
+				>
 					<p>
 						We are a team of strategists, designers, and developers united by a
 						passion for creating digital products that make an impact. We become

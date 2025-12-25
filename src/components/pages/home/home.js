@@ -1,69 +1,9 @@
-// Animation and scroll for poster section
-const poster = document.querySelector('.poster')
-const wrapper = document.querySelector('.page')
-
-let isPlayed = false
-let lockedScrollY = 0
-
-const lockScrollAtPoster = () => {
-	const posterTop = poster.offsetTop
-
-	// We put the scroll exactly at the beginning of the section
-	window.scrollTo(0, posterTop)
-
-	lockedScrollY = posterTop
-
-	wrapper.style.position = 'fixed'
-	wrapper.style.top = `-${lockedScrollY}px`
-	wrapper.style.left = '0'
-	wrapper.style.width = '100%'
-	wrapper.style.zIndex = '1'
-}
-const unlockScroll = () => {
-	wrapper.style.position = ''
-	wrapper.style.top = ''
-	wrapper.style.left = ''
-	wrapper.style.width = ''
-
-	window.scrollTo(0, lockedScrollY)
-}
-const goToNextSection = () => {
-	const next = poster.nextElementSibling
-	if (!next) return
-
-	next.scrollIntoView({
-		behavior: 'smooth',
-		block: 'start'
-	})
-}
-window.addEventListener('scroll', () => {
-	if (isPlayed) return
-
-	const rect = poster.getBoundingClientRect()
-
-	// IMPORTANT: we fire before the section goes up.
-	if (rect.top <= 0 && rect.bottom > window.innerHeight * 0.3) {
-		isPlayed = true
-		lockScrollAtPoster()
-
-		const ANIMATION_TIME = 2800
-
-		setTimeout(() => {
-			unlockScroll()
-			goToNextSection()
-
-			// Taking the poster out of the game
-			poster.removeAttribute('data-fls-watcher')
-			poster.classList.add('poster-post')
-		}, ANIMATION_TIME)
-	}
-})
-
-// Animation For Pc Complex Section
+/* ----- Animation For Pc Complex Section ----- */
 const q = (root, sel) => root.querySelector(sel)
+const qa = (root, sel) => [...root.querySelectorAll(sel)]
 const SHOW = el => el && el.classList.remove('disable')
 const HIDE = el => el && el.classList.add('disable')
-
+// Pieces
 function getPieces(root, prefix) {
 	return {
 		queen: q(root, `.${prefix}-queen`),
@@ -75,70 +15,183 @@ function getPieces(root, prefix) {
 		elephant: q(root, `.${prefix}-elephant`)
 	}
 }
-function resetBoard(p) {
-	SHOW(p.queen)
-	SHOW(p.pawn)
+// Pointer Drag Movement
+let dragState = null
+function enableQueenDrag(queen, board) {
+	if (!queen) return
 
-	HIDE(p.queen01)
-	HIDE(p.queen02)
-	HIDE(p.horse)
-	HIDE(p.horse01)
-	HIDE(p.elephant)
+	queen.addEventListener('pointerdown', e => {
+		if (queen.classList.contains('disable')) return
+
+		e.preventDefault()
+
+		const rect = queen.getBoundingClientRect()
+
+		dragState = {
+			el: queen,
+			startX: rect.left,
+			startY: rect.top,
+			offsetX: e.clientX - rect.left,
+			offsetY: e.clientY - rect.top,
+			board
+		}
+
+		queen.setPointerCapture(e.pointerId)
+
+		queen.classList.add('is-dragging')
+		queen.style.position = 'fixed'
+		queen.style.left = `${rect.left}px`
+		queen.style.top = `${rect.top}px`
+		queen.style.zIndex = '999'
+		queen.style.pointerEvents = 'none'
+	})
 }
-function playAnimation(root, prefix) {
+document.addEventListener('pointermove', e => {
+	if (!dragState) return
+
+	const { el, offsetX, offsetY, startX, startY } = dragState
+
+	const x = e.clientX - offsetX
+	const y = e.clientY - offsetY
+
+	el.style.transform = `translate3d(
+		${x - startX}px,
+		${y - startY}px,
+		0
+	)`
+})
+document.addEventListener('pointerup', e => {
+	if (!dragState) return
+
+	const { el, board } = dragState
+
+	el.releasePointerCapture(e.pointerId)
+	el.classList.remove('is-dragging')
+
+	const dropCell = document
+		.elementFromPoint(e.clientX, e.clientY)
+		?.closest('span')
+
+	if (dropCell && board.__onDrop) {
+		board.__onDrop(dropCell)
+	}
+
+	// Visual Return
+	el.style.transform = 'translate3d(0,0,0)'
+
+	setTimeout(() => {
+		el.style.position = ''
+		el.style.left = ''
+		el.style.top = ''
+		el.style.zIndex = ''
+		el.style.pointerEvents = ''
+	}, 0)
+
+	dragState = null
+})
+// Board Logic
+function initDnDBoard(root, prefix) {
+	if (!root) return
+
 	const p = getPieces(root, prefix)
+	const cells = qa(root, 'span')
+	let step = 0
 
-	function loop() {
-		resetBoard(p)
+	function reset() {
+		SHOW(p.queen)
+		SHOW(p.pawn)
 
-		setTimeout(() => {
+		HIDE(p.queen01)
+		HIDE(p.queen02)
+		HIDE(p.horse)
+		HIDE(p.horse01)
+		HIDE(p.elephant)
+
+		step = 0
+		enableStep0()
+	}
+
+	/* Step 0 — queen eats pawn */
+	function enableStep0() {
+		root.__onDrop = cell => {
+			if (cell !== cells[17]) return
+
 			HIDE(p.pawn)
 			HIDE(p.queen)
 			SHOW(p.queen01)
-		}, 800)
 
-		setTimeout(() => {
-			SHOW(p.horse)
-		}, 1400)
+			step = 1
+			run()
+		}
+	}
 
-		setTimeout(() => {
+	/* Step 1 — horse + queen move */
+	function step1() {
+		SHOW(p.horse)
+
+		root.__onDrop = cell => {
+			if (cell !== cells[4]) return
+
 			HIDE(p.horse)
 			SHOW(p.horse01)
 
 			HIDE(p.queen01)
 			SHOW(p.queen02)
-		}, 2200)
 
-		setTimeout(() => {
+			step = 2
+			run()
+		}
+	}
+
+	/* Step 2 — queen eats horse */
+	function step2() {
+		root.__onDrop = cell => {
+			if (cell !== cells[17]) return
+
 			HIDE(p.horse01)
 			HIDE(p.queen02)
 			SHOW(p.queen01)
-		}, 3000)
 
-		setTimeout(() => {
-			SHOW(p.elephant)
-		}, 3600)
+			step = 3
+			run()
+		}
+	}
 
-		setTimeout(() => {
+	/* Step 3 — queen eats elephant */
+	function step3() {
+		SHOW(p.elephant)
+
+		root.__onDrop = cell => {
+			if (cell !== cells[10]) return
+
 			HIDE(p.elephant)
 			HIDE(p.queen01)
 			SHOW(p.queen)
-		}, 4400)
 
-		setTimeout(loop, 5200)
+			reset()
+		}
 	}
 
-	loop()
+	function run() {
+		if (step === 1) step1()
+		if (step === 2) step2()
+		if (step === 3) step3()
+	}
+
+	// draggable only for queen’s
+	enableQueenDrag(p.queen, root)
+	enableQueenDrag(p.queen01, root)
+	enableQueenDrag(p.queen02, root)
+
+	reset()
 }
+// Initialisation
+initDnDBoard(document.querySelector('.complex__board--pc'), 'fm')
 
-playAnimation(document.querySelector('.complex__board--pc'), 'fm')
-playAnimation(document.querySelector('.complex__board--mb'), 'sm')
-
-// Our Step Section
+/* ----- Our Step Section ----- */
 const ourSection = document.querySelector('.our')
 const ourItems = document.querySelectorAll('.our__section')
 const ourSteps = ourItems.length
-
 window.addEventListener('scroll', () => {
 	const rect = ourSection.getBoundingClientRect()
 	const viewport = window.innerHeight
@@ -160,10 +213,9 @@ window.addEventListener('scroll', () => {
 	})
 })
 
-// Add Atribut Spoller
+/* ----- Add Atribut For Spoller ----- */
 const BREAKPOINT = 767.98
 let isMobile = null
-
 function handleSpollers() {
 	const nowMobile = window.innerWidth <= BREAKPOINT
 	if (nowMobile === isMobile) return // doing nothing
@@ -200,7 +252,7 @@ function handleSpollers() {
 		})
 	}
 }
-
+// Initialisation
 handleSpollers()
 window.addEventListener(
 	'resize',
@@ -210,11 +262,10 @@ window.addEventListener(
 	{ passive: true }
 )
 
-// Cause Step Section
+/* ----- Cause Step Section ----- */
 const causeSection = document.querySelector('.cause')
 const causeItems = document.querySelectorAll('.cause__section')
 const causeSteps = causeItems.length
-
 window.addEventListener('scroll', () => {
 	const rect = causeSection.getBoundingClientRect()
 	const viewport = window.innerHeight
@@ -236,7 +287,7 @@ window.addEventListener('scroll', () => {
 	})
 })
 
-// Play Video In Showreel Section
+/* ----- Play Video In Showreel Section ----- */
 document.addEventListener('DOMContentLoaded', () => {
 	const section = document.querySelector('.showreel')
 	if (!section) return

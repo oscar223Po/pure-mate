@@ -120,6 +120,7 @@
 .complex {
 	overflow: hidden;
 	position: relative;
+	cursor: url('@img/cursor/open.svg'), grab;
 	// .complex__body
 	&__body {
 		left: 0;
@@ -127,6 +128,7 @@
 		right: 0;
 		translate: 0 -50%;
 		position: absolute;
+		pointer-events: none;
 		@media (max-width: toEm($mobile)) {
 			top: 0;
 			translate: 0 0;
@@ -210,6 +212,14 @@
 				opacity: 0;
 				transform: scale(0.6);
 				pointer-events: none;
+			}
+			&.no-tuch {
+				pointer-events: none;
+			}
+			&.is-dragging {
+				user-select: none;
+				touch-action: none;
+				cursor: url('@img/cursor/close.svg'), grabbing;
 			}
 		}
 	}
@@ -980,12 +990,17 @@
 	// .our__label
 	&__label {
 		display: flex;
-		padding: 10px 14px;
+		padding-block: 10px;
 		border-radius: 33px;
+		padding-inline: 25px;
 		background-color: #e6ebf4;
 		@include adaptiveValue('font-size', 22, 16);
 		&:not(:last-child) {
 			@include adaptiveValue('margin-bottom', 20, 10);
+		}
+		@media (max-width: toEm($mobile)) {
+			border-radius: 8px;
+			padding-inline: 15px;
 		}
 	}
 	// .our__title
@@ -1201,52 +1216,27 @@
 // Poster
 .poster {
 	height: 100vh;
+	display: flex;
 	overflow: hidden;
 	position: relative;
+	align-items: center;
+	justify-content: center;
 	background-color: #fff;
-	transition: background-color 0.5s ease-in-out 2.5s;
-	&.--watcher-view {
-		background-color: #0b26c5;
-		.poster__image {
-			scale: 10;
-			bottom: 50%;
-			translate: 0 50%;
-		}
-	}
-	&.poster-post {
-		background-color: #fff;
-		transition: background-color 0.3s ease-in-out 0s;
-		.poster__image {
-			scale: 1;
-			bottom: 50%;
-			translate: 0 50%;
-			transition: bottom 0.3s ease-in-out 0s, translate 0.3s ease-in-out 0s,
-				scale 0.3s ease-in-out 0s;
-		}
+	// .poster__image
+	&__image {
+		top: 100%;
+		position: absolute;
+		will-change: transform, filter, opacity, top;
 	}
 	@media (max-width: toEm($mobile)) {
 		display: none;
-	}
-	// .poster__image
-	&__image {
-		left: 0;
-		right: 0;
-		bottom: 0;
-		margin: auto;
-		display: flex;
-		translate: 0 100%;
-		position: absolute;
-		align-items: center;
-		justify-content: center;
-		transition: bottom 1.5s ease-in-out 1s, translate 1.5s ease-in-out 1s,
-			scale 1.5s ease-in-out 2s;
-		@include adaptiveValue('width', 995, 595, 2, $containerWidth, 767.98);
 	}
 }
 // Why
 .why {
 	position: relative;
 	margin-bottom: -1px;
+	background-color: #0b26c5;
 	&::before {
 		left: 0;
 		bottom: 0;
