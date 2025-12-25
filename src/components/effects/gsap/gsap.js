@@ -1,8 +1,8 @@
-// Підключення функціоналу "Чертоги Фрілансера"
+// Enabling functionality
 import { FLS } from "@js/common/functions.js";
 // Docs: https://www.npmjs.com/package/gsap
 import { gsap, ScrollTrigger, Draggable, MotionPathPlugin } from "gsap/all";
-// Стилі модуля
+// Module styles
 import './gsap.scss'
 
 function gsapInit() {

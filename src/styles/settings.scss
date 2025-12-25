@@ -1,52 +1,46 @@
-// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Налаштування стилів за замовченням
-// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Setting up default styles
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap");
 
-$fontFamily: "FKTGnarly_Rg"; // Шрифт за замовчуванням
-$fontLite: "FKTGnarly_Lt"; // Шрифт за замовчуванням
-$fontBold: "FKTGnarly_Bd"; // Шрифт за замовчуванням
-$fontItalik: "FKTGnarly_It"; // Шрифт за замовчуванням
-$fontSemiBold: "FKTGnarly_SBd"; // Шрифт за замовчуванням
+$fontFamily: "FKTGnarly_Rg";
+$fontLite: "FKTGnarly_Lt";
+$fontBold: "FKTGnarly_Bd";
+$fontItalik: "FKTGnarly_It";
+$fontSemiBold: "FKTGnarly_SBd";
 
-$fontInter: "Inter", sans-serif; // Шрифт за замовчуванням
-$fontPoppins: "Poppins", sans-serif; // Шрифт за замовчуванням
-$fontSize: 16; // Розмір шрифту за замовченням (де 16 - розмір шрифту за замовчуванням з макету)
+$fontInter: "Inter", sans-serif; // Default font
+$fontPoppins: "Poppins", sans-serif;
+$fontSize: 16; // Default font size (where 16 is the default font size from the layout)
 
-// Основні кольори
-$mainColor: #040000; // Колір шрифту за замовчуванням
-$blueColor: #0926c6; // Колір шрифту за замовчуванням
-$orangeColor: #d77200; // Колір шрифту за замовчуванням
+// Primary colors
+$mainColor: #040000;
+$blueColor: #0926c6;
+$orangeColor: #d77200;
 
 $ease: cubic-bezier(0.4, 0, 0.2, 1);
 
-// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Налаштування адаптивної сітки
-// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Adaptive grid settings
 
-// Мінімальна ширина сторінки
+// Minimum page width
 $minWidth: 320;
-// Ширина полотна (макету)
+// Width of the canvas (layout)
 $maxWidth: 1440;
-// Ширина обмежуючого контейнера (0 = немає обмеження)
+// Container bounding width (0 = No Limit)
 $maxWidthContainer: 1420;
-// Загальний відступ у контейнера
-// (30 = по 15px ліворуч і праворуч, 0 = немає відступу)
+// General indentation of the container
+// (30 = 15px left and right, 0 = No indentation)
 $containerPadding: 10;
 
-// Ширина спрацьовування першого брейкпоінту
+// First breakpoint response width
 $containerWidth: $maxWidthContainer + $containerPadding;
 
-// Брейк-поїнти
-$pc: $containerWidth; // ПК, ноутбуки, деякі планшети у горизонтальному положенні
-$tablet: 991.98; // Планшети, деякі телефони в горизонтальному положенні
-$mobile: 767.98; // Телефони L
-$mobileSmall: 479.98; // Телефони S
+// Break points
+$pc: $containerWidth; // PCs, laptops, and some tablets in a horizontal position
+$tablet: 991.98; // Tablets, some phones in a horizontal position
+$mobile: 767.98; // Phone L
+$mobileSmall: 479.98; // Phone S
 
-// Тип адаптива:
-// 1 = чуйність (у контейнера немає брейкпоінтів),
-// 2 = по брейк-поїнт (контейнер змінює свою ширину по брейк-поїнт)
+// Adaptive type:
+// 1 = responsiveness (the container has no breakpoints),
+// 2 = by break point (the container changes its width by break point)
 $responsiveType: 1;
-
-// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

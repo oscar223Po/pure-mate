@@ -1,14 +1,14 @@
-// Налаштування шаблону
+// Template settings
 import templateConfig from '../template.config.js'
-// Логгер
+// Logger
 import logger from './logger.js'
-// Навігаційна панель
+// Navigation
 import { navPanel } from './navpanel.js'
 
 import { globSync } from 'glob'
 import fs from 'fs'
 
-// Обробка HTML
+// HTML processing
 import posthtml from 'posthtml'
 import prerenderHTML from './posthtml/prerender.js'
 import posthtmBeautify from 'posthtml-beautify'
@@ -22,11 +22,11 @@ const isProduction = process.env.NODE_ENV === 'production'
 const isWp = process.argv.includes('--wp')
 
 export const htmlPlugins = [
-	// Пре-обробка Inclue, Extend, Expressions
+	// Pre-test Include, Extend, Expressions
 	prerenderHTML({}),
 	// Nunjucks 
 	nunjucks(),
-	// Навігаційна панель
+	// Navigation
 	...((!isWp && ((!isProduction && templateConfig.navpanel.dev) || (isProduction && templateConfig.navpanel.build))) ? [{
 		name: 'nav-panel',
 		order: 'pre',
@@ -35,14 +35,14 @@ export const htmlPlugins = [
 			return html
 		},
 	}] : []),
-	// Прероцесор PUG
+	// Pug prerocessor
 	...((templateConfig.pug.enable) ?
 		[pugPlugin({
 			plugins: [
 				pugAliases({ '@pug': 'src/pug' })
 			]
 		})] : []),
-	// Пост-обробка HTML-файлів
+	// Post-processing of HTML files
 	{
 		name: 'add-posthtml',
 		apply: 'build',
@@ -51,11 +51,11 @@ export const htmlPlugins = [
 			const htmlFiles = globSync(`${dir}/*.html`)
 			htmlFiles.forEach(async htmlFile => {
 				let content = fs.readFileSync(htmlFile, 'utf-8')
-				// Шлихи SVG-спрайту
+				// SVG Sprite slots
 				if (templateConfig.images.svgsprite && content.includes('__spritemap')) {
 					content = content.replace(new RegExp('__spritemap', 'gi'), `${templateConfig.server.path}assets/img/spritemap.svg`)
 				}
-				// Форматування
+				// Formatting
 				if (templateConfig.html.beautify.enable) {
 					const render = await new Promise((resolve) => {
 						const output = {}

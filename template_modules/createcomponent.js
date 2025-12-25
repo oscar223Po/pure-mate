@@ -1,6 +1,6 @@
-// Налаштування шаблону
+// Template settings
 import templateConfig from '../template.config.js'
-// Логгер
+// Logger
 import logger from './logger.js'
 import fs from 'fs'
 import path from 'path'
@@ -32,7 +32,7 @@ function findFolderRecursive(startPath, folderName) {
 		const stat = fs.statSync(fullPath);
 		if (stat.isDirectory()) {
 			if (file === folderName) {
-				return fullPath; // Знайшли потрібну папку
+				return fullPath; // Found the right folder
 			}
 			const found = findFolderRecursive(fullPath, folderName);
 			if (found) return found;

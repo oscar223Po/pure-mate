@@ -1,6 +1,6 @@
-// Налаштування шаблону
+// Template settings
 import templateConfig from '../template.config.js'
-// Логгер
+// Logger
 import logger from './logger.js'
 
 import fs from 'node:fs';
@@ -21,7 +21,7 @@ let dataFiles = data.statistics.files;
 
 global.serverInit
 
-// Плагіни
+// Plugins
 export const statPlugins = [{
 	name: 'stat-dev',
 	enforce: 'pre',
@@ -31,11 +31,11 @@ export const statPlugins = [{
 			if (!global.serverInit && templateConfig.statistics.enable) {
 				global.serverInit = true
 
-				// Зупинка сервера (Ctrl+C)
+				// Server stop (Ctrl + C)
 				process.on('SIGINT', endSession)
-				// Зупинка сервера (SIGTERM)
+				// Server stop (SIGTERM)
 				process.on('SIGTERM', endSession)
-				// Зупинка сервера (SIGHUP)
+				// Stopping the server (SIGHUP)
 				process.on('SIGHUP', endSession)
 
 				const session = {
@@ -43,7 +43,7 @@ export const statPlugins = [{
 					start: time,
 					end: time
 				}
-				// Старт сесії
+				// Session start
 				dataSessions.push(session)
 				await writeSession()
 
@@ -65,7 +65,7 @@ export const statPlugins = [{
 		templateConfig.statistics.showonbuild ? showStat(dataStatistics) : null
 	}
 }]
-// Кінець сесії
+// End of session
 async function endSession(type) {
 	if (dataSessions.length) {
 		const lastSession = dataSessions[dataSessions.length - 1]
@@ -79,11 +79,11 @@ async function endSession(type) {
 		process.exit()
 	}
 }
-// Запис сесії
+// Session recording
 async function writeSession() {
 	fs.writeFileSync(file, JSON.stringify(data, null, 2))
 }
-// Формат дати
+// Date format
 function formatDate(date) {
 	const d = new Date(date);
 	const day = String(d.getDate()).padStart(2, '0');
@@ -91,7 +91,7 @@ function formatDate(date) {
 	const year = d.getFullYear();
 	return `${day}.${month}.${year}`;
 }
-// Формат часу
+// Time format
 function formatMilliseconds(ms) {
 	const seconds = Math.floor((ms / 1000) % 60);
 	const minutes = Math.floor((ms / (1000 * 60)) % 60);
@@ -105,7 +105,7 @@ function formatMilliseconds(ms) {
 
 	return parts.join(' ');
 }
-// Показ статистики
+// Displaying statistics
 function showStat(data) {
 	const dataSessions = data.sessions
 	const dataFiles = data.files

@@ -1,14 +1,10 @@
-// Шаблони (заготівлі)
-// @extend %ім'я шаблону;
-// Сніппет (SCSS): ex
-
-// Стилі для чуйних зображеннь (IBG)
+// Styles for Responsive Images (IBG)
 %ibg {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 }
-// Лічильник для списку
+// Tag for the list
 %listCounter {
 	list-style-type: none;
 	counter-reset: item;
@@ -23,7 +19,7 @@
 		}
 	}
 }
-// Адаптивне відео
+// Adaptive video
 %responsiveVideo {
 	video,
 	iframe,
@@ -32,7 +28,7 @@
 		aspect-ratio: 16 / 9;
 	}
 }
-// Відео як фон
+// Video as a background
 %videoBackground {
 	video,
 	iframe,
@@ -50,7 +46,7 @@
 		object-fit: cover;
 	}
 }
-// Сірий фільтр
+// Grey filter
 %grayfilter {
 	transition: all 0.3s ease 0s;
 	filter: grayscale(1);
@@ -60,19 +56,19 @@
 		}
 	}
 }
-// Скасувати виділення
+// Cancel selection
 %noselect {
 	user-select: none;
 }
-// Дзеркальне відображення
+// Mirror image
 %mirror {
 	transform: scale(-1, 1);
 }
-// Плавний скролл
+// Smooth scrolling
 %smoothscroll {
 	-webkit-overflow-scrolling: touch;
 }
-// Сховати скролл
+// Hide scroll
 %hidescroll {
 	&::-webkit-scrollbar {
 		display: none;

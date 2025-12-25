@@ -1,7 +1,7 @@
-// Підключення функціоналу "Чертоги Фрілансера"
+// Enabling functionality
 import { isMobile, FLS } from "@js/common/functions.js";
 
-// Підключення базових стилів
+// Enabling basic styles
 import "./beforeafter.scss";
 
 class BeforeAfter {
@@ -95,13 +95,13 @@ class BeforeAfter {
 			}
 		}
 	}
-	// Логінг у консоль
+	// Logging in to the console
 	setLogging(message) {
 		if (this.config.logging) {
 			FLS(`[ДоПісля]: ${message}`)
 		}
 	}
 }
-// Запускаємо
+// Launching
 new BeforeAfter({});
 

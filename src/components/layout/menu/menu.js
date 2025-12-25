@@ -1,4 +1,4 @@
-// Підключення функціоналу "Чортоги Фрілансера"
+// Enabling functionality
 import { addTouchAttr, bodyLockStatus, bodyLockToggle, FLS } from "@js/common/functions.js"
 
 import './menu.scss'

@@ -1,7 +1,7 @@
-// Підключення функціоналу "Чертоги Фрілансера"
+// Enabling functionality
 import { FLS, slideUp, slideDown, slideToggle, dataMediaQueries } from "@js/common/functions.js";
 
-// Підключення базових стилів
+// Enabling basic styles
 import "./spollers.scss";
 
 export function spollers() {
@@ -9,28 +9,28 @@ export function spollers() {
 	if (spollersArray.length > 0) {
 		FLS(`_FLS_SPOLLERS_START`, spollersArray.length)
 
-		// Подія кліку
+		// Click event
 		document.addEventListener("click", setSpollerAction);
-		// Отримання звичайних слойлерів
+		// Getting regular puffs
 		const spollersRegular = Array.from(spollersArray).filter(function (item, index, self) {
 			return !item.dataset.flsSpollers.split(",")[0];
 		});
-		// Ініціалізація звичайних слойлерів
+		// Initializing regular puffs
 		if (spollersRegular.length) {
 			initSpollers(spollersRegular);
 		}
-		// Отримання слойлерів з медіа-запитами
+		// Getting puffs with media requests
 		let mdQueriesArray = dataMediaQueries(spollersArray, "flsSpollers");
 		if (mdQueriesArray && mdQueriesArray.length) {
 			mdQueriesArray.forEach(mdQueriesItem => {
-				// Подія
+				// Event
 				mdQueriesItem.matchMedia.addEventListener("change", function () {
 					initSpollers(mdQueriesItem.itemsArray, mdQueriesItem.matchMedia);
 				});
 				initSpollers(mdQueriesItem.itemsArray, mdQueriesItem.matchMedia);
 			});
 		}
-		// Ініціалізація
+		// Initialization
 		function initSpollers(spollersArray, matchMedia = false) {
 			spollersArray.forEach(spollersBlock => {
 				spollersBlock = matchMedia ? spollersBlock.item : spollersBlock;
@@ -43,7 +43,7 @@ export function spollers() {
 				}
 			});
 		}
-		// Робота з контентом
+		// Working with content
 		function initSpollerBody(spollersBlock, hideSpollerBody = true) {
 			let spollerItems = spollersBlock.querySelectorAll('details');
 			if (spollerItems.length) {
@@ -106,7 +106,7 @@ export function spollers() {
 					}
 				}
 			}
-			// Закриття при кліку поза спойлером
+			// Closing when clicking outside the spoiler
 			if (!el.closest('[data-fls-spollers]')) {
 				const spollersClose = document.querySelectorAll('[data-fls-spollers-close]');
 				if (spollersClose.length) {

@@ -4575,9 +4575,8 @@ function Navigation({
 function initSliders() {
   if (document.querySelector(".swiper")) {
     new Swiper(".swiper", {
-      // <- Вказуємо склас потрібного слайдера
-      // Підключаємо модулі слайдера
-      // для конкретного випадку
+      // Connecting slider modules
+      // for a specific case
       modules: [Navigation],
       observer: true,
       observeParents: true,
@@ -4591,34 +4590,29 @@ function initSliders() {
       //preloadImages: false,
       //lazy: true,
       /*
-      // Ефекти
       effect: 'fade',
       autoplay: {
       	delay: 3000,
       	disableOnInteraction: false,
       },
       */
-      // Пагінація
       /*
       pagination: {
       	el: '.swiper-pagination',
       	clickable: true,
       },
       */
-      // Скроллбар
       /*
       scrollbar: {
       	el: '.swiper-scrollbar',
       	draggable: true,
       },
       */
-      // Кнопки "вліво/вправо"
       navigation: {
         prevEl: ".swiper-button-prev",
         nextEl: ".swiper-button-next"
       },
       /*
-      // Брейкпоінти
       breakpoints: {
       	640: {
       		slidesPerView: 1,
@@ -4639,7 +4633,7 @@ function initSliders() {
       	},
       },
       */
-      // Події
+      // Events
       on: {}
     });
   }
@@ -4814,16 +4808,16 @@ class ScrollWatcher {
     this.observer;
     !document.documentElement.hasAttribute("data-fls-watch") ? this.scrollWatcherRun() : null;
   }
-  // Оновлюємо конструктор
+  // Updating the ad builder
   scrollWatcherUpdate() {
     this.scrollWatcherRun();
   }
-  // Запускаємо конструктор
+  // Launching the ad builder
   scrollWatcherRun() {
     document.documentElement.setAttribute("data-fls-watch", "");
     this.scrollWatcherConstructor(document.querySelectorAll("[data-fls-watcher]"));
   }
-  // Конструктор спостерігачів
+  // Observer constructor
   scrollWatcherConstructor(items) {
     if (items.length) {
       let uniqParams = uniqArray(Array.from(items).map(function(item) {
@@ -4864,7 +4858,7 @@ class ScrollWatcher {
       });
     }
   }
-  // Функція створення налаштувань
+  // Function for creating settings
   getScrollWatcherConfig(paramsWatch) {
     let configWatcher = {};
     if (document.querySelector(paramsWatch.root)) {
@@ -4885,7 +4879,7 @@ class ScrollWatcher {
     configWatcher.threshold = paramsWatch.threshold;
     return configWatcher;
   }
-  // Функція створення нового спостерігача зі своїми налаштуваннями
+  // Function for creating a new observer with your own settings
   scrollWatcherCreate(configWatcher) {
     this.observer = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
@@ -4893,12 +4887,12 @@ class ScrollWatcher {
       });
     }, configWatcher);
   }
-  // Функція ініціалізації спостерігача зі своїми налаштуваннями
+  // Observer initialization function with its own settings
   scrollWatcherInit(items, configWatcher) {
     this.scrollWatcherCreate(configWatcher);
     items.forEach((item) => this.observer.observe(item));
   }
-  // Функція обробки базових дій точок спрацьовування
+  // Function for processing basic actions of trigger points
   scrollWatcherIntersecting(entry, targetElement) {
     if (entry.isIntersecting) {
       !targetElement.classList.contains("--watcher-view") ? targetElement.classList.add("--watcher-view") : null;
@@ -4906,11 +4900,11 @@ class ScrollWatcher {
       targetElement.classList.contains("--watcher-view") ? targetElement.classList.remove("--watcher-view") : null;
     }
   }
-  // Функція відключення стеження за об'єктом
+  // Function for disabling object tracking
   scrollWatcherOff(targetElement, observer) {
     observer.unobserve(targetElement);
   }
-  // Функція обробки спостереження
+  // Surveillance processing function
   scrollWatcherCallback(entry, observer) {
     const targetElement = entry.target;
     this.scrollWatcherIntersecting(entry, targetElement);

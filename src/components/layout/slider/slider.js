@@ -1,36 +1,36 @@
 /*
-Документація по роботі у шаблоні: 
-Документація слайдера: https://swiperjs.com/
-Сніппет(HTML): swiper
+Work documentation in the template: 
+Slider documentation: https://swiperjs.com/
+Snippet (HTML): swiper
 */
 
-// Підключаємо слайдер Swiper з node_modules
-// При необхідності підключаємо додаткові модулі слайдера, вказуючи їх у {} через кому
-// Приклад: { Navigation, Autoplay }
+// Connecting the Swiper slider with node_modules
+// If necessary, we connect additional slider modules by specifying them in {} separated by commas
+// Example: { Navigation, Autoplay }
 import Swiper from 'swiper'
 import { Navigation } from 'swiper/modules'
 /*
-Основні модулі слайдера:
+Main slider modules:
 Navigation, Pagination, Autoplay, 
 EffectFade, Lazy, Manipulation
-Детальніше дивись https://swiperjs.com/
+For more information, see https://swiperjs.com/
 */
 
-// Стилі Swiper
-// Підключення базових стилів
+// Swiper Styles
+// Connecting basic styles
 import "./slider.scss"
-// Повний набір стилів з node_modules
+// Full set of styles with node_modules
 // import 'swiper/css/bundle';
 
-// Ініціалізація слайдерів
+// Initializing sliders
 function initSliders() {
-	// Список слайдерів
-	// Перевіряємо, чи є слайдер на сторінці
-	if (document.querySelector('.swiper')) { // <- Вказуємо склас потрібного слайдера
-		// Створюємо слайдер
-		new Swiper('.swiper', { // <- Вказуємо склас потрібного слайдера
-			// Підключаємо модулі слайдера
-			// для конкретного випадку
+	// List of sliders
+	// Check if there is a slider on the page
+	if (document.querySelector('.swiper')) {
+		// Creating a slider
+		new Swiper('.swiper', {
+			// Connecting slider modules
+			// for a specific case
 			modules: [Navigation],
 			observer: true,
 			observeParents: true,
@@ -46,7 +46,6 @@ function initSliders() {
 			//lazy: true,
 
 			/*
-			// Ефекти
 			effect: 'fade',
 			autoplay: {
 				delay: 3000,
@@ -54,7 +53,6 @@ function initSliders() {
 			},
 			*/
 
-			// Пагінація
 			/*
 			pagination: {
 				el: '.swiper-pagination',
@@ -62,7 +60,6 @@ function initSliders() {
 			},
 			*/
 
-			// Скроллбар
 			/*
 			scrollbar: {
 				el: '.swiper-scrollbar',
@@ -70,13 +67,11 @@ function initSliders() {
 			},
 			*/
 
-			// Кнопки "вліво/вправо"
 			navigation: {
 				prevEl: '.swiper-button-prev',
 				nextEl: '.swiper-button-next',
 			},
 			/*
-			// Брейкпоінти
 			breakpoints: {
 				640: {
 					slidesPerView: 1,
@@ -97,7 +92,7 @@ function initSliders() {
 				},
 			},
 			*/
-			// Події
+			// Events
 			on: {
 
 			}

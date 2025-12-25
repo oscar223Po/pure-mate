@@ -1,8 +1,8 @@
-// Підключення функціоналу "Чертоги Фрілансера"
+// Enabling functionality
 import { FLS } from "@js/common/functions.js";
 // Docs: https://www.npmjs.com/package/split-type
 import SplitType from 'split-type'
-// Стилі модуля
+// Module styles
 import './splittype.scss'
 
 function splitType() {

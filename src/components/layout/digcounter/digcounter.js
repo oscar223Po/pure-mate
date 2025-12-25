@@ -1,9 +1,9 @@
-// Підключення функціоналу "Чертоги Фрілансера"
+// Enabling functionality
 import { FLS, getDigFormat } from "@js/common/functions.js";
 
-// Модуль анімація цифрового лічильника
+// Digital counter animation module
 export function digitsCounter() {
-	// Функція ініціалізації
+	// Initialization function
 	function digitsCountersInit(digitsCountersItems) {
 		let digitsCounters = digitsCountersItems ? digitsCountersItems : document.querySelectorAll("[data-fls-digcounter]");
 		if (digitsCounters.length) {
@@ -11,17 +11,17 @@ export function digitsCounter() {
 			FLS('_FLS_DIGCOUNTER_ANIM')
 
 			digitsCounters.forEach(digitsCounter => {
-				// Обнулення
+				// Zeroing out
 				if (digitsCounter.hasAttribute('data-fls-digcounter-go')) return;
 				digitsCounter.setAttribute('data-fls-digcounter-go', '');
 				digitsCounter.dataset.flsDigcounter = digitsCounter.innerHTML;
 				digitsCounter.innerHTML = `0`;
-				// Анімація
+				// Animation
 				digitsCountersAnimate(digitsCounter);
 			});
 		}
 	}
-	// Функція анімації
+	// Animation function
 	function digitsCountersAnimate(digitsCounter) {
 		let startTimestamp = null;
 		const duration = parseFloat(digitsCounter.dataset.flsDigcounterSpeed) ? parseFloat(digitsCounter.dataset.flsDigcounterSpeed) : 1000;

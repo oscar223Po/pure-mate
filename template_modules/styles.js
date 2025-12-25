@@ -1,27 +1,23 @@
-// Налаштування шаблону
+// Template settings
 import templateConfig from '../template.config.js'
 // PostCSS
-import postcss from 'postcss';
-// TailWind
-import tailwindcss from '@tailwindcss/vite'
-// Групування медіа-запитів
-import combineMediaQuery from 'postcss-combine-media-query';
-import sortMediaQueries from 'postcss-sort-media-queries';
-// Оптимізація
-import cssnano from 'cssnano';
+import postcss from 'postcss'
+// Grouping media queries
+import combineMediaQuery from 'postcss-combine-media-query'
+import sortMediaQueries from 'postcss-sort-media-queries'
+// Optimization
+import cssnano from 'cssnano'
 
-import { normalizePath } from 'vite'
-import { globSync } from 'glob'
 import fs from 'fs'
-import logger from './logger.js';
+import { globSync } from 'glob'
+import { normalizePath } from 'vite'
+import logger from './logger.js'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const isWp = process.argv.includes('--wp')
 
 export const stylesPlugins = [
-	// Підключення плагіну Tailwind
-	...((templateConfig.styles.tailwindcss) ? [tailwindcss()] : []),
-	// Заміна PX на REM
+	// Replacing PX with REM
 	...((isProduction && templateConfig.styles.pxtorem) ? [{
 		name: "css-pxtorem",
 		apply: 'build',
@@ -37,7 +33,7 @@ export const stylesPlugins = [
 			});
 		}
 	}] : []),
-	// Групування Media-запитів
+	// Grouping Media queries
 	...((isProduction) ? [{
 		name: "css-combine-media-query",
 		apply: 'build',
@@ -93,7 +89,7 @@ export const stylesPlugins = [
 			}
 		}
 	}] : []),
-	// Створення копії файлу(лів) для розробніків
+	// Creating a copy of the file (Liv) for developers
 	...((isProduction && templateConfig.styles.devfiles) ? [{
 		name: "css-devfiles",
 		apply: 'build',
@@ -119,5 +115,3 @@ export const stylesPlugins = [
 	}] : [])
 
 ]
-// Повідомлення
-templateConfig.styles.tailwindcss ? logger(`Tailwind підключений`) : null

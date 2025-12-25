@@ -1,4 +1,4 @@
-// Підключення функціоналу "Чортоги Фрілансера"
+// Enabling functionality
 import { isMobile, uniqArray, FLS } from "@js/common/functions.js";
 
 class ScrollWatcher {
@@ -11,23 +11,23 @@ class ScrollWatcher {
 
 		!document.documentElement.hasAttribute('data-fls-watch') ? this.scrollWatcherRun() : null;
 	}
-	// Оновлюємо конструктор
+	// Updating the ad builder
 	scrollWatcherUpdate() {
 		this.scrollWatcherRun();
 	}
-	// Запускаємо конструктор
+	// Launching the ad builder
 	scrollWatcherRun() {
-		//document.documentElement.classList.add('watcher');
+		// document.documentElement.classList.add('watcher');
 		document.documentElement.setAttribute('data-fls-watch', '')
 		this.scrollWatcherConstructor(document.querySelectorAll('[data-fls-watcher]'));
 	}
-	// Конструктор спостерігачів
+	// Observer constructor
 	scrollWatcherConstructor(items) {
 		if (items.length) {
 			FLS(`_FLS_WATCHER_START_WATCH`, items.length);
-			// Унікалізуємо параметри
+			// Unify parameters
 			let uniqParams = uniqArray(Array.from(items).map(function (item) {
-				// Обчислення автоматичного Threshold
+				// Calculating automatic Threshold
 				if (item.dataset.flsWatcher === 'navigator' && !item.dataset.flsWatcherThreshold) {
 					let valueOfThreshold;
 					if (item.clientHeight > 2) {
@@ -46,8 +46,8 @@ class ScrollWatcher {
 				}
 				return `${item.dataset.flsWatcherRoot ? item.dataset.flsWatcherRoot : null}|${item.dataset.flsWatcherMargin ? item.dataset.flsWatcherMargin : '0px'}|${item.dataset.flsWatcherThreshold ? item.dataset.flsWatcherThreshold : 0}`;
 			}));
-			// Отримуємо групи об'єктів з однаковими параметрами,
-			// створюємо налаштування, ініціалізуємо спостерігач
+			// We get groups of objects with the same parameters,
+			// creating settings and initializing the Observer
 			uniqParams.forEach(uniqParam => {
 				let uniqParamArray = uniqParam.split('|');
 				let paramsWatch = {
@@ -70,32 +70,32 @@ class ScrollWatcher {
 
 				let configWatcher = this.getScrollWatcherConfig(paramsWatch);
 
-				// Ініціалізація спостерігача зі своїми налаштуваннями
+				// Initializing the observer with its own settings
 				this.scrollWatcherInit(groupItems, configWatcher);
 			});
 		} else {
 			FLS("_FLS_WATCHER_SLEEP")
 		}
 	}
-	// Функція створення налаштувань
+	// Function for creating settings
 	getScrollWatcherConfig(paramsWatch) {
-		//Створюємо налаштування
+		// Creating settings
 		let configWatcher = {}
-		// Батько, у якому ведеться спостереження
+		// The parent who is being monitored
 		if (document.querySelector(paramsWatch.root)) {
 			configWatcher.root = document.querySelector(paramsWatch.root);
 		} else if (paramsWatch.root !== 'null') {
 			FLS(`_FLS_WATCHER_NOPARENT`, paramsWatch.root)
 		}
-		// Відступ спрацьовування
+		// Trigger indent
 		configWatcher.rootMargin = paramsWatch.margin;
 		if (paramsWatch.margin.indexOf('px') < 0 && paramsWatch.margin.indexOf('%') < 0) {
 			FLS(`_FLS_WATCHER_WARN_MARGIN`)
 			return
 		}
-		// Точки спрацьовування
+		// Trigger points
 		if (paramsWatch.threshold === 'prx') {
-			// Режим паралаксу
+			// Parallax mode
 			paramsWatch.threshold = [];
 			for (let i = 0; i <= 1.0; i += 0.005) {
 				paramsWatch.threshold.push(i);
@@ -106,7 +106,7 @@ class ScrollWatcher {
 		configWatcher.threshold = paramsWatch.threshold;
 		return configWatcher;
 	}
-	// Функція створення нового спостерігача зі своїми налаштуваннями
+	// Function for creating a new observer with your own settings
 	scrollWatcherCreate(configWatcher) {
 		this.observer = new IntersectionObserver((entries, observer) => {
 			entries.forEach(entry => {
@@ -114,40 +114,40 @@ class ScrollWatcher {
 			});
 		}, configWatcher);
 	}
-	// Функція ініціалізації спостерігача зі своїми налаштуваннями
+	// Observer initialization function with its own settings
 	scrollWatcherInit(items, configWatcher) {
-		// Створення нового спостерігача зі своїми налаштуваннями
+		// Creating a new observer with your own settings
 		this.scrollWatcherCreate(configWatcher);
-		// Передача спостерігачеві елементів
+		// Passing elements to the Observer
 		items.forEach(item => this.observer.observe(item));
 	}
-	// Функція обробки базових дій точок спрацьовування
+	// Function for processing basic actions of trigger points
 	scrollWatcherIntersecting(entry, targetElement) {
 		if (entry.isIntersecting) {
-			// Бачимо об'єкт
-			// Додаємо клас
+			// We see the object
+			// Adding a class
 			!targetElement.classList.contains('--watcher-view') ? targetElement.classList.add('--watcher-view') : null;
 			FLS(`_FLS_WATCHER_VIEW`, targetElement.classList[0]);
 		} else {
-			// Не бачимо об'єкт
-			// Забираємо клас
+			// We don't see the object
+			// Picking up a class
 			targetElement.classList.contains('--watcher-view') ? targetElement.classList.remove('--watcher-view') : null;
 			FLS(`_FLS_WATCHER_NOVIEW`, targetElement.classList[0]);
 		}
 	}
-	// Функція відключення стеження за об'єктом
+	// Function for disabling object tracking
 	scrollWatcherOff(targetElement, observer) {
 		observer.unobserve(targetElement);
 		FLS(`_FLS_WATCHER_STOP_WATCH`, targetElement.classList[0]);
 	}
-	// Функція обробки спостереження
+	// Surveillance processing function
 	scrollWatcherCallback(entry, observer) {
 		const targetElement = entry.target;
-		// Обробка базових дій точок спрацьовування
+		// Processing basic actions of trigger points
 		this.scrollWatcherIntersecting(entry, targetElement);
-		// Якщо є атрибут data-watch-once прибираємо стеження
+		// If there is a data-watch-once attribute, remove tracking
 		targetElement.hasAttribute('data-fls-watcher-once') && entry.isIntersecting ? this.scrollWatcherOff(targetElement, observer) : null;
-		// Створюємо свою подію зворотного зв'язку
+		// Creating your own feedback event
 		document.dispatchEvent(new CustomEvent("watcherCallback", {
 			detail: {
 				entry: entry
@@ -155,14 +155,14 @@ class ScrollWatcher {
 		}));
 
 		/*
-		// Вибираємо потрібні об'єкти
+		// Selecting the desired objects
 		if (targetElement.dataset.flsWatcher === 'some value') {
-			// пишемо унікальну специфіку
+			// we write unique specifics
 		}
 		if (entry.isIntersecting) {
-			//Бачимо об'єкт
+			// We see the object
 		} else {
-			//Не бачимо об'єкт
+			// We don't see the object
 		}
 		*/
 	}

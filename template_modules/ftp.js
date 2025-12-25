@@ -1,6 +1,6 @@
-// Налаштування шаблону
+// Template settings
 import templateConfig from '../template.config.js'
-// Логгер
+// Logger
 import logger from './logger.js'
 
 import vitePluginFtp from 'vite-plugin-ftp'

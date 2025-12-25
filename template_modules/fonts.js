@@ -1,35 +1,35 @@
-// Налаштування шаблону
+// Template settings
 import templateConfig from '../template.config.js'
-// Логгер
+// Logger
 import logger from './logger.js'
 
 import { globSync } from 'glob'
 import fs from 'node:fs';
 import path from 'node:path'
 
-// Конвертація шрифтів
+// Font conversion
 import Fontmin from 'fontmin';
-// Локальне підключення віддалених шрифтів
+// Local connection of remote fonts
 import webfontDownload from 'vite-plugin-webfont-dl'
-// Створення шрифту з SVG іконок
+// Creating a font from SVG icons
 import viteSvgToWebfont from 'vite-svg-2-webfont'
-// Оптимізація SVG іконок
+// Optimization of SVG icons
 import { svgOptimaze } from './svgoptimaze.js'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const isWp = process.argv.includes('--wp')
 
-// Шляхи до файлів
+// File paths
 const fontsHTMLFile = 'src/components/layout/head/fonts-preload.html'
 const fontsCSSFile = 'src/styles/fonts/fonts.css'
 const iconsCSSFile = 'src/styles/fonts/iconfont.css'
 const iconsPreviewFiles = globSync('src/assets/svgicons/preview/*.*')
 const iconsFiles = globSync('src/assets/svgicons/*.svg')
 
-// Обробка шрифтів
+// Font processing
 function fontWork() {
 	const fontsFiles = globSync('src/assets/fonts/*.{otf,ttf}', { posix: true })
-	// Конвертація шрифтів
+	// Font conversion
 	if (fontsFiles.length) {
 		logger('_FONTS_START')
 		const fontConverter = new Fontmin()
@@ -47,11 +47,11 @@ function fontWork() {
 		fontHtmlCss()
 	}
 }
-// Створення HTML,CSS файлів та підключення шрифтів
+// Creating HTML, CSS files, and connecting fonts
 const fontHtmlCss = () => {
 	const fontsFiles = globSync('src/assets/fonts/*.woff2', { posix: true })
 	if (fontsFiles.length) {
-		// Змінні
+		// Variables
 		let newFileOnly
 		let linksToFonts = ``
 		let fontsStyles = ``
@@ -59,21 +59,21 @@ const fontHtmlCss = () => {
 			all: 0
 		}
 		fontsFiles.forEach(fontsFile => {
-			// Ім'я файлу
+			// File name
 			const fontFileName = fontsFile.replace(new RegExp(' ', 'g'), '-').split('/').pop().split('.').slice(0, -1).join('.');
-			// Якщо шрифт не був оброблений раніше
+			// If the font was not processed earlier
 			if (newFileOnly !== fontFileName) {
 				const [fontName, fontWeightStr] = fontFileName.replace('--', '-').split("-");
 				const fontStyle = fontFileName.toLowerCase().includes("-italic") ? "italic" : "normal";
-				// Мапа для перетворення назв ваги в числові значення
+				// Map for converting weight names to numeric values
 				const fontWeightMap = { "thin": 100, "hairline": 100, "extralight": 200, "ultralight": 200, "light": 300, "medium": 500, "semibold": 600, "demibold": 600, "bold": 700, "extrabold": 800, "ultrabold": 800, "black": 900, "heavy": 900, "extrablack": 950, "ultrablack": 950, };
-				// Перевірка наявності ваги в мапі, якщо ні - використовуємо 400 (звичайний)
+				// Checking the weight in the map, if not, use 400 (normal)
 				let fontWeight = fontWeightStr ? fontWeightMap[fontWeightStr.toLowerCase()] || 400 : 400;
-				// Формування посилань на шрифт
+				// Creating font links
 				linksToFonts += `<link rel="preload" href="@fonts/${fontFileName}.woff2" as="font" type="font/woff2" crossorigin="anonymous">\n`;
-				// Формування стилів для шрифтів
+				// Creating styles for fonts
 				fontsStyles += `@font-face {font-family: ${fontName};font-display: swap;src: url("@fonts/${fontFileName}.woff2") format("woff2");font-weight: ${fontWeight};font-style: ${fontStyle};}\n`;
-				// Оновлюємо ім'я обробленого файлу
+				// Updating the name of the processed file
 				newFileOnly = fontFileName;
 			}
 			counter.all++
@@ -81,7 +81,7 @@ const fontHtmlCss = () => {
 		fs.writeFile(fontsHTMLFile, linksToFonts, cb)
 		fs.writeFile(fontsCSSFile, fontsStyles, cb)
 
-		// Видаляємо похідні файли
+		// Deleting derived files
 		const fontsSrcFiles = globSync('src/assets/fonts/*.*', { posix: true })
 		for (const file of fontsSrcFiles) {
 			if (file.endsWith('.otf') || file.endsWith('.ttf')) {
@@ -92,12 +92,12 @@ const fontHtmlCss = () => {
 		}
 		logger(`_FONTS_DONE`, [counter.all])
 	} else {
-		// Якщо шрифтів немає
+		// If there are no fonts
 		fs.writeFile(fontsHTMLFile, '', cb)
 		fs.writeFile(fontsCSSFile, '', cb)
 	}
 }
-// Додавання іконкового шрифту
+// Adding an icon font
 function addIconFonts() {
 	if (iconsFiles.length && templateConfig.fonts.iconsfont) {
 		!isProduction ? logger('_FONTS_ICONS_ADD_DONE') : null
@@ -110,18 +110,18 @@ function addIconFonts() {
 		fs.writeFile(iconsCSSFile, '', cb)
 	}
 }
-// Додавання шрифту для WP
+// Adding a font for WP
 async function addWpFonts() {
 	const styles = []
 	styles.push(`import '@styles/fonts/fonts.css'`)
 	iconsFiles.length && templateConfig.fonts.iconsfont ? styles.push(`import '@styles/fonts/iconfont.css'`) : null
 	fs.writeFile('src/components/wordpress/fls-wp-fonts.js', styles.join('\n'), () => { })
 }
-// Плагіни
+// Plugins
 export const fontPlugins = [
-	// Обробка шрифтів
+	// Font processing
 	fontWork(),
-	// Створення шрифту з SVG іконок
+	// Creating a font from SVG icons
 	(iconsFiles.length && templateConfig.fonts.iconsfont) ? await {
 		order: 'pre',
 		...svgOptimaze(iconsFiles).then(() => { logger('_FONTS_ICONS_DONE') })
@@ -146,7 +146,7 @@ export const fontPlugins = [
 		order: 'post',
 		...addIconFonts()
 	},
-	// Локальне підключення віддалених шрифтів
+	// Local connection of remote fonts
 	...((templateConfig.fonts.download) ? [webfontDownload(
 		[], {
 		cache: true,
@@ -169,7 +169,7 @@ export const fontPlugins = [
 		},
 	}] : [])
 ]
-// Функція
+// Function
 function cb(err) {
 	if (err) {
 		throw err;

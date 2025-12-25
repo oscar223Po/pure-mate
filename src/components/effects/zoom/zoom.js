@@ -1,4 +1,4 @@
-// Підключення функціоналу "Чертоги Фрілансера"
+// Enabling functionality
 import { FLS } from "@js/common/functions.js";
 
 import "./zoom.scss"

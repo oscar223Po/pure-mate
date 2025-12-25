@@ -1,6 +1,7 @@
-// Підключення функціоналу "Чортоги Фрілансера"
+// Enabling functionality
 import { isMobile, FLS } from "@js/common/functions.js";
 
+// Module styles
 import './darklite.scss'
 
 function getHours() {
@@ -10,25 +11,24 @@ function getHours() {
 }
 
 function darkliteInit() {
-	// HTML
 	const htmlBlock = document.documentElement;
 
-	// Отримуємо збережену тему
+	// Getting the saved theme
 	const saveUserTheme = localStorage.getItem('fls-user-theme');
 
 	let userTheme;
 
 	if (document.querySelector('[data-fls-darklite-time]')) {
-		// Користувацький проміжок часу
+		// User time interval
 		let customRange = document.querySelector('[data-fls-darklite-time]').dataset.flsDarkliteTime
 		customRange = customRange || '18,5'
 		const timeFrom = +customRange.split(',')[0]
 		const timeTo = +customRange.split(',')[1]
 		console.log(timeFrom);
-		// Робота з часом
+		// Working with time
 		userTheme = getHours() >= timeFrom && getHours() <= timeTo ? 'dark' : 'light'
 	} else {
-		// Робота з системними налаштуваннями
+		// Working with System Settings
 		if (window.matchMedia) {
 			userTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 		}
@@ -37,7 +37,7 @@ function darkliteInit() {
 		});
 	}
 
-	// Зміна теми по кліку
+	// Changing the theme on a click
 	const themeButton = document.querySelector('[data-fls-darklite-set]')
 	const resetButton = document.querySelector('[data-fls-darklite-reset]')
 
@@ -51,14 +51,14 @@ function darkliteInit() {
 			localStorage.setItem('fls-user-theme', '');
 		})
 	}
-	// Функція додавання класу теми
+	// Function for adding a theme class
 	function setThemeClass() {
 		htmlBlock.setAttribute(`data-fls-darklite-${saveUserTheme ? saveUserTheme : userTheme}`, '')
 	}
-	// Додаємо клас теми
+	// Adding a theme class
 	setThemeClass();
 
-	// Функція зміни теми
+	// Theme change function
 	function changeTheme(saveTheme = false) {
 		let currentTheme = htmlBlock.hasAttribute('data-fls-darklite-light') ? 'light' : 'dark';
 		let newTheme;

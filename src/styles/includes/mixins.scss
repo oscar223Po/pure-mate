@@ -1,30 +1,30 @@
 @use "sass:math";
 @use "@styles/settings.scss";
 
-//Percent
+// Percent
 @function percent($px, $from: 100) {
 	$result: math.div($px, $from) * 100%;
 	@return $result;
 }
-//REM
+// REM
 @function toRem($px, $current: 16) {
 	$result: math.div($px, $current) + rem;
 	@return $result;
 }
-//EM
+// EM
 @function toEm($px, $current: 16) {
 	$result: math.div($px, $current) + em;
 	@return $result;
 }
 
-//Currency
+// Currency
 @mixin currency($sym) {
 	&::after {
 		content: "#{$sym}";
 	}
 }
 
-// Трикутник
+// Triangle
 @mixin triangle($direction, $color, $size, $size2: $size) {
 	@if $direction == left {
 		border: #{$size2}px solid transparent;
@@ -51,7 +51,7 @@
 	grid-template-columns: repeat(auto-#{$type}, minmax($min, $max));
 }
 
-// Адаптивна властивість (clamp)
+// Adaptive property (clamp)
 @mixin adaptiveValue($property, $startSize, $minSize: settings.$minSize, $keepSize: 0, $widthFrom: settings.$containerWidth, $widthTo: settings.$minWidth) {
 	@if ($startSize==0) {
 		$startSize: 0.000001;
@@ -64,12 +64,12 @@
 		$widthFrom: settings.$maxWidth;
 	}
 
-	// Брейк-поїнти в EM
+	// Break points in EM
 	$widthFromMedia: toEm($widthFrom);
 	$widthToMedia: toEm($widthTo);
 
-	// Формула плаваючого значення
-	// Источник: https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
+	// Floating value formula
+	// Source: https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
 	$slope: math.div(($startSize - $minSize), ($widthFrom - $widthTo));
 	$yIntersection: -$widthTo * $slope + $minSize;
 	@if ($yIntersection==0) {
@@ -77,20 +77,20 @@
 	}
 	$flyValue: #{$yIntersection}px " + " #{$slope * 100}vw;
 
-	// Отримання значення властивості
+	// Getting the property value
 	$propertyValue: #{"clamp(" #{$minSize}px "," $flyValue "," #{$startSize}px ")"};
-	// Якщо негативні значення
+	// If the values are negative
 	@if ($minSize > $startSize) {
 		$propertyValue: #{"clamp(" #{$startSize}px "," $flyValue "," #{$minSize}px ")"};
 	}
 
-	// Встановлюємо значення за замовчуванням
+	// Setting the default value
 	@if $keepSize != 1 and $keepSize != 3 {
 		@media (min-width: $widthFromMedia) {
 			#{$property}: #{$startSize}px;
 		}
 	}
-	// Адаптуємо розмір у проміжку між зазначеними ширинами в'юпорту
+	// Adapting the size between the specified viewport widths
 	@media (min-width: $widthToMedia) and (max-width: $widthFromMedia) {
 		#{$property}: $propertyValue;
 	}
@@ -101,7 +101,7 @@
 	}
 }
 
-// Grid-контейнер
+// Grid-container
 @mixin gridContainer($type: 0, $container: settings.$maxWidthContainer, $paddingStart: math.div(settings.$containerPadding, 2), $paddingEnd: math.div(settings.$containerPadding, 2)) {
 	display: grid;
 	min-width: 0;

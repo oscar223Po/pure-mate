@@ -1,6 +1,6 @@
-// Налаштування шаблону
+// Template settings
 import templateConfig from '../template.config.js'
-// Логгер
+// Logger
 import logger from './logger.js'
 
 import PluginCritical from 'rollup-plugin-critical';
@@ -19,7 +19,7 @@ globSync('dist/*.html').forEach((file) => {
 })
 
 export const rollupPlugins = [
-	// Генерація критичних стилів
+	// Generating critical styles
 	...((templateConfig.styles.critical) ?
 		[PluginCritical({
 			criticalUrl: './',

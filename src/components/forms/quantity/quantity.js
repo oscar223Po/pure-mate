@@ -1,4 +1,4 @@
-// Підключення функціоналу "Чортоги Фрілансера"
+// Enabling functionality
 import { FLS } from "@js/common/functions.js";
 
 import './quantity.scss'

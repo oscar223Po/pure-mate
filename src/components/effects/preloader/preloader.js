@@ -3,7 +3,7 @@ import './preloader.scss'
 (function preloader() {
 	const html = document.documentElement
 
-	// Включаем сразу
+	// We turn it on immediately
 	html.setAttribute('data-fls-preloader-loading', '')
 	html.setAttribute('data-fls-scrolllock', '')
 
@@ -29,7 +29,7 @@ import './preloader.scss'
 		lineEl.style.width = `${value}%`
 	}
 
-	// Фейковая анимация до 90%
+	// Fake animation up to 90%
 	fakeTimer = setInterval(() => {
 		if (progress < 90) {
 			progress++
@@ -37,13 +37,13 @@ import './preloader.scss'
 		}
 	}, 20)
 
-	// ЖДЁМ РЕАЛЬНУЮ ЗАГРУЗКУ СТРАНИЦЫ
+	// WE ARE WAITING FOR THE ACTUAL PAGE LOADING
 	window.addEventListener('load', () => {
 		clearInterval(fakeTimer)
 		progress = 100
 		setProgress(progress)
 
-		// Небольшая пауза, чтобы 100% было видно
+		// A short pause to make it 100% visible
 		setTimeout(() => {
 			html.setAttribute('data-fls-preloader-loaded', '')
 			html.removeAttribute('data-fls-preloader-loading')

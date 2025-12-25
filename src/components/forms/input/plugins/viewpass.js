@@ -1,4 +1,4 @@
-// Функціонал "Показати пароль"
+// Show password functionality
 function viewPass() {
 	document.addEventListener("click", function (e) {
 		let targetElement = e.target;

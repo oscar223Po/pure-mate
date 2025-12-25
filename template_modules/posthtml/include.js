@@ -1,4 +1,4 @@
-// Налаштування шаблону
+// Template settings
 import templateConfig from '../../template.config.js'
 
 import fs from 'fs'
@@ -11,10 +11,10 @@ import replaceAliases from './aliases.js'
 //import htmlTags from 'html-tags'
 
 /**
- * Обробка атрибутів вузла з заміною аліасів.
- * @param {Object} attrs - Об'єкт атрибутів
- * @param {boolean} prependDot - Чи додавати крапку перед значенням
- * @returns {string|false} - Знайдене значення src/url або false
+ * Processing node attributes with replacement of aliases.
+ * @param {Object} attrs-attribute object
+ * @param {boolean} prependDot-whether to add a dot before the value
+ * @returns {string / false} - found src/url value or false
  */
 const processAttributes = (attrs, prependDot) => {
 	let src = false
@@ -28,7 +28,7 @@ const processAttributes = (attrs, prependDot) => {
 }
 
 /**
- * Обробка тегів і заміна аліасів у атрибутах.
+ * Tag processing and replacing aliases in attributes.
  * @param {Object} options
  * @returns {Function}
  */
@@ -42,19 +42,19 @@ export default (options = {}) => {
 		tree.match({ attrs: true }, (node) => {
 			if (!node.attrs) return node
 
-			// Для стандартних HTML-тегів prependDot = false, для інших true
+			// PrependDot = false for standard HTML tags, true for others
 			const prependDot = false //!htmlTags.includes(node.tag)
 			const src = processAttributes(node.attrs, prependDot)
 
 
 
-			// Обробка <include>
+			// Processing <include>
 			if (node.tag === 'include' && src) {
 				const filePath = path.resolve(root, src)
 
 				let source = fs.readFileSync(filePath, encoding)
 
-				// Підключення Tailwind CSS або Reset CSS
+				// Enabling Tailwind CSS or Reset CSS
 				if (filePath.endsWith('head.html')) {
 					source = source.replace("<head>", `<head>${templateConfig.styles.tailwindcss ? `<link rel="stylesheet" href="@styles/libs/tailwind.css">` : `<link rel="stylesheet" href="@styles/libs/reset.css">`}`)
 				}

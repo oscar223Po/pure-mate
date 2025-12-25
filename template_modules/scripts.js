@@ -1,7 +1,7 @@
-// Налаштування шаблону
+// Template settings
 import templateConfig from '../template.config.js'
 const finalAliases = templateConfig.aliases
-// Логгер
+// Logger
 import logger from './logger.js'
 
 import { normalizePath } from 'vite'
@@ -13,7 +13,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 const isWp = process.argv.includes('--wp')
 
 export const scriptsPlugins = [
-	// Обробка псевдонімів в JS-файлах
+	// Processing aliases in JS files
 	{
 		name: 'do-aliases',
 		order: "pre",
@@ -29,7 +29,7 @@ export const scriptsPlugins = [
 			return html
 		},
 	},
-	// Чистка від модуля FLS
+	// Cleaning from the FLS module
 	...((isProduction && templateConfig.logger.console.removeonbuild) ? [{
 		name: 'fls-clean',
 		apply: 'build',
@@ -40,7 +40,7 @@ export const scriptsPlugins = [
 			}
 		}
 	}] : []),
-	// Створення копії файлу(лів) для розробніків
+	// Creating a copy of the file (Liv) for developers
 	...((isProduction && templateConfig.js.devfiles) ? [{
 		name: "js-devfiles",
 		apply: 'build',
@@ -49,7 +49,7 @@ export const scriptsPlugins = [
 			order: 'post',
 			handler: async ({ dir }) => {
 				const jsFiles = globSync(`${dir}/js/*.js`)
-				// Створення копій
+				// Creating copies
 				!fs.existsSync(`${dir}/js/dev`) ? fs.mkdirSync(`${dir}/js/dev`) : null
 				jsFiles.forEach(async (jsFile) => {
 					jsFile = normalizePath(jsFile)
@@ -57,7 +57,7 @@ export const scriptsPlugins = [
 					fs.copyFileSync(jsFile, devJsFile)
 				});
 				logger('_IMG_JS_DEV_DONE')
-				// Оптимізація файлів
+				// File optimization
 				await esbuild.build({
 					entryPoints: jsFiles,
 					allowOverwrite: true,
@@ -67,7 +67,7 @@ export const scriptsPlugins = [
 			}
 		}
 	}] : []),
-	// Динамічне додавання JS-модулів
+	// Dynamic addition of JS modules
 	...(templateConfig.js.hotmodules ? [{
 		name: 'hot-modules',
 		transformIndexHtml: {
@@ -95,7 +95,7 @@ async function insertModule(html) {
 		const regex = new RegExp(`\\bdata-fls-${moduleName}\\b`)
 		if (regex.test(html)) {
 			modules.add(`<script type="module" src="${moduleJSFile}"></script>`)
-			// Перевіряємо, чи є плагіни для цього модуля
+			// Checking if there are plugins for this module
 			const curentModulePlugins = modulePlugins.get(moduleName)
 			if (curentModulePlugins) {
 				curentModulePlugins.forEach(curentModulePlugin => {

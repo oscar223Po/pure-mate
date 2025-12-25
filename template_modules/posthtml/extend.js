@@ -52,7 +52,7 @@ const processAttributes = (attrs, prependDot) => {
 function handleExtendsNodes(tree, options, messages) {
 	match.call(tree = applyPluginsToTree(tree, options.plugins), { tag: options.tagName }, extendsNode => {
 
-		// Для стандартних HTML-тегів prependDot = false, для інших true
+		// PrependDot = false for standard HTML tags, true for others
 		const prependDot = false //!htmlTags.includes(node.tag)
 		extendsNode.attrs.src = processAttributes(extendsNode.attrs, prependDot)
 

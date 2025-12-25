@@ -1,4 +1,4 @@
-// Налаштування шаблону
+// Template settings
 import templateConfig from '../template.config.js'
 import fs from 'fs'
 

@@ -41,7 +41,6 @@ export default {
 		}
 	},
 	styles: {
-		tailwindcss: false,
 		pxtorem: true,
 		critical: false,
 		codesplit: true,
@@ -77,21 +76,11 @@ export default {
 		hotmodules: true,
 		devfiles: true,
 		bundle: {
-			// Збирає в один JS та один CSS файли
-			// незалежно від налаштування
-			// styles -> codesplit,
+			// Collects in one JS and one CSS files
+			// regardless of the configuration
+			// styles -> codesplit
 			enable: false
-		},
-		react: false,
-		vue: false
-	},
-	php: {
-		enable: false,
-		base: './src/php/',
-		hostname: 'localhost',
-		port: '1110',
-		binary: 'C:\\php\\php.exe',
-		ini: 'template_modules/assets/php.ini'
+		}
 	},
 	pug: {
 		enable: false
@@ -104,19 +93,13 @@ export default {
 		password: '123456'
 	},
 	logger: {
-		// Логи роботи збірки в терміналі
+		// Terminal
 		terminal: false,
-		// Логи роботи модулів в консолі
+		// Console
 		console: {
 			enable: false,
 			removeonbuild: true
 		}
-	},
-	projectpage: {
-		enable: false,
-		projectname: '',
-		template: 'src/projectpage/projectpage.html',
-		outfilename: 'projectpage'
 	},
 	aliases: {
 		// HTML/SCSS/JS components
@@ -132,14 +115,5 @@ export default {
 		'@files': 'src/files',
 		// Other
 		'@pug': 'src/pug'
-	},
-	coffee: {
-		enable: false,
-		text: `(!!)Досить працювати, зроби перерву ☕️`,
-		interval: 45
-	},
-	novaposhta: {
-		enable: false,
-		key: ''
 	}
 }

@@ -1,6 +1,6 @@
 body {
 	.--fullpage-init & {
-		// Щоб вимкнути оновлення сторінки свайпом на телефоні
+		// To disable page refresh by swiping on your phone
 		overflow: hidden;
 		touch-action: none;
 		overscroll-behavior: none;
@@ -11,16 +11,16 @@ body {
 [data-fls-fullpage] {
 	min-height: 100svh;
 	.--fullpage-init & {
-		// Для того щоб секції не перекривали буллети
+		// So that the sections do not overlap the bullets
 		z-index: 1;
-		// Відносно чого позиціонуються секції
+		// What are the sections positioned about?
 		touch-action: none;
 		position: relative;
 		overflow: hidden;
 	}
 }
 
-// Секція
+// Section
 [data-fls-fullpage-section] {
 	.--fullpage-switching & {
 		touch-action: none;
@@ -36,7 +36,7 @@ body {
 		overflow: auto;
 	}
 
-	// Модифікації
+	// Modifications
 	.--fullpage-init .slider-mode &,
 	.--fullpage-init .cards-mode & {
 		transition: transform 0.7s cubic-bezier(0.55, 0.085, 0, 0.99) 0s;
@@ -48,7 +48,7 @@ body {
 	}
 }
 
-// Оболонка буллетів
+// Bullet shell
 .--fullpage-bullets {
 	position: fixed;
 	top: 50%;
@@ -73,7 +73,7 @@ body {
 		right: 50%;
 	}
 
-	// Булет
+	// Bulet
 	& .--fullpage-bullet {
 		cursor: pointer;
 		width: toRem(20);

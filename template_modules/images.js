@@ -1,10 +1,10 @@
-// Налаштування шаблону
+// Template settings
 import templateConfig from '../template.config.js'
-// Логгер
+// Logger
 import logger from './logger.js'
-// SVG-спрайт
+// SVG-Sprite
 import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap'
-// Робота с зображеннями
+// Working with images
 import sharp from 'sharp';
 import { imageSize } from 'image-size'
 
@@ -22,7 +22,7 @@ const isWp = process.argv.includes('--wp')
 let copyIgnore = new Set()
 
 export const imagePlugins = [
-	// SVG-спрайт
+	// SVG-Sprite
 	...((templateConfig.images.svgsprite) ? [svgOptimaze(iconsFiles)] : []),
 	...((templateConfig.images.svgsprite) ? [
 		VitePluginSvgSpritemap('assets/svgicons/*.svg', {
@@ -54,7 +54,7 @@ export const imagePlugins = [
 			}
 			// idify: (name, svg) => `sprite-${name}`,
 		})] : []),
-	// Робота с зображеннями
+	// Working with images
 	...((isProduction && !isWp) ? [{
 		name: "images",
 		apply: 'build',
@@ -71,11 +71,11 @@ export const imagePlugins = [
 						let content = fs.readFileSync(file, 'utf-8')
 						if (file.endsWith('.html') || file.endsWith('.js')) {
 							const attrIgnore = templateConfig.images.optimize.attrignore
-							// Обробка зображень які вказані в srcset тегів source
+							// Processing images that are specified in srcset Source Tags
 							content = content.replace(/<source\s[^>]*srcset=["']([^"']+\.(jpg|jpeg|avif|png|gif|webp))["'][^>]*>/gi, (data, url) => {
 								return returnUrl(data, url, uniqImages)
 							})
-							// Обробка зображень які вказані в src тегів IMG
+							// Processing images that are specified in src IMG tags
 							content = content.replace(new RegExp(`<img(?![^>]*\\s${attrIgnore})[^>]*>`, 'gi'), (data) => {
 								const regex = /([\w-]+)\s*=\s*"([^"]*)"/g
 								let match, imagePath, sizesAttr
@@ -107,12 +107,12 @@ export const imagePlugins = [
 								}
 								return data;
 							})
-							// Обробка зображень які вказані в href тегів A
+							// Processing images that are specified in href tags A
 							content = content.replace(/<a\s[^>]*href=["']([^"']+\.(jpg|jpeg|avif|png|gif|webp))["'][^>]*>/gi, (data, url) => {
 								return returnUrl(data, url, uniqImages)
 							})
 						} else if (file.endsWith('.css')) {
-							// Обробка зображень які вказані в url CSS-файлів
+							// Processing images that are specified in the URL of CSS files
 							content = content.replace(/url\(['"]?(https?:\/\/[^\s'"]+\.(?:jpg|jpeg|png|gif)|[^\s'"]+\.(?:jpg|jpeg|png|gif))['"]?\)/gi, (data, url) => {
 								return returnUrl(data, url, uniqImages)
 							})
@@ -127,7 +127,7 @@ export const imagePlugins = [
 		}
 	}] : []),
 ]
-// Побудова HTML-структури
+// Building an HTML structure
 function imageResizeInit(image, sizes, dpi, extType, attr, mode = 'html') {
 	const reg = new RegExp('\\.(png|webp|avif|jpeg|jpg|gif)(?=\\s|\\)|"|\'|$)', "gi")
 	const isWebpAvif = /avif|webp/i.test(extType)
@@ -162,9 +162,9 @@ function imageResizeInit(image, sizes, dpi, extType, attr, mode = 'html') {
 	imageDelete(image, isWebpAvif)
 	return templete
 }
-// Конвертація та зміна розмірів зображень
+// Converting and resizing images
 function imageResize(size, image, imageout, extType) {
-	// Працюємо з типами зображень
+	// Working with image types
 	if (templateConfig.images.optimize.modernformat.enable && templateConfig.images.optimize.modernformat.type === 'webp') {
 		sharp(image, { animated: true }).resize(size).webp({ quality: templateConfig.images.optimize.modernformat.quality || 80 }).toFile(imageout, (err) => { err ? console.error(err) : null })
 	} else if (templateConfig.images.optimize.modernformat.enable && templateConfig.images.optimize.modernformat.type === 'avif') {
@@ -179,7 +179,7 @@ function imageResize(size, image, imageout, extType) {
 	!size ? copyIgnore.add(imageout.replace('dist', '')) : null
 	return imageout.replace('dist/', templateConfig.server.path)
 }
-// Повернення шляху
+// Return Path
 function returnUrl(data, url, uniqImages) {
 	let inset
 	if (url.startsWith('../')) {
@@ -197,7 +197,7 @@ function returnUrl(data, url, uniqImages) {
 		return data
 	}
 }
-// Видалення зайвих файлів
+// Deleting unnecessary files
 function imageDelete(image, isWebpAvif) {
 	image = image.replace('src/', 'dist/')
 	if (templateConfig.images.optimize.modernformat.enable && templateConfig.images.optimize.modernformat.only) {
@@ -205,7 +205,7 @@ function imageDelete(image, isWebpAvif) {
 		!isWebpAvif && fs.existsSync(image) ? fs.unlinkSync(image) : null
 	}
 }
-// Копіювання папки img
+// Copying the img folder
 async function copyOtherImages(copyIgnore) {
 	copyIgnore = Array.from(copyIgnore)
 	try {

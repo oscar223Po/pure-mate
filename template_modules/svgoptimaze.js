@@ -3,9 +3,8 @@ import { outlineSvg } from '@davestewart/outliner'
 import { optimize } from 'svgo'
 import { readFile, writeFile } from 'fs/promises';
 
-// Оптимізація SVG-іконок
+// Optimization of SVG icons
 export async function svgOptimaze(iconsFiles) {
-	// Оптимізація SVG іконок
 	// Convert SVG strokes to paths and optimize SVG
 	const convertAndOptimizeSvg = async (file, srcDir, distDir) => {
 		const filePath = path.join(srcDir, file)

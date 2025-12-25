@@ -1,11 +1,11 @@
-// Підключення модуля
+// Connecting the module
 import datepicker from 'js-datepicker';
 
 import langs from "./_lang.json"
 import './datepicker.scss'
 
 if (document.querySelector('[data-fls-datepicker]')) {
-	const LANG = 'ua' // en
+	const LANG = 'en'
 	const datePicker = datepicker('[data-fls-datepicker]', {
 		customDays: langs[LANG].week,
 		customMonths: langs[LANG].month,

@@ -1,7 +1,5 @@
 @use "sass:map";
 
-// ------------------ Налаштування ------------------
-
 $grid-columns: 12;
 
 $gap-sizes: (
@@ -18,15 +16,11 @@ $breakpoints: (
 	small: toRem($mobileSmall)
 );
 
-// ------------------ Міксини -------------------------
-
 @mixin media($breakpoint) {
 	@media (max-width: map.get($breakpoints, $breakpoint)) {
 		@content;
 	}
 }
-
-// ------------------ GRID-Контейнер ------------------
 
 [data-fls-grid] {
 	display: grid;
@@ -46,7 +40,6 @@ $breakpoints: (
 	}
 }
 
-// Вирівнювання
 [data-fls-grid="y-start"] {
 	align-items: start;
 }
@@ -81,7 +74,6 @@ $breakpoints: (
 	place-items: stretch;
 }
 
-// Auto-flow керування
 [data-fls-grid-flow="row"] {
 	grid-auto-flow: row;
 }
@@ -98,15 +90,12 @@ $breakpoints: (
 	grid-auto-flow: column dense;
 }
 
-// Однакові рядки та колонки
 [data-fls-grid-samerows] {
 	grid-auto-rows: 1fr;
 }
 [data-fls-grid-samecols] {
 	grid-auto-columns: 1fr;
 }
-
-// ------------------ GRID-Елемент ------------------
 
 @for $i from 1 through $grid-columns {
 	[data-fls-grid-col="#{$i}"] {
@@ -128,7 +117,7 @@ $breakpoints: (
 		grid-row-end: $i + 1;
 	}
 }
-// По брейкпоінтах
+
 @each $bp, $val in $breakpoints {
 	@if ($bp != "desktop") {
 		@include media($bp) {
@@ -162,7 +151,6 @@ $breakpoints: (
 	}
 }
 
-// На всю сітку
 [data-fls-grid-row-full] {
 	grid-row: 1 / -1;
 }
@@ -170,7 +158,6 @@ $breakpoints: (
 	grid-column: 1 / -1;
 }
 
-// Вирівнювання
 [data-fls-grid-self="y-start"] {
 	align-self: start;
 }

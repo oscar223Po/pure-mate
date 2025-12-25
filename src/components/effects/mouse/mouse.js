@@ -1,29 +1,26 @@
-// Підключення функціоналу "Чортоги Фрілансера"
+// Enabling functionality
 import { isMobile, FLS } from "@js/common/functions.js";
 
-//Модуль паралаксу мишею
-// (c)Фрілансер по життю, "Хмурый Кот"
-// Документація: 
-
 /*
-Предмету, який рухатиметься за мишею, вказати атрибут data-fls-mouse
+Specify the data-fls-mouse attribute for the object that will move behind the mouse
 
 // =========
-Якщо потрібно додаткові налаштування - вказати
+If you need additional settings, specify
 
-Атрибут											Значення за замовчуванням
+Attribute											Default value
 -------------------------------------------------------------------------------------------------------------------
-data-fls-mouse-cx="коефіцієнт_х"					100							значення більше - менше відсоток зсуву
-data-fls-mouse-cy="коефіцієнт_y"					100							значення більше - менше відсоток зсуву
-data-fls-mouse-dxr																		проти осі X
-data-fls-mouse-dyr																		проти осі Y
-data-fls-mouse-a="швидкість_анімації"				50								більше значення – більше швидкість
+data-fls-mouse-cx="ratio_х"					100							value greater-less offset percentage
+data-fls-mouse-cy="ratio_y"					100							value greater-less offset percentage
+data-fls-mouse-dxr																		against the X-axis
+data-fls-mouse-dyr																		against the Y-axis
+data-fls-mouse-a="speed_animation"				50								more value – more speed
 
 // =========
-Якщо потрібно зчитувати рух миші в блоці-батьку - тому батькові вказати атрибут data-fls-mouse-mouse-wrapper
+If you want to read the mouse movement in the block-to the parent - then specify the attribute to the parent
+data-fls-mouse-mouse-wrapper
 
-Якщо в паралакс картинка - розтягнути її на >100%. 
-Наприклад:
+If the image is in parallax, stretch it by >100%.
+For example:
 	width: 130%;
 	height: 130%;
 	top: -15%;
@@ -49,25 +46,25 @@ class MousePRLX {
 		paralaxMouse.forEach(el => {
 			const paralaxMouseWrapper = el.closest('[data-fls-mouse-wrapper]');
 
-			// Коеф. X 
+			// Ratio. X 
 			const paramСoefficientX = +el.dataset.flsMouseCx || 100;
-			// Коеф. У 
+			// Ratio. У 
 			const paramСoefficientY = +el.dataset.flsMouseCy || 100;
-			// Напр. Х
+			// Direction. Х
 			const directionX = el.hasAttribute('data-fls-mouse-dxr') ? -1 : 1;
-			// Напр. У
+			// Direction. У
 			const directionY = el.hasAttribute('data-fls-mouse-dyr') ? -1 : 1;
-			// Швидкість анімації
+			// Animation speed
 			const paramAnimation = el.dataset.prlxA ? +el.dataset.prlxA : 50;
 
 
-			// Оголошення змінних
+			// Declaring variables
 			let positionX = 0, positionY = 0;
 			let coordXprocent = 0, coordYprocent = 0;
 
 			setMouseParallaxStyle();
 
-			// Перевіряю на наявність батька, в якому зчитуватиметься становище миші
+			// I check for the presence of a parent in which the mouse position will be read
 			if (paralaxMouseWrapper) {
 				mouseMoveParalax(paralaxMouseWrapper);
 			} else {
@@ -86,13 +83,13 @@ class MousePRLX {
 				wrapper.addEventListener("mousemove", function (e) {
 					const offsetTop = el.getBoundingClientRect().top + window.scrollY;
 					if (offsetTop >= window.scrollY || (offsetTop + el.offsetHeight) >= window.scrollY) {
-						// Отримання ширини та висоти блоку
+						// Getting the block width and height
 						const parallaxWidth = window.innerWidth;
 						const parallaxHeight = window.innerHeight;
-						// Нуль посередині
+						// Zero in the middle
 						const coordX = e.clientX - parallaxWidth / 2;
 						const coordY = e.clientY - parallaxHeight / 2;
-						// Отримуємо відсотки
+						// We get interest
 						coordXprocent = coordX / parallaxWidth * 100;
 						coordYprocent = coordY / parallaxHeight * 100;
 					}
@@ -101,7 +98,7 @@ class MousePRLX {
 		});
 	}
 }
-// Запускаємо
+// Launching it
 document.querySelector('[data-fls-mouse]') ?
 	window.addEventListener('load', new MousePRLX({})) : null
 

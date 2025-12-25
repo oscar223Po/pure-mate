@@ -3,17 +3,17 @@ import { globSync } from 'glob'
 import path from 'path'
 import { defineConfig } from "vite"
 
-// Налаштування збірки
+// Build settings
 import templateConfig from './template.config.js'
-// Імпортовані модулі
+// Imported modules
 import templateImports from './template_modules/template.imports.js'
-// Генерація налаштувань для редактору
+// Generating settings for the editor
 templateConfig.vscode.settings ? templateImports.vscodeSettings() : null
-// Генерація сніпетів для редактору
+// Generating snippets for the editor
 templateConfig.vscode.snippets ? templateImports.addSnippets() : null
-// Мова повідоблень
+// Povidoblen language
 const lang = JSON.parse(fs.readFileSync(`./template_modules/languages/${templateConfig.lang}.json`, 'UTF-8'))
-// Формування псевдонімів для Vite
+// Creating aliases for Vite
 const makeAliases = (aliases) => {
 	return Object.entries(aliases).reduce((acc, [key, value]) => {
 		value = !value.startsWith(`./`) ? `./${value}` : value
@@ -22,7 +22,7 @@ const makeAliases = (aliases) => {
 	}, {})
 }
 const aliases = makeAliases(templateConfig.aliases)
-// Логінг
+// Logging
 import logger from "./template_modules/logger.js"
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -35,7 +35,6 @@ import { ignoredDirs, ignoredFiles } from './template_modules/ignored.js'
 
 import qrcode from 'qrcode-terminal'
 import Inspect from 'vite-plugin-inspect'
-import { getDev } from './template_modules/main.js'
 
 export default defineConfig(({ command, mode, ssrBuild }) => {
 	return {
@@ -60,16 +59,6 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
 			open: isWp ? 'http://localhost:8080' : true,
 			host: templateConfig.server.hostname,
 			port: templateConfig.server.port,
-			proxy: {
-				'/php': {
-					target: `http://${templateConfig.php.hostname}:${templateConfig.php.port}`,
-					changeOrigin: true,
-					rewrite: (path) => path.replace(/^\/php/, ''),
-					secure: false,
-					ws: true,
-					rewriteWsOrigin: true,
-				},
-			},
 			watch: {
 				ignored: [
 					...ignoredDirs.map(dir => `**/${dir}/**`),
@@ -78,33 +67,21 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
 			}
 		},
 		plugins: [
-			// Робота з HTML
+			// Part HTML
 			...templateImports.htmlPlugins,
-			// Робота з скриптами
+			// Part scripts
 			...templateImports.scriptsPlugins,
-			// Робота зі шрифтами
+			// Part fonts
 			...templateImports.fontPlugins,
-			// Робота з стилями
+			// Part styles
 			...templateImports.stylesPlugins,
-			// Робота з зображеннями
+			// Part images
 			...templateImports.imagePlugins,
-			// Робота з PHP
-			...templateImports.phpPlugins,
-			// Робота з архівом
+			// Part zip
 			...templateImports.zipPlugin,
-			// Робота з FTP
+			// Part FTP
 			...templateImports.ftpPlugin,
-			// Обробка React
-			...(templateConfig.js.react ? [templateImports.react()] : []),
-			// Обробка Vue
-			...(templateConfig.js.vue ? [templateImports.vue()] : []),
-			// NovaPoshta
-			...(templateConfig.novaposhta.enable ? [templateImports.novaPoshta()] : []),
-			// Генерація сторінки проєкту
-			...(isProduction && templateConfig.projectpage.enable ? [templateImports.projectPage()] : []),
-			// Час для кави
-			...(!isProduction && templateConfig.coffee.enable ? [templateImports.coffeeTime()] : []),
-			// Копіювання файлів
+			// Copying files
 			...(isProduction && templateConfig.server.copyfiles ? [templateImports.viteStaticCopy({
 				targets: [
 					{
@@ -114,11 +91,11 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
 				],
 				silent: true
 			})] : []),
-			// Робота з статистикою
+			// Part statistics
 			...templateImports.statPlugins,
-			// Робота з GitHub
+			// Part GitHub
 			...(isProduction && isGit ? [...templateImports.gitPlugins] : []),
-			// Додавання версії файлів
+			// Adding a file version
 			...(isProduction && templateConfig.server.version ? [{
 				//templateImports.addVersion((new Date()).getTime())
 				name: "add-version",
@@ -131,7 +108,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
 					})
 				},
 			}] : []),
-			// Оновлення браузеру
+			// Browser update
 			{
 				name: 'custom-hmr',
 				enforce: 'post',
@@ -141,14 +118,14 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
 					}
 				},
 			},
-			// Повідомлення
+			// Message
 			{
 				name: 'message-dev',
 				enforce: 'post',
 				configureServer: {
 					order: 'post',
 					handler: (server) => {
-						// Додавання QR-коду в термінал
+						// Adding a QR code to the terminal
 						if (isHost) {
 							setTimeout(() => {
 								const urls = server.resolvedUrls || server.network
@@ -173,7 +150,6 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
 					}
 				}
 			},
-			getDev(),
 			{
 				name: 'message-build',
 				apply: 'build',
@@ -224,7 +200,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
 							return customName
 						}
 					},
-					// Налаштування асетів
+					// Configuring assets
 					assetFileNames: (asset) => {
 						let getPath = asset.originalFileNames[0] && asset.names && asset.names.length > 0 ? asset.originalFileNames[0].replace(`/${asset.names[0]}`, '') : ''
 						let extType = asset.names && asset.names.length > 0 ? asset.names[0].split('.').pop() : ''

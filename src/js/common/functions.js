@@ -20,14 +20,14 @@ export function FLS(text, vars = '') {
 		}, 0);
 	}
 }
-/* Перевірка мобільного браузера */
+/* Checking your mobile browser */
 export const isMobile = { Android: function () { return navigator.userAgent.match(/Android/i); }, BlackBerry: function () { return navigator.userAgent.match(/BlackBerry/i); }, iOS: function () { return navigator.userAgent.match(/iPhone|iPad|iPod/i); }, Opera: function () { return navigator.userAgent.match(/Opera Mini/i); }, Windows: function () { return navigator.userAgent.match(/IEMobile/i); }, any: function () { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); } };
-/* Додавання класу touch для HTML, якщо браузер мобільний */
+/* Adding a touch class for HTML if the browser is mobile */
 export function addTouchAttr() {
-	// Додавання data-fls-touch для HTML, якщо браузер мобільний
+	// Adding data-fls-touch for HTML if the browser is mobile
 	if (isMobile.any()) document.documentElement.setAttribute('data-fls-touch', '')
 }
-// Додавання loaded для HTML після повного завантаження сторінки
+// Adding loaded for HTML after the page is fully loaded
 export function addLoadedAttr() {
 	if (!document.documentElement.hasAttribute('data-fls-preloader-loading')) {
 		window.addEventListener("load", function () {
@@ -37,16 +37,16 @@ export function addLoadedAttr() {
 		});
 	}
 }
-// Отримання хешу на адресі сайту
+// Getting a hash on the site address
 export function getHash() {
 	if (location.hash) { return location.hash.replace('#', ''); }
 }
-// Вказівка хеша на адресу сайту
+// Specifying the hash to the site address
 export function setHash(hash) {
 	hash = hash ? `#${hash}` : window.location.href.split('#')[0];
 	history.pushState('', '', hash);
 }
-// Допоміжні модулі плавного розкриття та закриття об'єкта
+// Auxiliary modules for smooth opening and closing of an object
 export let slideUp = (target, duration = 500, showmore = 0) => {
 	if (!target.classList.contains('--slide')) {
 		target.classList.add('--slide');
@@ -71,7 +71,7 @@ export let slideUp = (target, duration = 500, showmore = 0) => {
 			target.style.removeProperty('transition-duration');
 			target.style.removeProperty('transition-property');
 			target.classList.remove('--slide');
-			// Створюємо подію 
+			// Creating an event
 			document.dispatchEvent(new CustomEvent("slideUpDone", {
 				detail: {
 					target: target
@@ -106,7 +106,7 @@ export let slideDown = (target, duration = 500, showmore = 0) => {
 			target.style.removeProperty('transition-duration');
 			target.style.removeProperty('transition-property');
 			target.classList.remove('--slide');
-			// Створюємо подію
+			// Creating an event
 			document.dispatchEvent(new CustomEvent("slideDownDone", {
 				detail: {
 					target: target
@@ -122,7 +122,7 @@ export let slideToggle = (target, duration = 500) => {
 		return slideUp(target, duration);
 	}
 }
-// Допоміжні модулі блокування прокручування та стрибка
+// Auxiliary scroll and jump lock modules
 export let bodyLockStatus = true
 export let bodyLockToggle = (delay = 500) => {
 	if (document.documentElement.hasAttribute("data-fls-scrolllock")) {
@@ -164,38 +164,38 @@ export let bodyLock = (delay = 500) => {
 		}, delay)
 	}
 }
-// Отримати ім'я по значенню в об'єкті
+// Get a name by value in an object
 export function getKeyByValue(object, value) {
 	return Object.keys(object).find(key => object[key] === value);
 }
-// Отримати цифри з рядка
+// Get numbers from a string
 export function getDigFromString(item) {
 	return parseInt(item.replace(/[^\d]/g, ''))
 }
-// Форматування цифр типу 100 000 000
+// Formatting digits like 100,000,000
 export function getDigFormat(item, sepp = ' ') {
 	return item.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, `$1${sepp}`);
 }
-// Прибрати клас з усіх елементів масиву
+// Remove class from all array elements
 export function removeClasses(array, className) {
 	for (var i = 0; i < array.length; i++) {
 		array[i].classList.remove(className);
 	}
 }
-// Унікалізація масиву
+// Array unicalization
 export function uniqArray(array) {
 	return array.filter((item, index, self) => self.indexOf(item) === index)
 }
-// Функція отримання індексу всередині батьківського елемента
+// Function for getting an index inside the parent element
 export function indexInParent(parent, element) {
 	const array = Array.prototype.slice.call(parent.children);
 	return Array.prototype.indexOf.call(array, element);
 };
-// Функція перевіряє чи об'єкт видимий
+// The function checks whether the object is visible
 export function isHidden(el) {
 	return (el.offsetParent === null)
 }
-// Обробка медіа запитів з атрибутів
+// Processing media requests from attributes
 export function dataMediaQueries(array, dataSetValue) {
 	const media = Array.from(array)
 		.filter(item => item.dataset[dataSetValue])
@@ -206,7 +206,7 @@ export function dataMediaQueries(array, dataSetValue) {
 
 	if (media.length === 0) return [];
 
-	// Отримуємо унікальні брейкпоінти
+	// We get unique breakpoints
 	const breakpointsArray = media.map(({ value, type }) => `(${type}-width: ${value}px),${value},${type}`);
 	const uniqueQueries = [...new Set(breakpointsArray)];
 
@@ -214,13 +214,13 @@ export function dataMediaQueries(array, dataSetValue) {
 		const [mediaQuery, mediaBreakpoint, mediaType] = query.split(',');
 		const matchMedia = window.matchMedia(mediaQuery);
 
-		// Фільтруємо об'єкти з потрібними умовами
+		// Filtering objects with the desired conditions
 		const itemsArray = media.filter(item => item.value === mediaBreakpoint && item.type === mediaType);
 
 		return { itemsArray, matchMedia }
 	});
 }
-// Модуль плавної проктутки до блоку
+// Smooth proctutka module to the block
 export const gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop = 0) => {
 	const targetBlockElement = document.querySelector(targetBlock);
 	if (targetBlockElement) {
@@ -241,12 +241,12 @@ export const gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop 
 				headerItemHeight = headerElement.offsetHeight;
 			}
 		}
-		// Закриваємо меню, якщо воно відкрите
+		// Close the menu if it is open
 		if (document.documentElement.hasAttribute("data-fls-menu-open")) {
 			bodyUnlock()
 			document.documentElement.removeAttribute("data-fls-menu-open")
 		}
-		// Прокручування стандартними засобами
+		// Scrolling using standard tools
 		let targetBlockElementPosition = targetBlockElement.getBoundingClientRect().top + scrollY;
 		targetBlockElementPosition = headerItemHeight ? targetBlockElementPosition - headerItemHeight : targetBlockElementPosition;
 		targetBlockElementPosition = offsetTop ? targetBlockElementPosition - offsetTop : targetBlockElementPosition;

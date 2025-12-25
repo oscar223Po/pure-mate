@@ -1,4 +1,4 @@
-// Підключення функціоналу "Чортоги Фрілансера"
+// Enabling functionality
 import { FLS } from "@js/common/functions.js";
 
 import './rating.scss'
@@ -38,9 +38,9 @@ export function formRating() {
 		rating.insertAdjacentHTML("beforeend", ratingItems)
 	}
 	function formRatingGet(rating, ratingValue) {
-		// Тут відправка оцінки (ratingValue) на бекенд...
-		// Отримуємо нову седню оцінку formRatingSend()
-		// Або виводимо ту яку вказав користувач
+		// Here sending a rating (ratingValue) to the backend...
+		// We get a new gray estimate of formRatingSend()
+		// Or output the one specified by the user
 		const resultRating = ratingValue;
 		formRatingSet(rating, resultRating);
 	}
