@@ -11194,50 +11194,138 @@ _getGSAP2() && gsap.registerPlugin(ScrollTrigger);
 var gsapWithCSS = gsap$2.registerPlugin(CSSPlugin) || gsap$2;
 gsapWithCSS.core.Tween;
 gsapWithCSS.registerPlugin(ScrollTrigger);
-function posterScroll() {
-  const poster = document.querySelector(".poster");
-  const image = poster.querySelector(".poster__image");
-  if (!poster || !image) {
-    console.warn("Poster elements not found");
-    return;
-  }
-  const tl = gsapWithCSS.timeline({
-    scrollTrigger: {
-      trigger: poster,
-      start: "top top",
-      end: "+=200%",
-      // long scroll
-      pin: true,
-      // fix section
-      scrub: true,
-      // scroll = timeline
-      anticipatePin: 1
+const initAnimations = () => {
+  const mm = gsapWithCSS.matchMedia();
+  mm.add("(min-width: 767.98px)", () => {
+    const our = document.querySelector(".our");
+    if (!our) return;
+    const head = our.querySelector(".our__head");
+    const circle = our.querySelector(".our__circle");
+    const sections = our.querySelectorAll(".our__section");
+    const total = sections.length;
+    gsapWithCSS.set(circle, {
+      top: "100%",
+      left: "50%",
+      xPercent: -50,
+      yPercent: 0,
+      scale: 1,
+      transformOrigin: "50% 50%"
+    });
+    gsapWithCSS.set(head, {
+      top: "100%",
+      opacity: 0,
+      yPercent: 0
+    });
+    gsapWithCSS.set(sections, {
+      opacity: 0,
+      y: 40
+    });
+    const tl = gsapWithCSS.timeline({
+      scrollTrigger: {
+        trigger: our,
+        start: "top top",
+        end: () => `+=${window.innerHeight * (total + 1.5)}`,
+        pin: true,
+        scrub: 1,
+        anticipatePin: 1
+      }
+    });
+    tl.to(circle, {
+      top: "50%",
+      scale: 20,
+      yPercent: -50,
+      duration: 1.2,
+      ease: "power3.out"
+    }).to(circle, {
+      scale: 1,
+      duration: 1,
+      ease: "power3.inOut"
+    }).to(circle, {
+      scale: 0,
+      duration: 1,
+      ease: "power3.inOut"
+    });
+    tl.to(head, {
+      top: "50%",
+      opacity: 1,
+      duration: 1,
+      yPercent: -50,
+      ease: "power3.out"
+    }).to(head, {
+      top: "+=100",
+      duration: 0.3,
+      ease: "power2.inOut"
+    }).to(head, {
+      top: 100,
+      duration: 0.6,
+      yPercent: 0,
+      ease: "power3.out"
+    });
+    tl.set(head, {
+      top: 0,
+      position: "relative"
+    });
+    sections.forEach((section, i) => {
+      tl.to(section, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power3.out",
+        onStart: () => section.classList.add("is-active"),
+        onReverseComplete: () => section.classList.remove("is-active")
+      });
+      if (i < total - 1) {
+        tl.to(
+          section,
+          {
+            opacity: 0,
+            y: -40,
+            duration: 0.4,
+            ease: "power2.in",
+            onComplete: () => section.classList.remove("is-active")
+          }
+          // '+=0.5'
+        );
+      }
+    });
+    const poster = document.querySelector(".poster");
+    if (poster) {
+      const posterImage = poster.querySelector(".poster__image");
+      gsapWithCSS.timeline({
+        scrollTrigger: {
+          trigger: poster,
+          start: "top top",
+          end: "+=200%",
+          pin: true,
+          scrub: true
+        }
+      }).to(posterImage, {
+        top: "50%",
+        yPercent: -50,
+        scale: 1,
+        duration: 1,
+        ease: "none"
+      }).to(posterImage, {
+        scale: 15,
+        duration: 1.5,
+        ease: "none"
+      }).to(
+        poster,
+        {
+          backgroundColor: "#0b26c5",
+          duration: 2,
+          ease: "none"
+        },
+        "<"
+      );
     }
+    return () => {
+      tl.kill();
+      ScrollTrigger.getAll().forEach((st) => st.kill());
+    };
   });
-  tl.to(image, {
-    top: "50%",
-    translateY: "-50%",
-    scale: 1,
-    duration: 1,
-    ease: "none"
-  });
-  tl.to(image, {
-    scale: 15,
-    duration: 1.5,
-    ease: "none"
-  });
-  tl.to(
-    poster,
-    {
-      backgroundColor: "#0b26c5",
-      duration: 2,
-      ease: "none",
-      delay: 0.3
-    },
-    "<"
-  );
-}
-document.querySelector("[data-fls-gsap]") ? window.addEventListener("load", posterScroll) : null;
+};
+window.addEventListener("load", initAnimations);
 const q = (root, sel) => root.querySelector(sel);
 const qa = (root, sel) => [...root.querySelectorAll(sel)];
 const SHOW = (el) => el && el.classList.remove("disable");
@@ -11376,24 +11464,6 @@ function initDnDBoard(root, prefix) {
   reset();
 }
 initDnDBoard(document.querySelector(".complex__board--pc"), "fm");
-const ourSection = document.querySelector(".our");
-const ourItems = document.querySelectorAll(".our__section");
-const ourSteps = ourItems.length;
-window.addEventListener("scroll", () => {
-  const rect = ourSection.getBoundingClientRect();
-  const viewport = window.innerHeight;
-  const progress = Math.min(
-    Math.max(-rect.top / (rect.height - viewport), 0),
-    1
-  );
-  let index = Math.floor(progress * ourSteps);
-  if (index >= ourSteps) {
-    index = ourSteps - 1;
-  }
-  ourItems.forEach((el, i) => {
-    el.classList.toggle("is-active", i === index);
-  });
-});
 const BREAKPOINT = 767.98;
 let isMobile = null;
 function handleSpollers() {

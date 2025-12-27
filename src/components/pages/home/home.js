@@ -188,7 +188,7 @@ function initDnDBoard(root, prefix) {
 // Initialisation
 initDnDBoard(document.querySelector('.complex__board--pc'), 'fm')
 
-/* ----- Our Step Section ----- */
+/* ----- Our Step Section -----
 const ourSection = document.querySelector('.our')
 const ourItems = document.querySelectorAll('.our__section')
 const ourSteps = ourItems.length
@@ -212,6 +212,7 @@ window.addEventListener('scroll', () => {
 		el.classList.toggle('is-active', i === index)
 	})
 })
+*/
 
 /* ----- Add Atribut For Spoller ----- */
 const BREAKPOINT = 767.98
@@ -227,7 +228,7 @@ function handleSpollers() {
 	const addOpen = document.querySelector('.add-open')
 
 	if (nowMobile) {
-		// === MOBILE ===
+		// Mobile
 		innerSpollers.forEach(el => {
 			el.setAttribute('data-fls-spollers', '')
 		})
@@ -241,7 +242,7 @@ function handleSpollers() {
 			addOpen.setAttribute('data-fls-spollers-open', '')
 		}
 	} else {
-		// === DESKTOP ===
+		// Desktop
 		innerSpollers.forEach(el => {
 			el.removeAttribute('data-fls-spollers')
 		})
