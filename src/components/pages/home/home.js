@@ -188,32 +188,6 @@ function initDnDBoard(root, prefix) {
 // Initialisation
 initDnDBoard(document.querySelector('.complex__board--pc'), 'fm')
 
-/* ----- Our Step Section -----
-const ourSection = document.querySelector('.our')
-const ourItems = document.querySelectorAll('.our__section')
-const ourSteps = ourItems.length
-window.addEventListener('scroll', () => {
-	const rect = ourSection.getBoundingClientRect()
-	const viewport = window.innerHeight
-
-	const progress = Math.min(
-		Math.max(-rect.top / (rect.height - viewport), 0),
-		1
-	)
-
-	let index = Math.floor(progress * ourSteps)
-
-	// Fixing the last element
-	if (index >= ourSteps) {
-		index = ourSteps - 1
-	}
-
-	ourItems.forEach((el, i) => {
-		el.classList.toggle('is-active', i === index)
-	})
-})
-*/
-
 /* ----- Add Atribut For Spoller ----- */
 const BREAKPOINT = 767.98
 let isMobile = null

@@ -11203,12 +11203,33 @@ const initAnimations = () => {
     const circle = our.querySelector(".our__circle");
     const sections = our.querySelectorAll(".our__section");
     const total = sections.length;
+    const targetWord = our.querySelector(".target-word");
+    if (!targetWord) {
+      console.warn("GSAP Warning: Element .target-word not found inside .our");
+      return;
+    }
+    const chars = targetWord.textContent.split("");
+    targetWord.textContent = "";
+    chars.forEach((char, index) => {
+      const span = document.createElement("span");
+      span.textContent = char;
+      span.style.display = "inline-block";
+      span.style.position = "relative";
+      if (index === 0 || index === 1 || index === 3) {
+        span.classList.add("jump-target");
+      }
+      targetWord.appendChild(span);
+    });
+    const jumpTargets = our.querySelectorAll(".jump-target");
     gsapWithCSS.set(circle, {
       top: "100%",
       left: "50%",
       xPercent: -50,
       yPercent: 0,
+      x: 0,
+      y: 0,
       scale: 1,
+      position: "absolute",
       transformOrigin: "50% 50%"
     });
     gsapWithCSS.set(head, {
@@ -11240,21 +11261,113 @@ const initAnimations = () => {
       scale: 1,
       duration: 1,
       ease: "power3.inOut"
-    }).to(circle, {
-      scale: 0,
-      duration: 1,
-      ease: "power3.inOut"
     });
     tl.to(head, {
       top: "50%",
       opacity: 1,
       duration: 1,
-      yPercent: -50,
+      yPercent: 50,
       ease: "power3.out"
     }).to(head, {
       top: "+=100",
       duration: 0.3,
       ease: "power2.inOut"
+    }).to(head, {
+      top: "50%",
+      duration: 1,
+      yPercent: -50,
+      ease: "power3.out"
+    });
+    tl.to(
+      circle,
+      {
+        scale: 0.1,
+        duration: 0.5,
+        yPercent: -170,
+        ease: "power3.inOut"
+      },
+      "<"
+    );
+    if (jumpTargets.length >= 3) {
+      const getCord = (targetEl) => {
+        const pRect = our.getBoundingClientRect();
+        const tRect = targetEl.getBoundingClientRect();
+        return {
+          x: tRect.left - pRect.left + tRect.width / 2 - pRect.width / 2,
+          y: tRect.top - pRect.top + tRect.height / 2 - pRect.height / 2
+        };
+      };
+      const posD = () => getCord(jumpTargets[0]);
+      tl.to(circle, {
+        x: () => posD().x,
+        y: () => posD().y - 120,
+        duration: 0.6,
+        ease: "power2.in",
+        // Fall
+        yPercent: 0
+        // Resetting the percentage offset
+      });
+      const posE = () => getCord(jumpTargets[1]);
+      tl.to(
+        circle,
+        {
+          x: () => posE().x,
+          duration: 0.4,
+          ease: "power1.inOut"
+        },
+        "jump-to-e"
+      );
+      tl.to(
+        circle,
+        {
+          keyframes: {
+            "0%": { y: () => posD().y - 120 },
+            "50%": { y: () => posD().y - 200 },
+            // Jump height
+            "100%": { y: () => posE().y - 110 }
+            // Landing
+          },
+          duration: 0.4,
+          ease: "sine.inOut"
+        },
+        "jump-to-e"
+      );
+      const posI = () => getCord(jumpTargets[2]);
+      tl.to(
+        circle,
+        {
+          x: () => posI().x,
+          duration: 0.4,
+          ease: "power1.inOut"
+        },
+        "jump-to-i"
+      );
+      tl.to(
+        circle,
+        {
+          keyframes: {
+            "0%": { y: () => posE().y - 110 },
+            "50%": { y: () => posE().y - 200 },
+            "100%": { y: () => posI().y - 107 }
+            // The position of the point above the i
+          },
+          duration: 0.4,
+          ease: "sine.inOut"
+        },
+        "jump-to-i"
+      );
+      tl.to(circle, {
+        scale: 0,
+        duration: 0.2,
+        ease: "power3.out"
+        // ease: 'back.in(2)'
+      });
+    }
+    tl.to(head, {
+      top: "50%",
+      duration: 1,
+      yPercent: -50,
+      ease: "power3.out"
     }).to(head, {
       top: 100,
       duration: 0.6,
