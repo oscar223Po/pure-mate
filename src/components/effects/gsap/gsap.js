@@ -65,6 +65,29 @@ const initAnimations = () => {
 			y: 40
 		})
 
+		// Pre animation for circle
+		gsap.fromTo(
+			circle,
+			{
+				// Change scale on width
+				top: '100%',
+				width: 150,
+				yPercent: 0
+			},
+			{
+				top: '50%',
+				width: 3000,
+				yPercent: -50,
+				ease: 'power3.out',
+				scrollTrigger: {
+					trigger: our,
+					start: 'top 80%',
+					end: 'top top',
+					scrub: true
+				}
+			}
+		)
+
 		// Timeline
 		const tl = gsap.timeline({
 			scrollTrigger: {
@@ -77,15 +100,9 @@ const initAnimations = () => {
 			}
 		})
 
-		// Circle Animation
+		// Circle animation return
 		tl.to(circle, {
-			top: '50%',
-			scale: 20,
-			yPercent: -50,
-			duration: 1.2,
-			ease: 'power3.out'
-		}).to(circle, {
-			scale: 1,
+			width: 150,
 			duration: 1,
 			ease: 'power3.inOut'
 		})
@@ -258,41 +275,76 @@ const initAnimations = () => {
 
 		/* ----- Poster ----- */
 		const poster = document.querySelector('.poster')
-		if (poster) {
-			const posterImage = poster.querySelector('.poster__image')
+		if (!poster) return
 
-			gsap
-				.timeline({
-					scrollTrigger: {
-						trigger: poster,
-						start: 'top top',
-						end: '+=200%',
-						pin: true,
-						scrub: true
-					}
-				})
-				.to(posterImage, {
+		const posterImage = poster.querySelector('.poster__image')
+
+		// State
+		gsap.set(posterImage, {
+			top: '100%',
+			left: '50%',
+			xPercent: -50,
+			yPercent: 0,
+			width: 995,
+			position: 'absolute',
+			transformOrigin: '50% 50%'
+		})
+
+		// Pre Animation
+		gsap.fromTo(
+			posterImage,
+			{
+				top: '100%',
+				yPercent: 0
+			},
+			{
+				top: '50%',
+				yPercent: -50,
+				ease: 'none',
+				scrollTrigger: {
+					trigger: poster,
+					start: 'top 80%',
+					end: 'top top',
+					scrub: true
+				}
+			}
+		)
+
+		// Fix state on pin start
+		ScrollTrigger.create({
+			trigger: poster,
+			start: 'top top',
+			onEnter: () => {
+				gsap.set(posterImage, {
 					top: '50%',
-					yPercent: -50,
-					scale: 1,
-					duration: 1,
-					ease: 'none'
+					yPercent: -50
 				})
-				.to(posterImage, {
-					scale: 15,
-					duration: 1.5,
-					ease: 'none'
-				})
-				.to(
-					poster,
-					{
-						backgroundColor: '#0b26c5',
-						duration: 2,
-						ease: 'none'
-					},
-					'<'
-				)
-		}
+			}
+		})
+
+		// Timeline
+		const pl = gsap.timeline({
+			scrollTrigger: {
+				trigger: poster,
+				start: 'top top',
+				end: '+=200%',
+				pin: true,
+				scrub: true,
+				anticipatePin: 1
+			}
+		})
+
+		pl.to(posterImage, {
+			width: 15000,
+			ease: 'none'
+		}).to(
+			poster,
+			{
+				backgroundColor: '#0b26c5',
+				ease: 'none'
+			},
+			'<'
+		)
 
 		// Clean Resize
 		return () => {
