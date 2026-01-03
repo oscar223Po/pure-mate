@@ -11194,228 +11194,228 @@ _getGSAP2() && gsap.registerPlugin(ScrollTrigger);
 var gsapWithCSS = gsap$2.registerPlugin(CSSPlugin) || gsap$2;
 gsapWithCSS.core.Tween;
 gsapWithCSS.registerPlugin(ScrollTrigger);
-const initAnimations = () => {
-  const mm = gsapWithCSS.matchMedia();
-  mm.add("(min-width: 767.98px)", () => {
-    const our = document.querySelector(".our");
-    if (!our) return;
-    const head = our.querySelector(".our__head");
-    const circle = our.querySelector(".our__circle");
-    const sections = our.querySelectorAll(".our__section");
-    const total = sections.length;
-    const targetWord = our.querySelector(".target-word");
-    if (!targetWord) {
-      console.warn("GSAP Warning: Element .target-word not found inside .our");
-      return;
+const splitTextAndMarkTargets = (element, targetIndices) => {
+  if (!element) return [];
+  const text = element.textContent;
+  element.textContent = "";
+  text.split("").map((char, index) => {
+    const span = document.createElement("span");
+    span.textContent = char;
+    Object.assign(span.style, { display: "inline-block", position: "relative" });
+    if (targetIndices.includes(index)) {
+      span.classList.add("jump-target");
     }
-    const chars = targetWord.textContent.split("");
-    targetWord.textContent = "";
-    chars.forEach((char, index) => {
-      const span = document.createElement("span");
-      span.textContent = char;
-      span.style.display = "inline-block";
-      span.style.position = "relative";
-      if (index === 0 || index === 1 || index === 3) {
-        span.classList.add("jump-target");
-      }
-      targetWord.appendChild(span);
-    });
-    const jumpTargets = our.querySelectorAll(".jump-target");
-    gsapWithCSS.set(circle, {
-      top: "100%",
-      left: "50%",
-      xPercent: -50,
-      yPercent: 0,
-      x: 0,
-      y: 0,
-      scale: 1,
-      position: "absolute",
-      transformOrigin: "50% 50%"
-    });
-    gsapWithCSS.set(head, {
-      top: "100%",
-      opacity: 0,
-      yPercent: 0
-    });
-    gsapWithCSS.set(sections, {
-      opacity: 0,
-      y: 40
-    });
-    gsapWithCSS.fromTo(
-      circle,
-      {
-        // Change scale on width
+    element.appendChild(span);
+    return span;
+  });
+  return element.querySelectorAll(".jump-target");
+};
+const getRelativeCenter = (targetEl, parentEl) => {
+  const pRect = parentEl.getBoundingClientRect();
+  const tRect = targetEl.getBoundingClientRect();
+  return {
+    x: tRect.left - pRect.left + tRect.width / 2 - pRect.width / 2,
+    y: tRect.top - pRect.top + tRect.height / 2 - pRect.height / 2
+  };
+};
+const initOurAnimations = () => {
+  const our = document.querySelector(".our");
+  if (!our) return;
+  const ui = {
+    head: our.querySelector(".our__head"),
+    circle: our.querySelector(".our__circle"),
+    sections: our.querySelectorAll(".our__section"),
+    targetWord: our.querySelector(".target-word")
+  };
+  if (!ui.targetWord) {
+    console.warn("GSAP Warning: .target-word not found");
+    return;
+  }
+  const jumpTargets = splitTextAndMarkTargets(ui.targetWord, [0, 1, 3]);
+  const totalSections = ui.sections.length;
+  const mm = gsapWithCSS.matchMedia();
+  mm.add(
+    {
+      isDesktop: "(min-width: 992px)",
+      isTablet: "(max-width: 991.98px) and (min-width: 768px)",
+      isMobile: "(max-width: 767.98px)"
+    },
+    (context3) => {
+      const { isMobile: isMobile2, isTablet, isDesktop } = context3.conditions;
+      const config3 = {
+        circleStartWidth: isMobile2 ? 85 : isDesktop ? 150 : 115,
+        jumpYOffset: isMobile2 ? -62 : isTablet ? -90 : -120,
+        jumpHighPoint: isMobile2 ? -100 : isTablet ? -170 : -200,
+        // The logic of landing:
+        // Mobile (< 768): -70
+        // Tablet (768 - 991): -80
+        // Desktop (> 992): -110 (standart)
+        jumpLandingFix: isMobile2 ? -60 : isTablet ? -82 : -110
+      };
+      gsapWithCSS.set(ui.circle, {
         top: "100%",
-        width: 150,
-        yPercent: 0
-      },
-      {
-        top: "50%",
-        width: 3e3,
-        yPercent: -50,
-        ease: "power3.out",
+        left: "50%",
+        xPercent: -50,
+        yPercent: 0,
+        x: 0,
+        y: 0,
+        scale: 1,
+        position: "absolute",
+        transformOrigin: "50% 50%"
+      });
+      gsapWithCSS.set(ui.head, { top: "100%", opacity: 0, yPercent: 0 });
+      gsapWithCSS.set(ui.sections, { opacity: 0, y: 40 });
+      gsapWithCSS.fromTo(
+        ui.circle,
+        { top: "100%", width: config3.circleStartWidth, yPercent: 0 },
+        {
+          top: "50%",
+          width: 3e3,
+          yPercent: -50,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: our,
+            start: "top 80%",
+            end: "top top",
+            scrub: true
+          }
+        }
+      );
+      const tl = gsapWithCSS.timeline({
         scrollTrigger: {
           trigger: our,
-          start: "top 80%",
-          end: "top top",
-          scrub: true
+          start: "top top",
+          end: () => `+=${window.innerHeight * (totalSections + 1.5)}`,
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1
         }
-      }
-    );
-    const tl = gsapWithCSS.timeline({
-      scrollTrigger: {
-        trigger: our,
-        start: "top top",
-        end: () => `+=${window.innerHeight * (total + 1.5)}`,
-        pin: true,
-        scrub: 1,
-        anticipatePin: 1
-      }
-    });
-    tl.to(circle, {
-      width: 150,
-      duration: 1,
-      ease: "power3.inOut"
-    });
-    tl.to(head, {
-      top: "50%",
-      opacity: 1,
-      duration: 1,
-      yPercent: 50,
-      ease: "power3.out"
-    }).to(head, {
-      top: "+=100",
-      duration: 0.3,
-      ease: "power2.inOut"
-    }).to(head, {
-      top: "50%",
-      duration: 1,
-      yPercent: -50,
-      ease: "power3.out"
-    });
-    tl.to(
-      circle,
-      {
-        scale: 0.1,
-        duration: 0.5,
-        yPercent: -170,
+      });
+      tl.to(ui.circle, {
+        width: config3.circleStartWidth,
+        duration: 1,
         ease: "power3.inOut"
-      },
-      "<"
-    );
-    if (jumpTargets.length >= 3) {
-      const getCord = (targetEl) => {
-        const pRect = our.getBoundingClientRect();
-        const tRect = targetEl.getBoundingClientRect();
-        return {
-          x: tRect.left - pRect.left + tRect.width / 2 - pRect.width / 2,
-          y: tRect.top - pRect.top + tRect.height / 2 - pRect.height / 2
-        };
-      };
-      const posD = () => getCord(jumpTargets[0]);
-      tl.to(circle, {
-        x: () => posD().x,
-        y: () => posD().y - 120,
-        duration: 0.6,
-        ease: "power2.in",
-        // Fall
-        yPercent: 0
-        // Resetting the percentage offset
       });
-      const posE = () => getCord(jumpTargets[1]);
-      tl.to(
-        circle,
-        {
-          x: () => posE().x,
-          duration: 0.4,
-          ease: "power1.inOut"
-        },
-        "jump-to-e"
-      );
-      tl.to(
-        circle,
-        {
-          keyframes: {
-            "0%": { y: () => posD().y - 120 },
-            "50%": { y: () => posD().y - 200 },
-            // Jump height
-            "100%": { y: () => posE().y - 110 }
-            // Landing
-          },
-          duration: 0.4,
-          ease: "sine.inOut"
-        },
-        "jump-to-e"
-      );
-      const posI = () => getCord(jumpTargets[2]);
-      tl.to(
-        circle,
-        {
-          x: () => posI().x,
-          duration: 0.4,
-          ease: "power1.inOut"
-        },
-        "jump-to-i"
-      );
-      tl.to(
-        circle,
-        {
-          keyframes: {
-            "0%": { y: () => posE().y - 110 },
-            "50%": { y: () => posE().y - 200 },
-            "100%": { y: () => posI().y - 107 }
-            // The position of the point above the i
-          },
-          duration: 0.4,
-          ease: "sine.inOut"
-        },
-        "jump-to-i"
-      );
-      tl.to(circle, {
-        scale: 0,
-        duration: 0.2,
-        ease: "power3.out"
-        // ease: 'back.in(2)'
-      });
-    }
-    tl.to(head, {
-      top: "50%",
-      duration: 1,
-      yPercent: -50,
-      ease: "power3.out"
-    }).to(head, {
-      top: 100,
-      duration: 0.6,
-      yPercent: 0,
-      ease: "power3.out"
-    });
-    tl.set(head, {
-      top: 0,
-      position: "relative"
-    });
-    sections.forEach((section, i) => {
-      tl.to(section, {
+      tl.to(ui.head, {
+        top: "50%",
         opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: "power3.out",
-        onStart: () => section.classList.add("is-active"),
-        onReverseComplete: () => section.classList.remove("is-active")
+        duration: 1,
+        yPercent: 50,
+        ease: "power3.out"
+      }).to(ui.head, {
+        top: "+=100",
+        duration: 0.3,
+        ease: "power2.inOut"
+      }).to(ui.head, {
+        top: "50%",
+        duration: 1,
+        yPercent: -50,
+        ease: "power3.out"
       });
-      if (i < total - 1) {
+      tl.to(
+        ui.circle,
+        {
+          scale: isDesktop ? 0.1 : 0.09,
+          duration: 0.5,
+          yPercent: -170,
+          ease: "power3.inOut"
+        },
+        "<"
+      );
+      if (jumpTargets.length >= 3) {
+        const getPos = (index) => getRelativeCenter(jumpTargets[index], our);
+        tl.to(ui.circle, {
+          x: () => getPos(0).x,
+          y: () => getPos(0).y + config3.jumpYOffset,
+          duration: 0.6,
+          ease: "power2.in",
+          yPercent: 0
+        });
+        const posE = () => getPos(1);
         tl.to(
-          section,
+          ui.circle,
           {
+            x: () => posE().x,
+            duration: 0.4,
+            ease: "power1.inOut"
+          },
+          "jump-to-e"
+        );
+        tl.to(
+          ui.circle,
+          {
+            keyframes: {
+              "0%": { y: () => getPos(0).y + config3.jumpYOffset },
+              "50%": { y: () => getPos(0).y + config3.jumpHighPoint },
+              "100%": { y: () => posE().y + config3.jumpLandingFix }
+            },
+            duration: 0.4,
+            ease: "sine.inOut"
+          },
+          "jump-to-e"
+        );
+        const posI = () => getPos(2);
+        tl.to(
+          ui.circle,
+          {
+            x: () => posI().x,
+            duration: 0.4,
+            ease: "power1.inOut"
+          },
+          "jump-to-i"
+        );
+        tl.to(
+          ui.circle,
+          {
+            keyframes: {
+              "0%": { y: () => posE().y + config3.jumpLandingFix },
+              "50%": { y: () => posE().y + config3.jumpHighPoint },
+              "100%": { y: () => posI().y + (config3.jumpLandingFix + 3) }
+            },
+            duration: 0.4,
+            ease: "sine.inOut"
+          },
+          "jump-to-i"
+        );
+        tl.to(ui.circle, { scale: 0, duration: 0.2, ease: "power3.out" });
+      }
+      tl.to(ui.head, {
+        top: "50%",
+        duration: 1,
+        yPercent: -50,
+        ease: "power3.out"
+      }).to(ui.head, {
+        top: 100,
+        duration: 0.6,
+        yPercent: 0,
+        ease: "power3.out"
+      });
+      tl.set(ui.head, { top: 0, position: "relative" });
+      ui.sections.forEach((section, i) => {
+        tl.to(section, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power3.out",
+          onStart: () => section.classList.add("is-active"),
+          onReverseComplete: () => section.classList.remove("is-active")
+        });
+        if (!isMobile2 && i < totalSections - 1) {
+          tl.to(section, {
             opacity: 0,
             y: -40,
             duration: 0.4,
             ease: "power2.in",
             onComplete: () => section.classList.remove("is-active")
-          }
-          // '+=0.5'
-        );
-      }
-    });
+          });
+        }
+      });
+    }
+  );
+};
+const initPosterAnimations = () => {
+  const mm = gsapWithCSS.matchMedia();
+  mm.add("(min-width: 768px)", () => {
     const poster = document.querySelector(".poster");
     if (!poster) return;
     const posterImage = poster.querySelector(".poster__image");
@@ -11430,10 +11430,7 @@ const initAnimations = () => {
     });
     gsapWithCSS.fromTo(
       posterImage,
-      {
-        top: "100%",
-        yPercent: 0
-      },
+      { top: "100%", yPercent: 0 },
       {
         top: "50%",
         yPercent: -50,
@@ -11449,12 +11446,7 @@ const initAnimations = () => {
     ScrollTrigger.create({
       trigger: poster,
       start: "top top",
-      onEnter: () => {
-        gsapWithCSS.set(posterImage, {
-          top: "50%",
-          yPercent: -50
-        });
-      }
+      onEnter: () => gsapWithCSS.set(posterImage, { top: "50%", yPercent: -50 })
     });
     const pl = gsapWithCSS.timeline({
       scrollTrigger: {
@@ -11466,24 +11458,17 @@ const initAnimations = () => {
         anticipatePin: 1
       }
     });
-    pl.to(posterImage, {
-      width: 15e3,
-      ease: "none"
-    }).to(
+    pl.to(posterImage, { width: 15e3, ease: "none" }).to(
       poster,
-      {
-        backgroundColor: "#0b26c5",
-        ease: "none"
-      },
+      { backgroundColor: "#0b26c5", ease: "none" },
       "<"
     );
-    return () => {
-      tl.kill();
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
   });
 };
-window.addEventListener("load", initAnimations);
+window.addEventListener("load", () => {
+  initOurAnimations();
+  initPosterAnimations();
+});
 const q = (root, sel) => root.querySelector(sel);
 const qa = (root, sel) => [...root.querySelectorAll(sel)];
 const SHOW = (el) => el && el.classList.remove("disable");

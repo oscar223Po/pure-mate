@@ -822,15 +822,10 @@
 	&::-webkit-scrollbar {
 		display: none;
 	}
-	@media (min-width: toEm($mobile)) {
-		height: 100vh;
-		position: relative;
-		&:has(.our__section.is-active) {
-			overflow: auto;
-		}
-	}
-	@media (max-width: toEm($mobile)) {
-		padding-bottom: 100px;
+	height: 100vh;
+	position: relative;
+	&:has(.our__section.is-active) {
+		overflow: auto;
 	}
 	// .our__circle
 	&__circle {
@@ -842,21 +837,16 @@
 		position: absolute;
 		border-radius: 50%;
 		background: #000;
+		pointer-events: none;
 		transform: translate(-50%, -50%) scale(10);
 		will-change: transform, opacity, width;
-		pointer-events: none;
-		@media (max-width: toEm($mobile)) {
-			display: none;
-		}
 	}
 	// .our__container-min
 	&__container-min {
-		@media (min-width: toEm($mobile)) {
-			display: flex;
-			height: 100vh;
-			padding-top: 100px;
-			flex-direction: column;
-		}
+		display: flex;
+		height: 100vh;
+		padding-top: 100px;
+		flex-direction: column;
 	}
 	// .our__head
 	&__head {
@@ -874,7 +864,6 @@
 			@include adaptiveValue('margin-bottom', 90, 30, 2, 1440, 767.98);
 		}
 		@media (max-width: toEm($mobile)) {
-			position: relative;
 			&:not(:last-child) {
 				@include adaptiveValue('margin-bottom', 40, 20, 0, 767.98, 320);
 			}
@@ -898,7 +887,13 @@
 	}
 	// .our__title
 	&__title {
-		@include adaptiveValue('font-size', 94, 40);
+		font-size: 94px;
+		@media (max-width: toEm($tablet)) {
+			font-size: 64px;
+		}
+		@media (max-width: toEm($mobile)) {
+			font-size: 40px;
+		}
 	}
 	// .our__body
 	&__body {
@@ -907,6 +902,7 @@
 		@media (max-width: toEm($mobile)) {
 			height: auto;
 			display: grid;
+			padding-bottom: 40px;
 			@include adaptiveValue('gap', 40, 30, 0, 767.98, 320);
 		}
 	}
@@ -1265,6 +1261,7 @@
 		left: 0;
 		right: 0;
 		top: 50%;
+		z-index: 1;
 		color: #fff;
 		translate: 0 -50%;
 		position: absolute;
