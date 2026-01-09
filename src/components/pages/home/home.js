@@ -237,31 +237,6 @@ window.addEventListener(
 	{ passive: true }
 )
 
-/* ----- Cause Step Section ----- */
-const causeSection = document.querySelector('.cause')
-const causeItems = document.querySelectorAll('.cause__section')
-const causeSteps = causeItems.length
-window.addEventListener('scroll', () => {
-	const rect = causeSection.getBoundingClientRect()
-	const viewport = window.innerHeight
-
-	const progress = Math.min(
-		Math.max(-rect.top / (rect.height - viewport), 0),
-		1
-	)
-
-	let index = Math.floor(progress * causeSteps)
-
-	// Fixing the last element
-	if (index >= causeSteps) {
-		index = causeSteps - 1
-	}
-
-	causeItems.forEach((el, i) => {
-		el.classList.toggle('is-active', i === index)
-	})
-})
-
 /* ----- Play Video In Showreel Section ----- */
 document.addEventListener('DOMContentLoaded', () => {
 	const section = document.querySelector('.showreel')

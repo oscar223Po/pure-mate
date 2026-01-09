@@ -51,7 +51,9 @@ const initOurAnimations = () => {
 		return
 	}
 
+	// D e ı g n  → прыжки по D, e, ı
 	const jumpTargets = splitTextAndMarkTargets(ui.targetWord, [0, 1, 3])
+	const iSpan = jumpTargets[2]
 	const totalSections = ui.sections.length
 
 	const mm = gsap.matchMedia()
@@ -67,15 +69,12 @@ const initOurAnimations = () => {
 
 			// 1. Configuration
 			const config = {
-				circleStartWidth: isMobile ? 85 : isDesktop ? 150 : 115,
-				jumpYOffset: isMobile ? -62 : isTablet ? -90 : -120,
-				jumpHighPoint: isMobile ? -100 : isTablet ? -170 : -200,
+				circleStartWidth: isMobile ? 77 : isDesktop ? 150 : 115,
+				jumpYOffset: isMobile ? -57 : isTablet ? -90 : -120,
+				jumpHighPoint: isMobile ? -95 : isTablet ? -170 : -200,
 
 				// The logic of landing:
-				// Mobile (< 768): -70
-				// Tablet (768 - 991): -80
-				// Desktop (> 992): -110 (standart)
-				jumpLandingFix: isMobile ? -60 : isTablet ? -82 : -110
+				jumpLandingFix: isMobile ? -52 : isTablet ? -82 : -110
 			}
 
 			// -- Set Initial States --
@@ -116,7 +115,7 @@ const initOurAnimations = () => {
 				scrollTrigger: {
 					trigger: our,
 					start: 'top top',
-					end: () => `+=${window.innerHeight * (totalSections + 1.5)}`,
+					end: () => `+=${window.innerHeight * (totalSections + 0.8)}`,
 					pin: true,
 					scrub: 1,
 					anticipatePin: 1
@@ -125,7 +124,7 @@ const initOurAnimations = () => {
 
 			tl.to(ui.circle, {
 				width: config.circleStartWidth,
-				duration: 1,
+				duration: 0.5, // 1
 				ease: 'power3.inOut'
 			})
 
@@ -133,18 +132,18 @@ const initOurAnimations = () => {
 			tl.to(ui.head, {
 				top: '50%',
 				opacity: 1,
-				duration: 1,
+				duration: 0.5, // 1
 				yPercent: 50,
 				ease: 'power3.out'
 			})
 				.to(ui.head, {
 					top: '+=100',
-					duration: 0.3,
+					duration: 0.15, // 0.3
 					ease: 'power2.inOut'
 				})
 				.to(ui.head, {
 					top: '50%',
-					duration: 1,
+					duration: 0.5, // 1
 					yPercent: -50,
 					ease: 'power3.out'
 				})
@@ -153,8 +152,8 @@ const initOurAnimations = () => {
 			tl.to(
 				ui.circle,
 				{
-					scale: isDesktop ? 0.1 : 0.09,
-					duration: 0.5,
+					scale: isMobile ? 0.06 : isDesktop ? 0.1 : 0.09,
+					duration: 0.25, // 0.5
 					yPercent: -170,
 					ease: 'power3.inOut'
 				},
@@ -169,7 +168,7 @@ const initOurAnimations = () => {
 				tl.to(ui.circle, {
 					x: () => getPos(0).x,
 					y: () => getPos(0).y + config.jumpYOffset,
-					duration: 0.6,
+					duration: 0.3, // 0.6
 					ease: 'power2.in',
 					yPercent: 0
 				})
@@ -180,7 +179,7 @@ const initOurAnimations = () => {
 					ui.circle,
 					{
 						x: () => posE().x,
-						duration: 0.4,
+						duration: 0.2, // 0.4
 						ease: 'power1.inOut'
 					},
 					'jump-to-e'
@@ -194,19 +193,20 @@ const initOurAnimations = () => {
 							'50%': { y: () => getPos(0).y + config.jumpHighPoint },
 							'100%': { y: () => posE().y + config.jumpLandingFix }
 						},
-						duration: 0.4,
+						duration: 0.2, // 0.4
 						ease: 'sine.inOut'
 					},
 					'jump-to-e'
 				)
 
-				// Jump to "i"
+				// Jump to "ı" (Change to i)
 				const posI = () => getPos(2)
+
 				tl.to(
 					ui.circle,
 					{
 						x: () => posI().x,
-						duration: 0.4,
+						duration: 0.2, // 0.4
 						ease: 'power1.inOut'
 					},
 					'jump-to-i'
@@ -220,24 +220,38 @@ const initOurAnimations = () => {
 							'50%': { y: () => posE().y + config.jumpHighPoint },
 							'100%': { y: () => posI().y + (config.jumpLandingFix + 3) }
 						},
-						duration: 0.4,
-						ease: 'sine.inOut'
+						duration: 0.2, // 0.4
+						ease: 'sine.inOut',
+
+						// Immediately Reaction
+						onUpdate: function () {
+							// this.progress() return from 0 to 1.
+							// If the progress is less than 1 (circle in flight or just started to break away when reversing)
+							// and the letter is still 'i', we immediately change it back to 'a'.
+							if (this.progress() < 1 && iSpan && iSpan.textContent === 'i') {
+								iSpan.textContent = 'ı'
+							}
+						},
+						// It is triggered only when the circle has landed completely (forward)
+						onComplete: () => {
+							if (iSpan) iSpan.textContent = 'i'
+						}
 					},
 					'jump-to-i'
 				)
 
-				tl.to(ui.circle, { scale: 0, duration: 0.2, ease: 'power3.out' })
+				tl.to(ui.circle, { scale: 0, duration: 0.1, ease: 'power3.out' }) // duration 0.2
 			}
 
 			// Head Leaves
 			tl.to(ui.head, {
 				top: '50%',
-				duration: 1,
+				duration: 0.5, // 1
 				yPercent: -50,
 				ease: 'power3.out'
 			}).to(ui.head, {
 				top: 100,
-				duration: 0.6,
+				duration: 0.3, // 0.6
 				yPercent: 0,
 				ease: 'power3.out'
 			})
@@ -248,7 +262,7 @@ const initOurAnimations = () => {
 				tl.to(section, {
 					opacity: 1,
 					y: 0,
-					duration: 0.6,
+					duration: 0.3, // 0.6
 					ease: 'power3.out',
 					onStart: () => section.classList.add('is-active'),
 					onReverseComplete: () => section.classList.remove('is-active')
@@ -258,7 +272,7 @@ const initOurAnimations = () => {
 					tl.to(section, {
 						opacity: 0,
 						y: -40,
-						duration: 0.4,
+						duration: 0.2, // 0.4
 						ease: 'power2.in',
 						onComplete: () => section.classList.remove('is-active')
 					})
@@ -266,6 +280,84 @@ const initOurAnimations = () => {
 			})
 		}
 	)
+}
+const initCauseAnimations = () => {
+	const cause = document.querySelector('.cause')
+	if (!cause) return
+
+	const sections = gsap.utils.toArray('.cause__section')
+
+	// Making sure that everything is hidden except the first one
+	gsap.set(sections, { autoAlpha: 0, zIndex: 0 })
+	gsap.set(sections[0], { autoAlpha: 1, zIndex: 1 })
+
+	sections.forEach((section, i) => {
+		if (i === 0) return
+		const text = section.querySelector('.cause__below')
+		if (text) {
+			gsap.set(text, { y: 30, autoAlpha: 0 })
+		}
+	})
+
+	// 2. Create Timeline
+	const tl = gsap.timeline({
+		scrollTrigger: {
+			trigger: cause,
+			start: 'top top',
+			end: () => `+=${sections.length * 100}%`,
+			pin: true,
+			scrub: 0.5,
+			anticipatePin: 1
+		}
+	})
+
+	// Pause at the beginning so that the user can read the first slide.
+	tl.to({}, { duration: 0.5 })
+
+	// 3. Animation cycle
+	sections.forEach((section, i) => {
+		if (i === 0) return
+
+		const prevSection = sections[i - 1]
+		const currentText = section.querySelector('.cause__below')
+
+		// Grouping animations so that they go in one step
+
+		// A) Removing the previous section
+		tl.to(prevSection, {
+			autoAlpha: 0,
+			duration: 0.1,
+			ease: 'none'
+		})
+
+		// B) Showing the current section
+		tl.to(
+			section,
+			{
+				autoAlpha: 1,
+				duration: 0.1,
+				ease: 'none'
+			},
+			'<'
+		)
+
+		// C) Text animation
+		if (currentText) {
+			tl.to(
+				currentText,
+				{
+					y: 0,
+					autoAlpha: 1,
+					duration: 0.5,
+					ease: 'power2.out'
+				},
+				'<'
+			)
+		}
+
+		// A short pause after the slide appears before changing the next one
+		tl.to({}, { duration: 1 })
+	})
 }
 const initPosterAnimations = () => {
 	const mm = gsap.matchMedia()
@@ -330,5 +422,6 @@ const initPosterAnimations = () => {
 /* ----- Initialisation ----- */
 window.addEventListener('load', () => {
 	initOurAnimations()
+	initCauseAnimations()
 	initPosterAnimations()
 })

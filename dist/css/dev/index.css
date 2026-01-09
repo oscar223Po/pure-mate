@@ -586,7 +586,6 @@ body {
   align-items: center;
   background: #e8e8f1;
   justify-content: center;
-  box-shadow: inset rgba(0, 0, 0, 0.03) 0rem 0rem 0rem 0.0625rem;
 }
 .complex__board--pc span:nth-child(12n+2), .complex__board--pc span:nth-child(12n+4), .complex__board--pc span:nth-child(12n+6), .complex__board--pc span:nth-child(12n+7), .complex__board--pc span:nth-child(12n+9), .complex__board--pc span:nth-child(12n+11) {
   background: #f5f5ff;
@@ -1039,71 +1038,65 @@ body {
   display: none;
 }
 .cause {
-  height: 500vh;
+  height: 100vh;
   color: #fff;
+  overflow: hidden;
   position: relative;
   background-color: #040000;
 }
 .cause__container-min {
-  top: 0;
-  height: 100vh;
-  position: sticky;
-}
-.cause__body {
+  gap: 1.5625rem;
   height: 100%;
-  position: relative;
-}
-.cause__section {
-  inset: 0;
-  gap: 1.875rem;
-  display: grid;
-  position: absolute;
-  align-items: start;
-  grid-template-rows: 1fr auto;
-}
-.cause__section.is-active {
-  z-index: 1;
-  overflow-y: auto;
-}
-.cause__section.is-active .cause__title {
-  opacity: 1;
-}
-.cause__section.is-active .article-cause {
-  opacity: 1;
-  transform: translateY(0);
+  display: flex;
+  padding-block: 6.25rem;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .cause__title {
-  opacity: 0;
   font-family: "FKTGnarly_Rg";
   background: linear-gradient(90deg, #f0e9e9 19.71%, #e3c8df 47.6%, #bacbea 76.92%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.article-cause {
+.cause__body {
+  width: 100%;
+  display: grid;
+  position: relative;
+  grid-template-areas: "stack";
+}
+.cause__section {
   opacity: 0;
   display: grid;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  grid-area: stack;
+  visibility: hidden;
   align-items: center;
-  transform: translateY(2.5rem);
+  grid-template-columns: repeat(2, 1fr);
 }
-.article-cause__body {
+.cause__section:first-child {
+  opacity: 1;
+  z-index: 1;
+  visibility: visible;
+}
+.cause__image {
+  width: 100%;
+  display: block;
+}
+.below-cause {
   gap: 1rem;
-  display: grid;
+  display: flex;
+  flex-direction: column;
 }
-.article-cause__title {
+.below-cause__title {
   line-height: 1.1;
 }
-.article-cause__label {
+.below-cause__label {
   line-height: 1.2;
   color: rgba(255, 255, 255, 0.5);
 }
-.article-cause__text {
+.below-cause__text {
   line-height: 1.3;
   font-family: "FKTGnarly_Lt";
-}
-.article-cause__gif {
-  width: 100%;
 }
 .poster {
   height: 100vh;
@@ -1233,10 +1226,13 @@ body {
     align-items: start;
     flex-direction: column;
   }
+  .our__circle {
+    max-width: 93.75rem;
+  }
   .our__title {
     font-size: 4rem;
   }
-  .article-cause__label {
+  .below-cause__label {
     font-family: "FKTGnarly_It";
   }
   .poster__image {
@@ -1479,7 +1475,7 @@ body {
     padding-inline: 0.9375rem;
   }
   .our__title {
-    font-size: 2.5rem;
+    font-size: 1.875rem;
   }
   .our__body {
     height: auto;
@@ -1492,8 +1488,12 @@ body {
   .side-our__title {
     padding-bottom: 0.9375rem;
   }
+  .cause__container-min {
+    padding-block: 5.3125rem;
+    justify-content: start;
+  }
   .cause__section {
-    grid-template-rows: 0fr;
+    grid-template-columns: auto;
   }
   .poster {
     display: none;
@@ -1521,9 +1521,6 @@ body {
   }
   .hero-board-works__slide {
     padding: 0.1875rem;
-  }
-  .cause__section {
-    gap: 1.875rem;
   }
 }
 @media (max-width: 20em){
@@ -1699,7 +1696,7 @@ body {
     font-size: 0.4375rem;
   }
   .our__label {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
   .our__label:not(:last-child) {
     margin-bottom: 0.625rem;
@@ -1707,22 +1704,16 @@ body {
   .side-our__heading:not(:last-child) {
     margin-bottom: 0.3125rem;
   }
-  .cause__section {
-    padding-block: 4.375rem;
-  }
   .cause__title--title {
     font-size: 2.375rem;
   }
-  .article-cause {
-    gap: 1.5625rem;
-  }
-  .article-cause__title {
+  .below-cause__title {
     font-size: 1.875rem;
   }
-  .article-cause__label {
+  .below-cause__label {
     font-size: 0.875rem;
   }
-  .article-cause__text {
+  .below-cause__text {
     font-size: 0.875rem;
   }
   .why__text {
@@ -1956,7 +1947,7 @@ body {
     font-size: clamp( 0.4375rem , 0.311373873875rem  +  0.6306306306vw , 0.875rem );
   }
   .our__label {
-    font-size: clamp( 1rem , 0.89189189189375rem  +  0.5405405405vw , 1.375rem );
+    font-size: clamp( 0.875rem , 0.73085585585625rem  +  0.7207207207vw , 1.375rem );
   }
   .our__label:not(:last-child) {
     margin-bottom: clamp( 0.625rem , 0.44481981981875rem  +  0.9009009009vw , 1.25rem );
@@ -1964,22 +1955,16 @@ body {
   .side-our__heading:not(:last-child) {
     margin-bottom: clamp( 0.3125rem , 0.2224099099125rem  +  0.4504504505vw , 0.625rem );
   }
-  .cause__section {
-    padding-block: clamp( 4.375rem , 3.4740990991rem  +  4.5045045045vw , 7.5rem );
-  }
   .cause__title--title {
     font-size: clamp( 2.375rem , 0.75337837838125rem  +  8.1081081081vw , 8rem );
   }
-  .article-cause {
-    gap: clamp( 1rem , 1.7246621621625rem  +  -0.8108108108vw , 1.5625rem );
-  }
-  .article-cause__title {
+  .below-cause__title {
     font-size: clamp( 1.875rem , 1.42454954955rem  +  2.2522522523vw , 3.4375rem );
   }
-  .article-cause__label {
+  .below-cause__label {
     font-size: clamp( 0.875rem , 0.802927927925rem  +  0.3603603604vw , 1.125rem );
   }
-  .article-cause__text {
+  .below-cause__text {
     font-size: clamp( 0.875rem , 0.802927927925rem  +  0.3603603604vw , 1.125rem );
   }
   .why__text {
@@ -2176,9 +2161,6 @@ body {
   }
   .side-our {
     padding-bottom: 3.75rem;
-  }
-  .article-cause {
-    grid-template-columns: repeat(2, 1fr);
   }
   .why__text {
     margin: 0 0 0 auto;
@@ -2404,22 +2386,16 @@ body {
   .side-our__heading:not(:last-child) {
     margin-bottom: 0.625rem;
   }
-  .cause__section {
-    padding-block: 7.5rem;
-  }
   .cause__title--title {
     font-size: 8rem;
   }
-  .article-cause {
-    gap: 1rem;
-  }
-  .article-cause__title {
+  .below-cause__title {
     font-size: 3.4375rem;
   }
-  .article-cause__label {
+  .below-cause__label {
     font-size: 1.125rem;
   }
-  .article-cause__text {
+  .below-cause__text {
     font-size: 1.125rem;
   }
   .why__container-min {

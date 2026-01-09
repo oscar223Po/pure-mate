@@ -11232,6 +11232,7 @@ const initOurAnimations = () => {
     return;
   }
   const jumpTargets = splitTextAndMarkTargets(ui.targetWord, [0, 1, 3]);
+  const iSpan = jumpTargets[2];
   const totalSections = ui.sections.length;
   const mm = gsapWithCSS.matchMedia();
   mm.add(
@@ -11243,14 +11244,11 @@ const initOurAnimations = () => {
     (context3) => {
       const { isMobile: isMobile2, isTablet, isDesktop } = context3.conditions;
       const config3 = {
-        circleStartWidth: isMobile2 ? 85 : isDesktop ? 150 : 115,
-        jumpYOffset: isMobile2 ? -62 : isTablet ? -90 : -120,
-        jumpHighPoint: isMobile2 ? -100 : isTablet ? -170 : -200,
+        circleStartWidth: isMobile2 ? 77 : isDesktop ? 150 : 115,
+        jumpYOffset: isMobile2 ? -57 : isTablet ? -90 : -120,
+        jumpHighPoint: isMobile2 ? -95 : isTablet ? -170 : -200,
         // The logic of landing:
-        // Mobile (< 768): -70
-        // Tablet (768 - 991): -80
-        // Desktop (> 992): -110 (standart)
-        jumpLandingFix: isMobile2 ? -60 : isTablet ? -82 : -110
+        jumpLandingFix: isMobile2 ? -52 : isTablet ? -82 : -110
       };
       gsapWithCSS.set(ui.circle, {
         top: "100%",
@@ -11285,7 +11283,7 @@ const initOurAnimations = () => {
         scrollTrigger: {
           trigger: our,
           start: "top top",
-          end: () => `+=${window.innerHeight * (totalSections + 1.5)}`,
+          end: () => `+=${window.innerHeight * (totalSections + 0.8)}`,
           pin: true,
           scrub: 1,
           anticipatePin: 1
@@ -11293,30 +11291,35 @@ const initOurAnimations = () => {
       });
       tl.to(ui.circle, {
         width: config3.circleStartWidth,
-        duration: 1,
+        duration: 0.5,
+        // 1
         ease: "power3.inOut"
       });
       tl.to(ui.head, {
         top: "50%",
         opacity: 1,
-        duration: 1,
+        duration: 0.5,
+        // 1
         yPercent: 50,
         ease: "power3.out"
       }).to(ui.head, {
         top: "+=100",
-        duration: 0.3,
+        duration: 0.15,
+        // 0.3
         ease: "power2.inOut"
       }).to(ui.head, {
         top: "50%",
-        duration: 1,
+        duration: 0.5,
+        // 1
         yPercent: -50,
         ease: "power3.out"
       });
       tl.to(
         ui.circle,
         {
-          scale: isDesktop ? 0.1 : 0.09,
-          duration: 0.5,
+          scale: isMobile2 ? 0.06 : isDesktop ? 0.1 : 0.09,
+          duration: 0.25,
+          // 0.5
           yPercent: -170,
           ease: "power3.inOut"
         },
@@ -11327,7 +11330,8 @@ const initOurAnimations = () => {
         tl.to(ui.circle, {
           x: () => getPos(0).x,
           y: () => getPos(0).y + config3.jumpYOffset,
-          duration: 0.6,
+          duration: 0.3,
+          // 0.6
           ease: "power2.in",
           yPercent: 0
         });
@@ -11336,7 +11340,8 @@ const initOurAnimations = () => {
           ui.circle,
           {
             x: () => posE().x,
-            duration: 0.4,
+            duration: 0.2,
+            // 0.4
             ease: "power1.inOut"
           },
           "jump-to-e"
@@ -11349,7 +11354,8 @@ const initOurAnimations = () => {
               "50%": { y: () => getPos(0).y + config3.jumpHighPoint },
               "100%": { y: () => posE().y + config3.jumpLandingFix }
             },
-            duration: 0.4,
+            duration: 0.2,
+            // 0.4
             ease: "sine.inOut"
           },
           "jump-to-e"
@@ -11359,7 +11365,8 @@ const initOurAnimations = () => {
           ui.circle,
           {
             x: () => posI().x,
-            duration: 0.4,
+            duration: 0.2,
+            // 0.4
             ease: "power1.inOut"
           },
           "jump-to-i"
@@ -11372,21 +11379,34 @@ const initOurAnimations = () => {
               "50%": { y: () => posE().y + config3.jumpHighPoint },
               "100%": { y: () => posI().y + (config3.jumpLandingFix + 3) }
             },
-            duration: 0.4,
-            ease: "sine.inOut"
+            duration: 0.2,
+            // 0.4
+            ease: "sine.inOut",
+            // Immediately Reaction
+            onUpdate: function() {
+              if (this.progress() < 1 && iSpan && iSpan.textContent === "i") {
+                iSpan.textContent = "ı";
+              }
+            },
+            // It is triggered only when the circle has landed completely (forward)
+            onComplete: () => {
+              if (iSpan) iSpan.textContent = "i";
+            }
           },
           "jump-to-i"
         );
-        tl.to(ui.circle, { scale: 0, duration: 0.2, ease: "power3.out" });
+        tl.to(ui.circle, { scale: 0, duration: 0.1, ease: "power3.out" });
       }
       tl.to(ui.head, {
         top: "50%",
-        duration: 1,
+        duration: 0.5,
+        // 1
         yPercent: -50,
         ease: "power3.out"
       }).to(ui.head, {
         top: 100,
-        duration: 0.6,
+        duration: 0.3,
+        // 0.6
         yPercent: 0,
         ease: "power3.out"
       });
@@ -11395,7 +11415,8 @@ const initOurAnimations = () => {
         tl.to(section, {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          duration: 0.3,
+          // 0.6
           ease: "power3.out",
           onStart: () => section.classList.add("is-active"),
           onReverseComplete: () => section.classList.remove("is-active")
@@ -11404,7 +11425,8 @@ const initOurAnimations = () => {
           tl.to(section, {
             opacity: 0,
             y: -40,
-            duration: 0.4,
+            duration: 0.2,
+            // 0.4
             ease: "power2.in",
             onComplete: () => section.classList.remove("is-active")
           });
@@ -11412,6 +11434,63 @@ const initOurAnimations = () => {
       });
     }
   );
+};
+const initCauseAnimations = () => {
+  const cause = document.querySelector(".cause");
+  if (!cause) return;
+  const sections = gsapWithCSS.utils.toArray(".cause__section");
+  gsapWithCSS.set(sections, { autoAlpha: 0, zIndex: 0 });
+  gsapWithCSS.set(sections[0], { autoAlpha: 1, zIndex: 1 });
+  sections.forEach((section, i) => {
+    if (i === 0) return;
+    const text = section.querySelector(".cause__below");
+    if (text) {
+      gsapWithCSS.set(text, { y: 30, autoAlpha: 0 });
+    }
+  });
+  const tl = gsapWithCSS.timeline({
+    scrollTrigger: {
+      trigger: cause,
+      start: "top top",
+      end: () => `+=${sections.length * 100}%`,
+      pin: true,
+      scrub: 0.5,
+      anticipatePin: 1
+    }
+  });
+  tl.to({}, { duration: 0.5 });
+  sections.forEach((section, i) => {
+    if (i === 0) return;
+    const prevSection = sections[i - 1];
+    const currentText = section.querySelector(".cause__below");
+    tl.to(prevSection, {
+      autoAlpha: 0,
+      duration: 0.1,
+      ease: "none"
+    });
+    tl.to(
+      section,
+      {
+        autoAlpha: 1,
+        duration: 0.1,
+        ease: "none"
+      },
+      "<"
+    );
+    if (currentText) {
+      tl.to(
+        currentText,
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.5,
+          ease: "power2.out"
+        },
+        "<"
+      );
+    }
+    tl.to({}, { duration: 1 });
+  });
 };
 const initPosterAnimations = () => {
   const mm = gsapWithCSS.matchMedia();
@@ -11467,6 +11546,7 @@ const initPosterAnimations = () => {
 };
 window.addEventListener("load", () => {
   initOurAnimations();
+  initCauseAnimations();
   initPosterAnimations();
 });
 const q = (root, sel) => root.querySelector(sel);
@@ -11645,24 +11725,6 @@ window.addEventListener(
   },
   { passive: true }
 );
-const causeSection = document.querySelector(".cause");
-const causeItems = document.querySelectorAll(".cause__section");
-const causeSteps = causeItems.length;
-window.addEventListener("scroll", () => {
-  const rect = causeSection.getBoundingClientRect();
-  const viewport = window.innerHeight;
-  const progress = Math.min(
-    Math.max(-rect.top / (rect.height - viewport), 0),
-    1
-  );
-  let index = Math.floor(progress * causeSteps);
-  if (index >= causeSteps) {
-    index = causeSteps - 1;
-  }
-  causeItems.forEach((el, i) => {
-    el.classList.toggle("is-active", i === index);
-  });
-});
 document.addEventListener("DOMContentLoaded", () => {
   const section = document.querySelector(".showreel");
   if (!section) return;
