@@ -1,6 +1,6 @@
 .header {
-	-webkit-backdrop-filter: blur(15px);
-	backdrop-filter: blur(15px);
+	-webkit-backdrop-filter: blur(20px);
+	backdrop-filter: blur(20px);
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -57,9 +57,17 @@
 				background-color: #ffb700;
 			}
 		}
+		@media (min-width: toEm($tablet)) {
+			width: 100%;
+		}
+		@media (max-width: toEm($tablet)) {
+			padding: 10px 20px;
+		}
 		@media (max-width: toEm($mobile)) {
-			padding: 15px 25px;
+			padding: 15px 32px;
+			border-radius: 38px;
 			font-family: $fontFamily;
+			background-color: $orangeColor;
 		}
 	}
 	// .header__icon
@@ -67,8 +75,10 @@
 		width: 50px;
 		display: flex;
 		aspect-ratio: 1;
+		border-radius: 50%;
 		align-items: center;
 		justify-content: center;
+		background-color: $mainColor;
 		@media (min-width: toEm($mobile)) {
 			display: none;
 		}
