@@ -122,8 +122,8 @@ body {
 		opacity 0.3s ease 0.5s,
 		visibility 0.3s ease 0.5s;
 	&.--watcher-view {
-		// opacity: 1;
-		// visibility: visible;
+		opacity: 1;
+		visibility: visible;
 	}
 }
 
@@ -134,7 +134,7 @@ body {
 		transform 0.5s ease 0.5s,
 		opacity 0.5s ease 0.5s;
 	&.--watcher-view {
-		// opacity: 1;
-		// transform: translateY(0);
+		opacity: 1;
+		transform: translateY(0);
 	}
 }

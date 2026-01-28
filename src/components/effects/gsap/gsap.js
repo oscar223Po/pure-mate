@@ -434,7 +434,7 @@ const initPosterAnimations = () => {
 
 /* ----- Initialisation ----- */
 window.addEventListener('load', () => {
-	// initOurAnimations()
-	// initCauseAnimations()
-	// initPosterAnimations()
+	initOurAnimations()
+	initCauseAnimations()
+	initPosterAnimations()
 })

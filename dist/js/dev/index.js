@@ -11194,7 +11194,372 @@ _getGSAP2() && gsap.registerPlugin(ScrollTrigger);
 var gsapWithCSS = gsap$2.registerPlugin(CSSPlugin) || gsap$2;
 gsapWithCSS.core.Tween;
 gsapWithCSS.registerPlugin(ScrollTrigger);
+const splitTextAndMarkTargets = (element, targetIndices) => {
+  if (!element) return [];
+  const text = element.textContent;
+  element.textContent = "";
+  text.split("").map((char, index) => {
+    const span = document.createElement("span");
+    span.textContent = char;
+    Object.assign(span.style, { display: "inline-block", position: "relative" });
+    if (targetIndices.includes(index)) {
+      span.classList.add("jump-target");
+    }
+    element.appendChild(span);
+    return span;
+  });
+  return element.querySelectorAll(".jump-target");
+};
+const getRelativeCenter = (targetEl, parentEl) => {
+  const pRect = parentEl.getBoundingClientRect();
+  const tRect = targetEl.getBoundingClientRect();
+  return {
+    x: tRect.left - pRect.left + tRect.width / 2 - pRect.width / 2,
+    y: tRect.top - pRect.top + tRect.height / 2 - pRect.height / 2
+  };
+};
+const initOurAnimations = () => {
+  const our = document.querySelector(".our");
+  if (!our) return;
+  const ui = {
+    head: our.querySelector(".our__head"),
+    circle: our.querySelector(".our__circle"),
+    sections: our.querySelectorAll(".our__section"),
+    targetWord: our.querySelector(".target-word")
+  };
+  if (!ui.targetWord) {
+    console.warn("GSAP Warning: .target-word not found");
+    return;
+  }
+  const jumpTargets = splitTextAndMarkTargets(ui.targetWord, [0, 1, 3]);
+  const iSpan = jumpTargets[2];
+  const totalSections = ui.sections.length;
+  const mm = gsapWithCSS.matchMedia();
+  mm.add(
+    {
+      isDesktop: "(min-width: 992px)",
+      isTablet: "(max-width: 991.98px) and (min-width: 768px)",
+      isMobile: "(max-width: 767.98px)"
+    },
+    (context3) => {
+      const { isMobile: isMobile2, isTablet, isDesktop } = context3.conditions;
+      const config3 = {
+        circleStartWidth: isMobile2 ? 77 : isDesktop ? 150 : 115,
+        jumpYOffset: isMobile2 ? -57 : isTablet ? -90 : -120,
+        jumpHighPoint: isMobile2 ? -95 : isTablet ? -170 : -200,
+        // The logic of landing:
+        jumpLandingFix: isMobile2 ? -52 : isTablet ? -82 : -110
+      };
+      gsapWithCSS.set(ui.circle, {
+        top: "100%",
+        left: "50%",
+        xPercent: -50,
+        yPercent: 0,
+        x: 0,
+        y: 0,
+        scale: 1,
+        position: "absolute",
+        transformOrigin: "50% 50%"
+      });
+      gsapWithCSS.set(ui.head, { top: "100%", opacity: 0, yPercent: 0 });
+      gsapWithCSS.set(ui.sections, { autoAlpha: 0, y: 50 });
+      gsapWithCSS.fromTo(
+        ui.circle,
+        { top: "100%", width: config3.circleStartWidth, yPercent: 0 },
+        {
+          top: "50%",
+          width: 3e3,
+          yPercent: -50,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: our,
+            start: "top 80%",
+            end: "top top",
+            scrub: true
+          }
+        }
+      );
+      const tl = gsapWithCSS.timeline({
+        scrollTrigger: {
+          trigger: our,
+          start: "top top",
+          end: () => `+=${window.innerHeight * (totalSections + 0.8)}`,
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1
+        }
+      });
+      tl.to(ui.circle, {
+        width: config3.circleStartWidth,
+        duration: 0.5,
+        // 1
+        ease: "power3.inOut"
+      });
+      tl.to(ui.head, {
+        top: "50%",
+        opacity: 1,
+        duration: 0.5,
+        // 1
+        yPercent: 50,
+        ease: "power3.out"
+      }).to(ui.head, {
+        top: "+=100",
+        duration: 0.15,
+        // 0.3
+        ease: "power2.inOut"
+      }).to(ui.head, {
+        top: "50%",
+        duration: 0.5,
+        // 1
+        yPercent: -50,
+        ease: "power3.out"
+      });
+      tl.to(
+        ui.circle,
+        {
+          scale: isMobile2 ? 0.06 : isDesktop ? 0.1 : 0.09,
+          duration: 0.25,
+          // 0.5
+          yPercent: -170,
+          ease: "power3.inOut"
+        },
+        "<"
+      );
+      if (jumpTargets.length >= 3) {
+        const getPos = (index) => getRelativeCenter(jumpTargets[index], our);
+        tl.to(ui.circle, {
+          x: () => getPos(0).x,
+          y: () => getPos(0).y + config3.jumpYOffset,
+          duration: 0.3,
+          // 0.6
+          ease: "power2.in",
+          yPercent: 0
+        });
+        const posE = () => getPos(1);
+        tl.to(
+          ui.circle,
+          {
+            x: () => posE().x,
+            duration: 0.2,
+            // 0.4
+            ease: "power1.inOut"
+          },
+          "jump-to-e"
+        );
+        tl.to(
+          ui.circle,
+          {
+            keyframes: {
+              "0%": { y: () => getPos(0).y + config3.jumpYOffset },
+              "50%": { y: () => getPos(0).y + config3.jumpHighPoint },
+              "100%": { y: () => posE().y + config3.jumpLandingFix }
+            },
+            duration: 0.2,
+            // 0.4
+            ease: "sine.inOut"
+          },
+          "jump-to-e"
+        );
+        const posI = () => getPos(2);
+        tl.to(
+          ui.circle,
+          {
+            x: () => posI().x,
+            duration: 0.2,
+            // 0.4
+            ease: "power1.inOut"
+          },
+          "jump-to-i"
+        );
+        tl.to(
+          ui.circle,
+          {
+            keyframes: {
+              "0%": { y: () => posE().y + config3.jumpLandingFix },
+              "50%": { y: () => posE().y + config3.jumpHighPoint },
+              "100%": { y: () => posI().y + (config3.jumpLandingFix + 3) }
+            },
+            duration: 0.2,
+            // 0.4
+            ease: "sine.inOut",
+            // Immediately Reaction
+            onUpdate: function() {
+              if (this.progress() < 1 && iSpan && iSpan.textContent === "i") {
+                iSpan.textContent = "ı";
+              }
+            },
+            // It is triggered only when the circle has landed completely (forward)
+            onComplete: () => {
+              if (iSpan) iSpan.textContent = "i";
+            }
+          },
+          "jump-to-i"
+        );
+        tl.to(ui.circle, { scale: 0, duration: 0.1, ease: "power3.out" });
+      }
+      tl.to(ui.head, {
+        top: "50%",
+        duration: 0.5,
+        // 1
+        yPercent: -50,
+        ease: "power3.out"
+      }).to(ui.head, {
+        top: 100,
+        duration: 0.3,
+        // 0.6
+        yPercent: 0,
+        ease: "power3.out"
+      });
+      tl.set(ui.head, { top: 0, position: "relative" });
+      const resetSectionScroll = (section) => {
+        if (!section) return;
+        section.scrollTop = 0;
+      };
+      ui.sections.forEach((section, i) => {
+        tl.to(section, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.2,
+          // 0.3
+          ease: "power2.out",
+          onStart: () => {
+            section.classList.add("is-active");
+            resetSectionScroll(section);
+          },
+          onReverseComplete: () => section.classList.remove("is-active"),
+          onReverseStart: () => resetSectionScroll(section)
+        });
+        if (!isMobile2 && i < totalSections - 1) {
+          tl.to(section, {
+            autoAlpha: 0,
+            y: -20,
+            duration: 0.16,
+            // 0.25
+            ease: "power1.in",
+            onComplete: () => section.classList.remove("is-active"),
+            onReverseComplete: () => {
+              section.classList.add("is-active");
+              resetSectionScroll(section);
+            }
+          });
+        }
+      });
+    }
+  );
+};
+const initCauseAnimations = () => {
+  const cause = document.querySelector(".cause");
+  if (!cause) return;
+  const sections = gsapWithCSS.utils.toArray(".cause__section");
+  gsapWithCSS.set(sections, { autoAlpha: 0, zIndex: 0 });
+  gsapWithCSS.set(sections[0], { autoAlpha: 1, zIndex: 1 });
+  sections.forEach((section, i) => {
+    if (i === 0) return;
+    const text = section.querySelector(".cause__below");
+    if (text) {
+      gsapWithCSS.set(text, { y: 30, autoAlpha: 0 });
+    }
+  });
+  const tl = gsapWithCSS.timeline({
+    scrollTrigger: {
+      trigger: cause,
+      start: "top top",
+      end: () => `+=${sections.length * 100}%`,
+      pin: true,
+      scrub: 0.5,
+      anticipatePin: 1
+    }
+  });
+  tl.to({}, { duration: 0.5 });
+  sections.forEach((section, i) => {
+    if (i === 0) return;
+    const prevSection = sections[i - 1];
+    const currentText = section.querySelector(".cause__below");
+    tl.to(prevSection, {
+      autoAlpha: 0,
+      duration: 0.1,
+      ease: "none"
+    });
+    tl.to(
+      section,
+      {
+        autoAlpha: 1,
+        duration: 0.1,
+        ease: "none"
+      },
+      "<"
+    );
+    if (currentText) {
+      tl.to(
+        currentText,
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.5,
+          ease: "power2.out"
+        },
+        "<"
+      );
+    }
+    tl.to({}, { duration: 1 });
+  });
+};
+const initPosterAnimations = () => {
+  const mm = gsapWithCSS.matchMedia();
+  mm.add("(min-width: 768px)", () => {
+    const poster = document.querySelector(".poster");
+    if (!poster) return;
+    const posterImage = poster.querySelector(".poster__image");
+    gsapWithCSS.set(posterImage, {
+      top: "100%",
+      left: "50%",
+      xPercent: -50,
+      yPercent: 0,
+      width: 995,
+      position: "absolute",
+      transformOrigin: "50% 50%"
+    });
+    gsapWithCSS.fromTo(
+      posterImage,
+      { top: "100%", yPercent: 0 },
+      {
+        top: "50%",
+        yPercent: -50,
+        ease: "none",
+        scrollTrigger: {
+          trigger: poster,
+          start: "top 80%",
+          end: "top top",
+          scrub: true
+        }
+      }
+    );
+    ScrollTrigger.create({
+      trigger: poster,
+      start: "top top",
+      onEnter: () => gsapWithCSS.set(posterImage, { top: "50%", yPercent: -50 })
+    });
+    const pl = gsapWithCSS.timeline({
+      scrollTrigger: {
+        trigger: poster,
+        start: "top top",
+        end: "+=200%",
+        pin: true,
+        scrub: true,
+        anticipatePin: 1
+      }
+    });
+    pl.to(posterImage, { width: 15e3, ease: "none" }).to(
+      poster,
+      { backgroundColor: "#0b26c5", ease: "none" },
+      "<"
+    );
+  });
+};
 window.addEventListener("load", () => {
+  initOurAnimations();
+  initCauseAnimations();
+  initPosterAnimations();
 });
 const q = (root, sel) => root.querySelector(sel);
 const qa = (root, sel) => [...root.querySelectorAll(sel)];
