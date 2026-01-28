@@ -1,8 +1,35 @@
 /* ----- Animation For Pc Complex Section ----- */
 const q = (root, sel) => root.querySelector(sel)
 const qa = (root, sel) => [...root.querySelectorAll(sel)]
-const SHOW = el => el && el.classList.remove('disable')
+const isQueenPiece = el =>
+	el && [...el.classList].some(cls => cls.includes('queen'))
+const SHOW = el => {
+	if (!el) return
+	const wasDisabled = el.classList.contains('disable')
+	el.classList.remove('disable')
+
+	if (!wasDisabled || isQueenPiece(el)) return
+
+	el.classList.remove('is-entering')
+	window.requestAnimationFrame(() => {
+		el.classList.add('is-entering')
+		el.addEventListener(
+			'animationend',
+			() => {
+				el.classList.remove('is-entering')
+			},
+			{ once: true }
+		)
+	})
+}
 const HIDE = el => el && el.classList.add('disable')
+const restartCrosses = board => {
+	if (!board) return
+	board.classList.remove('is-cross-restart')
+	void board.offsetWidth
+	board.classList.add('is-cross-restart')
+}
+const HOVER_LOCK_MS = 100
 // Pieces
 function getPieces(root, prefix) {
 	return {
@@ -76,6 +103,22 @@ document.addEventListener('pointerup', e => {
 		board.__onDrop(dropCell)
 	}
 
+	const hoverTarget = document.elementFromPoint(e.clientX, e.clientY)
+	const hoverQueen = hoverTarget?.closest('img[class*="queen"]')
+	if (
+		hoverQueen &&
+		!hoverQueen.classList.contains('disable') &&
+		!board.classList.contains('is-hover-lock')
+	) {
+		const complex = hoverQueen.closest('.complex')
+		const hoverBoard = hoverQueen.closest('.complex__board')
+		if (complex) {
+			complex.classList.remove('is-hover')
+			complex.classList.add('is-queen-hover')
+		}
+		restartCrosses(hoverBoard)
+	}
+
 	// Visual Return
 	el.style.transform = 'translate3d(0,0,0)'
 
@@ -95,7 +138,19 @@ function initDnDBoard(root, prefix) {
 
 	const p = getPieces(root, prefix)
 	const cells = qa(root, 'span')
+	const complex = root.closest('.complex')
 	let step = 0
+	let hoverLockTimer = null
+
+	function lockHover() {
+		if (!complex) return
+		root.classList.add('is-hover-lock')
+		complex.classList.remove('is-queen-hover')
+		clearTimeout(hoverLockTimer)
+		hoverLockTimer = setTimeout(() => {
+			root.classList.remove('is-hover-lock')
+		}, HOVER_LOCK_MS)
+	}
 
 	function reset() {
 		SHOW(p.queen)
@@ -121,6 +176,7 @@ function initDnDBoard(root, prefix) {
 			SHOW(p.queen01)
 
 			step = 1
+			lockHover()
 			run()
 		}
 	}
@@ -139,6 +195,7 @@ function initDnDBoard(root, prefix) {
 			SHOW(p.queen02)
 
 			step = 2
+			lockHover()
 			run()
 		}
 	}
@@ -153,6 +210,7 @@ function initDnDBoard(root, prefix) {
 			SHOW(p.queen01)
 
 			step = 3
+			lockHover()
 			run()
 		}
 	}
@@ -168,6 +226,7 @@ function initDnDBoard(root, prefix) {
 			HIDE(p.queen01)
 			SHOW(p.queen)
 
+			lockHover()
 			reset()
 		}
 	}
@@ -187,6 +246,46 @@ function initDnDBoard(root, prefix) {
 }
 // Initialisation
 initDnDBoard(document.querySelector('.complex__board--pc'), 'fm')
+
+// Complex Hover Attention
+function initComplexHoverAttention() {
+	const complex = document.querySelector('.complex')
+	if (!complex) return
+
+	const add = () => complex.classList.add('is-hover')
+	const remove = () => complex.classList.remove('is-hover')
+
+	complex.addEventListener('mouseenter', add)
+	complex.addEventListener('mouseleave', remove)
+}
+initComplexHoverAttention()
+function initQueenHoverState() {
+	const queens = document.querySelectorAll(
+		'.complex__board img[class*="queen"]'
+	)
+	if (!queens.length) return
+
+	queens.forEach(queen => {
+		const complex = queen.closest('.complex')
+		const board = queen.closest('.complex__board')
+		if (!complex) return
+
+		queen.addEventListener('mouseenter', () => {
+			if (board?.classList.contains('is-hover-lock')) return
+			complex.classList.remove('is-hover')
+			complex.classList.add('is-queen-hover')
+			restartCrosses(board)
+		})
+
+		queen.addEventListener('mouseleave', () => {
+			complex.classList.remove('is-queen-hover')
+			if (complex.matches(':hover')) {
+				complex.classList.add('is-hover')
+			}
+		})
+	})
+}
+initQueenHoverState()
 
 /* ----- Add Atribut For Spoller ----- */
 const BREAKPOINT = 767.98

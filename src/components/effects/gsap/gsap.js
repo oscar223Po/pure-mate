@@ -90,7 +90,7 @@ const initOurAnimations = () => {
 				transformOrigin: '50% 50%'
 			})
 			gsap.set(ui.head, { top: '100%', opacity: 0, yPercent: 0 })
-			gsap.set(ui.sections, { opacity: 0, y: 40 })
+			gsap.set(ui.sections, { autoAlpha: 0, y: 50 })
 
 			// -- Pre-animation --
 			gsap.fromTo(
@@ -257,24 +257,37 @@ const initOurAnimations = () => {
 			})
 			tl.set(ui.head, { top: 0, position: 'relative' })
 
+			const resetSectionScroll = section => {
+				if (!section) return
+				section.scrollTop = 0
+			}
+
 			// Sections Sequence
 			ui.sections.forEach((section, i) => {
 				tl.to(section, {
-					opacity: 1,
+					autoAlpha: 1,
 					y: 0,
-					duration: 0.3, // 0.6
-					ease: 'power3.out',
-					onStart: () => section.classList.add('is-active'),
-					onReverseComplete: () => section.classList.remove('is-active')
+					duration: 0.2, // 0.3
+					ease: 'power2.out',
+					onStart: () => {
+						section.classList.add('is-active')
+						resetSectionScroll(section)
+					},
+					onReverseComplete: () => section.classList.remove('is-active'),
+					onReverseStart: () => resetSectionScroll(section)
 				})
 
 				if (!isMobile && i < totalSections - 1) {
 					tl.to(section, {
-						opacity: 0,
-						y: -40,
-						duration: 0.2, // 0.4
-						ease: 'power2.in',
-						onComplete: () => section.classList.remove('is-active')
+						autoAlpha: 0,
+						y: -20,
+						duration: 0.16, // 0.25
+						ease: 'power1.in',
+						onComplete: () => section.classList.remove('is-active'),
+						onReverseComplete: () => {
+							section.classList.add('is-active')
+							resetSectionScroll(section)
+						}
 					})
 				}
 			})
@@ -421,7 +434,7 @@ const initPosterAnimations = () => {
 
 /* ----- Initialisation ----- */
 window.addEventListener('load', () => {
-	initOurAnimations()
-	initCauseAnimations()
-	initPosterAnimations()
+	// initOurAnimations()
+	// initCauseAnimations()
+	// initPosterAnimations()
 })

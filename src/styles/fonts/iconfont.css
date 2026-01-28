@@ -1,7 +1,7 @@
 @font-face { 
 	font-family: "iconfont"; 
 	font-display: swap;
-	src: url("/Users/sell/Main/pure-mate/src/assets/svgicons/preview/iconfont.woff2?67d18140cf3f975ba68ba382a35791cf") format("woff2"); 
+	src: url("/Users/sell/puremate-landing/src/assets/svgicons/preview/iconfont.woff2?097cabccbe416047a29a754edbb59bf3") format("woff2"); 
 } 
 [class*="--icon-"]::before{
 	font-family: iconfont; 
