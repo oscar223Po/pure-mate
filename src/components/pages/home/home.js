@@ -374,3 +374,192 @@ document.addEventListener('DOMContentLoaded', () => {
 		showButton()
 	})
 })
+
+/* ----- Calendar ----- */
+document.addEventListener('DOMContentLoaded', () => {
+	const calendarRoot = document.querySelector('[data-calendar]')
+	if (!calendarRoot) return
+
+	const titleEl = calendarRoot.querySelector('[data-calendar-title]')
+	const gridEl = calendarRoot.querySelector('[data-calendar-grid]')
+	const prevBtn = calendarRoot.querySelector('[data-calendar-prev]')
+	const nextBtn = calendarRoot.querySelector('[data-calendar-next]')
+	const timeList = document.querySelector('[data-time-slots]')
+	const timeEmpty = document.querySelector('[data-time-empty]')
+
+	if (!titleEl || !gridEl || !prevBtn || !nextBtn || !timeList || !timeEmpty)
+		return
+
+	const state = {
+		selectedDate: null,
+		selectedTime: null,
+		viewDate: new Date()
+	}
+
+	state.viewDate.setDate(1)
+
+	const monthFormatter = new Intl.DateTimeFormat('en-US', {
+		month: 'long',
+		year: 'numeric'
+	})
+
+	const startOfDay = date => {
+		const next = new Date(date)
+		next.setHours(0, 0, 0, 0)
+		return next
+	}
+
+	const today = startOfDay(new Date())
+
+	const isSameDay = (a, b) => {
+		if (!a || !b) return false
+		return (
+			a.getFullYear() === b.getFullYear() &&
+			a.getMonth() === b.getMonth() &&
+			a.getDate() === b.getDate()
+		)
+	}
+
+	const formatDateKey = date => {
+		const year = date.getFullYear()
+		const month = String(date.getMonth() + 1).padStart(2, '0')
+		const day = String(date.getDate()).padStart(2, '0')
+		return `${year}-${month}-${day}`
+	}
+
+	const setSelectedDate = date => {
+		state.selectedDate = date
+		state.selectedTime = null
+		renderCalendar()
+		renderTimeSlots()
+	}
+
+	const setSelectedTime = time => {
+		state.selectedTime = time
+		updateTimeActiveState()
+	}
+
+	const renderCalendar = () => {
+		titleEl.textContent = monthFormatter.format(state.viewDate)
+		gridEl.innerHTML = ''
+
+		const year = state.viewDate.getFullYear()
+		const month = state.viewDate.getMonth()
+		const firstDay = new Date(year, month, 1)
+		const startWeekday = firstDay.getDay()
+		const daysInMonth = new Date(year, month + 1, 0).getDate()
+
+		for (let i = 0; i < startWeekday; i += 1) {
+			const blank = document.createElement('span')
+			blank.className = 'day day--disabled'
+			blank.setAttribute('aria-hidden', 'true')
+			gridEl.appendChild(blank)
+		}
+
+		for (let day = 1; day <= daysInMonth; day += 1) {
+			const date = new Date(year, month, day)
+			const dayButton = document.createElement('button')
+			dayButton.type = 'button'
+			dayButton.className = 'day'
+			dayButton.textContent = String(day)
+			dayButton.dataset.date = formatDateKey(date)
+
+			const isWeekend = date.getDay() === 0 || date.getDay() === 6
+			const isPast = startOfDay(date) < today
+
+			if (isWeekend || isPast) {
+				dayButton.classList.add('day--disabled')
+				dayButton.disabled = true
+			}
+
+			if (isSameDay(date, state.selectedDate)) {
+				dayButton.classList.add('day--selected')
+				dayButton.setAttribute('aria-pressed', 'true')
+			}
+
+			gridEl.appendChild(dayButton)
+		}
+	}
+
+	const buildTimeSlots = () => {
+		const slots = []
+		const startMinutes = 12 * 60
+		const endMinutes = 18 * 60 + 30
+
+		for (let mins = startMinutes; mins <= endMinutes; mins += 30) {
+			const hours = String(Math.floor(mins / 60)).padStart(2, '0')
+			const minutes = String(mins % 60).padStart(2, '0')
+			slots.push(`${hours}:${minutes}`)
+		}
+
+		return slots
+	}
+
+	const updateTimeActiveState = () => {
+		const buttons = [...timeList.querySelectorAll('.time-slot')]
+		buttons.forEach(button => {
+			const isActive = button.dataset.time === state.selectedTime
+			button.classList.toggle('time-slot--active', isActive)
+			button.setAttribute('aria-pressed', isActive ? 'true' : 'false')
+		})
+	}
+
+	const renderTimeSlots = () => {
+		timeList.innerHTML = ''
+
+		if (!state.selectedDate) {
+			timeList.hidden = true
+			timeEmpty.hidden = false
+			return
+		}
+
+		timeEmpty.hidden = true
+		timeList.hidden = false
+
+		const slots = buildTimeSlots()
+		slots.forEach(time => {
+			const button = document.createElement('button')
+			button.type = 'button'
+			button.className = 'time-slot'
+			button.textContent = time
+			button.dataset.time = time
+			timeList.appendChild(button)
+		})
+
+		updateTimeActiveState()
+	}
+
+	gridEl.addEventListener('click', event => {
+		event.stopPropagation()
+		const button = event.target.closest('button.day')
+		if (!button || button.disabled) return
+
+		const dateString = button.dataset.date
+		if (!dateString) return
+
+		const [year, month, day] = dateString.split('-').map(Number)
+		setSelectedDate(new Date(year, month - 1, day))
+	})
+
+	timeList.addEventListener('click', event => {
+		event.stopPropagation()
+		const button = event.target.closest('.time-slot')
+		if (!button) return
+		setSelectedTime(button.dataset.time || null)
+	})
+
+	prevBtn.addEventListener('click', () => {
+		state.viewDate.setMonth(state.viewDate.getMonth() - 1)
+		state.viewDate.setDate(1)
+		renderCalendar()
+	})
+
+	nextBtn.addEventListener('click', () => {
+		state.viewDate.setMonth(state.viewDate.getMonth() + 1)
+		state.viewDate.setDate(1)
+		renderCalendar()
+	})
+
+	renderCalendar()
+	renderTimeSlots()
+})

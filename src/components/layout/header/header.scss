@@ -54,7 +54,7 @@
 		@media (any-hover: hover) {
 			&:hover {
 				color: $mainColor;
-				background-color: #ffb700;
+				background-color: $yellowColor;
 			}
 		}
 		@media (min-width: toEm($tablet)) {

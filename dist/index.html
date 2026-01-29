@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+	<!-- data-fls-popup-open -->
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +11,8 @@
 		<link rel="preload" href="./assets/fonts/FKTGnarly_Bd.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 		<link rel="shortcut icon" href="./assets/img/shortcut.svg">
 		<title>Pure Mate</title>
-		<script type="module" crossorigin="" src="./js/index.min.js?v=1769621722152"></script>
-		<link rel="stylesheet" crossorigin="" href="./css/index.min.css?v=1769621722152">
+		<script type="module" crossorigin="" src="./js/index.min.js?v=1769697660048"></script>
+		<link rel="stylesheet" crossorigin="" href="./css/index.min.css?v=1769697660048">
 	</head>
 	<body>
 		<div class="wrapper">
@@ -41,7 +42,7 @@
 							</ul>
 						</nav>
 					</div>
-					<a href="#" data-fls-dynamic=".hero__button, 767.98" class="header__button">Discuss Your Project</a>
+					<button type="button" class="header__button" data-fls-popup-link="popup" data-fls-dynamic=".hero__button, 767.98">Discuss Your Project</button>
 					<button type="button" data-fls-menu="" class="header__icon">
 						<div class="icon-menu">
 							<span></span>
@@ -904,6 +905,232 @@
 					</div>
 				</div>
 			</footer>
+		</div>
+		<!-- data-fls-popup-active -->
+		<div data-fls-popup="popup" aria-hidden="true" class="popup">
+			<div data-fls-popup-wrapper="" class="popup__wrapper">
+				<div data-fls-popup-body="" class="popup__body">
+					<div class="popup__note note">
+						<figure class="note__article">
+							<blockquote>
+								“Working with agencies used to feel like a game of blind man's
+						bluff. Pure Mate gave us a transparent board of moves where we could
+						see every stage.
+							</blockquote>
+							<figcaption>
+								<b>— James Caldwell</b>
+								<cite>CEO of the fintech startup "Nexus Pay"</cite>
+							</figcaption>
+						</figure>
+						<figure class="note__article">
+							<blockquote>
+								"I thought we had to choose: either powerful functionality or
+						beautiful design. Pure Mate proved that to be a false choice.
+							</blockquote>
+							<figcaption>
+								<b>—  Sophia Liang</b>
+								<cite>CEO of the mindfulness service "Aura Flow"</cite>
+							</figcaption>
+						</figure>
+						<figure class="note__article">
+							<blockquote>
+								"They checkmated us. In a good way. We had reached a stalemate with
+						our platform, and competitors were closing in. Pure Mate didn't just
+						do 'another iteration'.
+							</blockquote>
+							<figcaption>
+								<b>—  Arthur Wallen</b>
+								<cite>CEO of the educational platform "Edify Tech"</cite>
+							</figcaption>
+						</figure>
+						<figure class="note__article">
+							<blockquote>
+								“Working with agencies used to feel like a game of blind man's
+						bluff. Pure Mate gave us a transparent board of moves where we could
+						see every stage.
+							</blockquote>
+							<figcaption>
+								<b>— James Caldwell</b>
+								<cite>CEO of the fintech startup "Nexus Pay"</cite>
+							</figcaption>
+						</figure>
+						<figure class="note__article">
+							<blockquote>
+								"I thought we had to choose: either powerful functionality or
+						beautiful design. Pure Mate proved that to be a false choice.
+							</blockquote>
+							<figcaption>
+								<b>—  Sophia Liang</b>
+								<cite>CEO of the mindfulness service "Aura Flow"</cite>
+							</figcaption>
+						</figure>
+						<figure class="note__article">
+							<blockquote>
+								"They checkmated us. In a good way. We had reached a stalemate with
+						our platform, and competitors were closing in. Pure Mate didn't just
+						do 'another iteration'.
+							</blockquote>
+							<figcaption>
+								<b>—  Arthur Wallen</b>
+								<cite>CEO of the educational platform "Edify Tech"</cite>
+							</figcaption>
+						</figure>
+						<figure class="note__article">
+							<blockquote>
+								“Working with agencies used to feel like a game of blind man's
+						bluff. Pure Mate gave us a transparent board of moves where we could
+						see every stage.
+							</blockquote>
+							<figcaption>
+								<b>— James Caldwell</b>
+								<cite>CEO of the fintech startup "Nexus Pay"</cite>
+							</figcaption>
+						</figure>
+					</div>
+					<div class="popup__base base">
+						<div class="base__top top-base">
+							<h2 class="top-base__title">Let’s Talk</h2>
+							<button data-fls-popup-close="" type="button" class="popup__close">
+								<svg width="40" height="40" viewbox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path opacity="0.850056" d="M1.73333 1.48883L21.5469 21.0288" stroke="#ffffff" stroke-linecap="square"></path>
+									<path opacity="0.850056" d="M21.2667 1.48883L1.45309 21.0288" stroke="#ffffff" stroke-linecap="square"></path>
+								</svg>
+							</button>
+						</div>
+						<div data-fls-tabs="" class="base__tabs tabs">
+							<nav data-fls-tabs-titles="" class="tabs__navigation">
+								<button type="button" class="tabs__title --tab-active">Book a Strategy Call</button>
+								<button type="button" class="tabs__title">Submit Your Task</button>
+							</nav>
+							<div data-fls-tabs-body="" class="tabs__content">
+								<div class="tabs__body booking-tab">
+									<div class="booking-tab__booking booking">
+										<div class="booking__data data">
+											<figure class="data__user">
+												<img src="./assets/img/avatar.svg" alt="Profile photo of Michal Skvarenin">
+												<figcaption class="data__name">Michal Skvarenin</figcaption>
+											</figure>
+											<div class="data__text">
+												<h3>30-minute intro call</h3>
+												<p>Book a complimentary session to:</p>
+												<ul>
+													<li>Align on your goals</li>
+													<li>Answer open questions</li>
+													<li>Define next steps</li>
+												</ul>
+												<p>
+													Selected collaborators:
+													<span>Seen Finance</span>
+													,
+													<span>Mastercard</span>
+													,
+													<span>Visa</span>
+												</p>
+											</div>
+											<div class="data__below">
+												<div class="data__item-below">
+													<svg width="15" height="15" viewbox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<path d="M7.5 14.5C11.366 14.5 14.5 11.366 14.5 7.5C14.5 3.63401 11.366 0.5 7.5 0.5C3.63401 0.5 0.5 3.63401 0.5 7.5C0.5 11.366 3.63401 14.5 7.5 14.5Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"></path>
+														<path d="M7.5 2.83331V7.49998" stroke="white" stroke-linecap="round" stroke-linejoin="round"></path>
+														<path d="M10.7978 10.7978L7.5 7.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"></path>
+													</svg>
+													<span>30m</span>
+												</div>
+												<div class="data__item-below">
+													<svg width="14" height="12" viewbox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<path d="M0 10.535C0 11.0412 0.413498 11.4511 0.922961 11.4511H0.936226C0.418962 11.4511 0 11.0412 0 10.535Z" fill="#FBBC05"></path>
+														<path d="M7.93127 3.43532V5.82706L11.1558 3.22614V0.916078C11.1558 0.409948 10.7422 0 10.2328 0H3.24696L3.24072 3.43532H7.93127Z" fill="#FBBC05"></path>
+														<path d="M7.93083 8.21975H3.23252L3.22705 11.4512H10.2324C10.7426 11.4512 11.1554 11.0413 11.1554 10.5351V8.44953L7.93083 5.828V8.21975Z" fill="#34A853"></path>
+														<path d="M3.24714 0L0 3.43532H3.24167L3.24714 0Z" fill="#EA4335"></path>
+														<path d="M0 8.21954V10.5349C0 11.0411 0.418962 11.451 0.936226 11.451H3.22767L3.23308 8.21954H0Z" fill="#1967D2"></path>
+														<path d="M3.24167 3.43524H0V8.21949H3.23308L3.24167 3.43524Z" fill="#4285F4"></path>
+														<path d="M13.9912 9.72039V1.8574C13.8094 0.813831 12.6648 2.01008 12.6648 2.01008L11.1567 3.22618V8.44856L13.3155 10.2036C14.095 10.3059 13.9912 9.72039 13.9912 9.72039Z" fill="#34A853"></path>
+														<path d="M7.93164 5.8269L11.157 8.44919V3.22681L7.93164 5.8269Z" fill="#188038"></path>
+													</svg>
+													<span>Google Meet</span>
+												</div>
+												<div class="data__item-below">
+													<svg width="15" height="15" viewbox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<path d="M15 7.49989C15.0011 8.97328 14.5675 10.4143 13.7535 11.6428C12.9396 12.8713 11.7813 13.8328 10.4235 14.4072C9.06568 14.9815 7.56859 15.1431 6.11935 14.8719C4.67012 14.6007 3.33303 13.9086 2.27524 12.8822C1.21744 11.8558 0.485862 10.5406 0.171951 9.10096C-0.141959 7.66136 -0.024276 6.16123 0.51029 4.78809C1.04486 3.41495 1.97259 2.22972 3.17752 1.38057C4.38245 0.531409 5.81113 0.0559938 7.28496 0.0137478C7.42678 -0.0045826 7.57038 -0.0045826 7.7122 0.0137478C9.66299 0.0679667 11.5157 0.880277 12.8766 2.27803C14.2375 3.67579 14.9993 5.54973 15 7.49989ZM4.98958 13.4335C5.14999 13.5011 5.31262 13.562 5.47745 13.6162C4.49489 11.9122 3.9811 9.97868 3.98825 8.01203H1.07048C1.16567 9.18728 1.58131 10.314 2.27224 11.2698C2.96317 12.2256 3.90297 12.9739 4.98958 13.4335ZM1.55646 4.99315C1.2907 5.62005 1.12727 6.28547 1.07238 6.96409H3.98825C3.98233 5.00928 4.48856 3.08697 5.45661 1.38829C5.29936 1.44067 5.14368 1.49936 4.98958 1.56437C3.44353 2.21914 2.21255 3.44857 1.55646 4.99315ZM9.95926 6.96409C9.93594 6.2297 9.85325 5.49839 9.71201 4.77731C9.57387 4.0396 9.34708 3.32125 9.03657 2.63787C8.61311 1.73666 8.08071 1.14879 7.61842 1.0598C7.53853 1.05861 7.45863 1.05861 7.37874 1.0598C6.91644 1.14879 6.38405 1.73666 5.96059 2.63882C5.6504 3.32224 5.42393 4.04058 5.28609 4.77826C5.1449 5.49903 5.06221 6.23001 5.03884 6.96409H9.95926ZM9.03657 12.3373C9.34711 11.6539 9.5739 10.9356 9.71201 10.1979C9.85285 9.47706 9.93522 8.74608 9.95832 8.01203H5.03979C5.06314 8.74642 5.14583 9.47772 5.28704 10.1988C5.42492 10.9362 5.65139 11.6542 5.96154 12.3373C6.42289 13.318 7.01213 13.9277 7.5 13.9277C7.98787 13.9277 8.57711 13.318 9.03751 12.3373H9.03657ZM13.4435 10.0066C13.7123 9.37235 13.8764 8.69876 13.9295 8.01203H11.0099C11.0174 9.97934 10.5036 11.9136 9.52065 13.6181C9.68549 13.5638 9.84874 13.5026 10.0104 13.4345C11.5563 12.7799 12.7872 11.5509 13.4435 10.0066ZM10.0104 1.56437C9.85615 1.4993 9.69941 1.44024 9.54055 1.38734C10.5087 3.08599 11.0149 5.00832 11.0089 6.96314H13.9276C13.8287 5.79206 13.4115 4.67023 12.7212 3.71877C12.0308 2.76731 11.0935 2.02237 10.0104 1.56437Z" fill="white"></path>
+													</svg>
+													<span>Europe/Moscow</span>
+												</div>
+											</div>
+										</div>
+										<div class="booking__calendar calendar" data-calendar="">
+											<div class="calendar__header">
+												<div class="calendar__title" data-calendar-title="">Month Year</div>
+												<div class="calendar__controls">
+													<button type="button" class="calendar__nav" data-calendar-prev="" aria-label="Previous month">‹</button>
+													<button type="button" class="calendar__nav" data-calendar-next="" aria-label="Next month">›</button>
+												</div>
+											</div>
+											<div class="calendar__weekdays" aria-hidden="true">
+												<span>Sun</span>
+												<span>Mon</span>
+												<span>Tue</span>
+												<span>Wed</span>
+												<span>Thu</span>
+												<span>Fri</span>
+												<span>Sat</span>
+											</div>
+											<div class="calendar__grid" data-calendar-grid=""></div>
+										</div>
+										<div class="booking__time-slots time-slots" aria-live="polite">
+											<h4 class="time-slots__title">Time</h4>
+											<p class="time-slots__empty" data-time-empty="">Select a date to see times.</p>
+											<div class="time-slots__list" data-time-slots="" hidden></div>
+										</div>
+									</div>
+								</div>
+								<div class="tabs__body submit-tab">
+									<div class="submit-tab__body">
+										<form data-fls-form="" action="#" class="submit-tab__form form-submit">
+											<div class="form-submit__area">
+												<input data-fls-input="" required autocomplete="off" type="text" name="form[]" placeholder="First Name *" class="input">
+												<input data-fls-input="" required autocomplete="off" type="text" name="form[]" placeholder="Last Name *" class="input">
+												<input data-fls-input="" required autocomplete="off" type="email" name="form[]" placeholder="Email *" class="input">
+												<input data-fls-input="" required autocomplete="off" type="text" name="form[]" placeholder="Company" class="input">
+												<input data-fls-input="" required autocomplete="off" type="text" name="form[]" placeholder="Project Details *" class="input">
+											</div>
+											<button type="submit" class="form-submit__button">
+												<span>Send</span>
+												<svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path fill-rule="evenodd" clip-rule="evenodd" d="M20.749 12.75H3.24927V11.25H20.749V12.75Z" fill="#111010"></path>
+													<path fill-rule="evenodd" clip-rule="evenodd" d="M19.9994 11.25C16.4719 11.25 13.5894 14.3521 13.5894 17.66V18.41H15.0894V17.66C15.0894 15.1485 17.332 12.75 19.9994 12.75H20.749V11.25H19.9994Z" fill="#111010"></path>
+													<path fill-rule="evenodd" clip-rule="evenodd" d="M19.9994 12.75C16.4719 12.75 13.5894 9.64785 13.5894 6.33994V5.58994H15.0894V6.33994C15.0894 8.85152 17.332 11.25 19.9994 11.25H20.749V12.75H19.9994Z" fill="#111010"></path>
+												</svg>
+											</button>
+										</form>
+										<div class="submit-tab__location location-submit">
+											<div class="location-submit__content">
+												<a href="mailto:hello@puremate.com">hello@puremate.com</a>
+												<a href="tel:+11344673484">+1 (134) 467-3484</a>
+												<a target="_blank" href="https://maps.app.goo.gl/ABrYdfzRttpSCW5g9">123 Chess Ave, New York</a>
+											</div>
+											<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3027.216245132675!2d-74.02209262269754!3d40.64716337140335!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c245fe6a9044cb%3A0xe9d98b1b3c1045a7!2sRx2Go!5e0!3m2!1sru!2skg!4v1769676251775!5m2!1sru!2skg" style="border: 0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="base__privacy privacy-base">
+							<div class="privacy-base__label">Tired of forms?</div>
+							<div class="privacy-base__text">
+								<p>
+									We get it. Simply
+									<a href="#">book a call with our strategist</a>
+									,
+									<a href="#">drop us a direct email</a>
+									, or even
+									<a href="#">swing by our office</a>
+									for a real conversation.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

@@ -1,21 +1,23 @@
 // Setting up default styles
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
 
-$fontFamily: "FKTGnarly_Rg";
-$fontLite: "FKTGnarly_Lt";
-$fontBold: "FKTGnarly_Bd";
-$fontItalik: "FKTGnarly_It";
-$fontSemiBold: "FKTGnarly_SBd";
+$fontFamily: 'FKTGnarly_Rg';
+$fontLite: 'FKTGnarly_Lt';
+$fontBold: 'FKTGnarly_Bd';
+$fontItalik: 'FKTGnarly_It';
+$fontSemiBold: 'FKTGnarly_SBd';
 
-$fontInter: "Inter", sans-serif; // Default font
-$fontPoppins: "Poppins", sans-serif;
+$fontInter: 'Inter', sans-serif; // Default font
+$fontPoppins: 'Poppins', sans-serif;
 $fontSize: 16; // Default font size (where 16 is the default font size from the layout)
 
 // Primary colors
 $mainColor: #040000;
 $blueColor: #0926c6;
+$blackColor: #111010;
 $orangeColor: #d77200;
+$yellowColor: #ffb700;
 
 $ease: cubic-bezier(0.4, 0, 0.2, 1);
 

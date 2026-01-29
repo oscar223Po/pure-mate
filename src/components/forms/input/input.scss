@@ -1,6 +1,6 @@
-input[type="text"],
-input[type="email"],
-input[type="tel"],
+input[type='text'],
+input[type='email'],
+input[type='tel'],
 textarea {
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -9,18 +9,25 @@ textarea {
 .input {
 	border-radius: 0 !important;
 	width: 100%;
-	display: block;
+	outline: none;
 	padding: 10px;
-	border: 1px solid #eee;
+	display: block;
 	caret-color: inherit;
+	font-family: $fontLite;
+	border-bottom: 1px solid rgba(#fff, 0.5);
 	&.--form-focus {
 	}
 	&.--form-error {
+		border-bottom: 1px solid $yellowColor;
 	}
 }
 .input[placeholder]:not([data-fls-placeholder-nohiden]) {
 	&::placeholder {
+		color: rgba(#fff, 0.8);
 		transition: opacity 0.3s;
+		.--form-error & {
+			color: $yellowColor;
+		}
 	}
 	&:focus::placeholder {
 		opacity: 0;
