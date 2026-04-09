@@ -1,138 +1,51 @@
-# Pure Mate — Vite сборка
+# ♟️ Puremate — Interactive Digital Experience
 
-Инструкция по запуску, структуре и управлению текущей сборкой.
-
----
-
-## 📦 Требования
-
-Перед началом убедись, что установлено:
-
-- **Node.js** версии **18+** (рекомендуется LTS)
-- **npm** (идёт вместе с Node.js)
-- Git (для работы с репозиторием)
-
-Проверка:
-
-```bash
-node -v
-npm -v
-```
+Puremate is a digital agency website that transforms complex ideas into immersive, interactive experiences. The project highlights advanced front-end development through rich animations, seamless section-to-section transitions, and layered interactivity. Built using tools like GSAP alongside scroll-based triggers and custom watchers, the experience delivers precise control over timing, state, and visual flow. Each interaction is carefully orchestrated to maintain performance while creating a smooth, engaging narrative across the entire site.
 
 ---
 
-## 🚀 Быстрый старт
+<h3>🖼 Preview</h3>
 
-```bash
-# Установка зависимостей
-npm install
-
-# Запуск в режиме разработки
-npm run dev
-```
+<img width="1434" height="1013" alt="Puremate — Preview" src="https://github.com/user-attachments/assets/7125f9fc-58c6-4d2a-b54f-c9cc40426738" />
 
 ---
 
-## 📜 Основные команды
+<h3>🎯 Project Goals</h3>
 
-| Команда              | Назначение                    |
-| -------------------- | ----------------------------- |
-| `npm run dev`        | Локальная разработка          |
-| `npm run online`     | Dev-сервер, доступный в сети  |
-| `npm run build`      | Production-сборка             |
-| `npm run preview`    | Предпросмотр build            |
-| `npm run zip`        | Сборка + архив                |
-| `npm run tmp`        | Временная сборка + zip        |
-| `npm run deploy`     | Деплой по FTP                 |
-| `npm run git`        | Сборка + публикация через Git |
-| `npm run stat`       | Статистика проекта            |
-| `npm run stat-clear` | Очистка статистики            |
-| `npm run add`        | Создание нового компонента    |
+- ✅ Build a user-friendly and adaptive website with responsive design that reflects the company’s services
+- ✨ Add personality and liveliness to the site through pure JavaScript animations
+- ⚡ Ensure high loading speed and cross-browser compatibility (Google Chrome, Safari, Yandex Browser, Opera, Edge, Brave, etc.)
+- 🛠 Develop clean, valid, and maintainable code using only standard web technologies to guarantee stability and performance
 
 ---
 
-## 🗂 Структура проекта
+<h3>🧩 Development Features</h3>
 
-```
-src/
-├── assets/            # Изображения, иконки, шрифты
-├── components/
-│   ├── pages/         # Контент страниц
-│   ├── layout/        # Header, Footer, Menu, UI-компоненты
-│   ├── forms/         # Формы
-│   └── effects/       # JS-эффекты и интерактив
-├── styles/            # Глобальные стили (SCSS / CSS)
-
-template_modules/     # Основной функционал сборки
-
-template.config.js    # Конфигурация template_modules
-```
+- 📐 Semantic **HTML5** markup for well-structured and accessible architecture  
+- 🎨 **CSS3 + SCSS (Sass)** for styling with modularity and reusability  
+- 🏷️ **BEM methodology** for organized class naming and scalability  
+- 📱 Responsive layout with **Flexbox** and **CSS Grid**  
+- ⚙️ **JavaScript** for interactive elements and dynamic behavior  
+- 🔄 **Gulp + Webpack** for task automation:  
+  - SCSS compilation  
+  - Minification  
+  - Image optimization  
+  - Hot-reload during development  
 
 ---
 
-## 🧠 Принцип работы
+<h3>🛠️ Tech Stack</h3>
 
-- **Vite** используется как сборщик
-- Поддерживаются **HTML / Pug / Nunjucks**
-- JS — модульный, ES Modules
-- SCSS + PostCSS
-- Подключение React / Vue при необходимости
-
-Компонентный подход: логика, стили и шаблоны разделены.
-
----
-
-## ⚙️ Конфигурация сборки
-
-### `template.config.js`
-
-Через этот файл управляется функционал из папки `template_modules`:
-
-- оптимизация изображений
-- генерация шрифтов
-- SVG-спрайты
-- статистика
-- режимы сборки
-
-Изменения в конфиге **напрямую влияют** на поведение сборки.
+| Technology         | Purpose                   |
+| ------------------ | ------------------------- |
+| **HTML5**          | Structure & semantics     |
+| **CSS3 / SCSS**    | Styling & maintainability |
+| **BEM**            | Clean and scalable code   |
+| **Flexbox & Grid** | Responsive design         |
+| **JavaScript**     | Dynamic functionality     |
+| **Gulp & Webpack** | Build automation          |
+| **GSAP Library**   | Professionals animation   |
 
 ---
 
-## ➕ Создание компонентов
-
-```bash
-npm run add
-```
-
-Скрипт создаёт структуру компонента и подключает его автоматически.
-
----
-
-## 🧪 Production сборка
-
-```bash
-npm run build
-```
-
-Результат появится в папке `dist/`.
-
----
-
-## ❗ Важно
-
-- Не правь файлы внутри `template_modules`, если не понимаешь последствия
-- Все кастомные стили — **только через `src/styles`**
-- Логику страниц держи в `components/pages`
-
----
-
-## 🛠 Используемые технологии
-
-- Html, Scss, JavaScript, Vite, Gulp, Webpack
-- Tailwind (опционально)
-- React / Vue (опционально)
-
----
-
-✨ The chosen technology stack ensures stable performance, ease of development,
-and long-term support.
+✨ The chosen **technology stack** ensures stable performance, ease of development, and long-term support.
